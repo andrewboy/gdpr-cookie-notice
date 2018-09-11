@@ -22,6 +22,7 @@
     "babel-preset-es2015": "^6.9.0",
     "babel-preset-stage-2": "^6.11.0",
     "babel-runtime": "^6.9.2",
+    "js-cookie": "^2.2.0",
     "rimraf": "^2.6.1",
     "webpack": "1.13.1",
     "webpack-merge": "^4.1.0"
