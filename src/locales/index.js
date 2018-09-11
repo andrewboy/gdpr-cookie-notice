@@ -1,4 +1,4 @@
-import hu from './hu'
+import { default as hu } from './hu'
 
 export default {
   hu: hu
