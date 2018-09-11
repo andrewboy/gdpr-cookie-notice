@@ -1,5 +1,8 @@
+import template from './js/template'
+import * as locales from './locales'
+
 function gdprCookieNotice (config) {
-  console.log('gdprCookieNotice')
+  console.log(locales.hu)
 }
 
 module.exports = {
