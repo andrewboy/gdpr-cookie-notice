@@ -1,1 +1,5 @@
-import { default as hu } from './hu'
+import hu from './hu'
+
+export default {
+  hu: hu
+}
