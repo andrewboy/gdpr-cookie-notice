@@ -1,4 +1,4 @@
-export default {
+let hu = {
   description: 'Ez a weboldal sütiket(cookie-kat) használ azért, hogy a weboldal működjön, statisztikai adatokat gyűjtsön és jobb felhasználió élményt nyújtson. A Süti beállítások gombra kattintva több információt is megtudhat erről. Az oldal további használatával beleegyezik a sütik használatába.',
   settings: 'Süti beállítások',
   accept: 'Elfogadom',
@@ -14,3 +14,6 @@ export default {
   cookie_marketing_title: 'Marketing sütik',
   cookie_marketing_desc: 'Ezek a sütik segítenek nekünk a hirdetések kezelésében, célzásában.'
 }
+
+export { hu }
+export default hu

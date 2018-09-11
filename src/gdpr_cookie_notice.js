@@ -5,7 +5,7 @@ import Cookies from 'js-cookie'
 
 function gdprCookieNotice (config) {
   let namespace = 'gdprcookienotice';
-  console.log('gdprCookieNotice')
+  console.log('gdprCookieNotice', locales, locales.hu)
 
   let currentCookieSelection = getCookie(namespace);
 
