@@ -46,7 +46,7 @@ module.exports = [
     output: {
       filename: 'gdpr-cookie-notice.min.js',
       libraryTarget: 'window',
-      library: 'gdpr_cookie_notice',
+      // library: 'gdpr_cookie_notice',
     }
   }),
   merge(config, {
@@ -54,7 +54,7 @@ module.exports = [
     output: {
       filename: 'gdpr-cookie-notice.js',
       libraryTarget: 'umd',
-      library: 'gdpr-cookie-notice',
+      // library: 'gdpr-cookie-notice',
       umdNamedDefine: true
     }
   })
