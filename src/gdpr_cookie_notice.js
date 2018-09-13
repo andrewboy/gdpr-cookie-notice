@@ -20,11 +20,11 @@ function gdprCookieNotice (extOpts) {
   console.log('gdprCookieNotice', locales, locales.hu)
   console.log(currentCookieSelection)
 
-  if (!currentCookieSelection) {
+  // if (!currentCookieSelection) {
     showNotice()
-  } else {
-
-  }
+  // } else {
+  //
+  // }
 
   function showNotice () {
     buildNotice()
