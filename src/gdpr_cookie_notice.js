@@ -17,7 +17,7 @@ function gdprCookieNotice (extOpts) {
   let categories = []
   let currentCookieSelection = getCookie()
 
-  console.log('gdprCookieNotice', locales, locales.hu)
+  console.log('gdprCookieNotice', locales, locales.hu, template)
   console.log(currentCookieSelection)
 
   // if (!currentCookieSelection) {
