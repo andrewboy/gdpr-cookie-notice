@@ -4,7 +4,7 @@ import Cookies from 'js-cookie'
 
 function gdprCookieNotice (extOpts) {
   let defOpts = {
-    locale: 'en',
+    locale: 'hu',
     timeout: 500,
     domain: null,
     expiration: 30,
