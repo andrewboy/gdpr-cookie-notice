@@ -41,6 +41,8 @@ function gdprCookieNotice (extOpts) {
   function getTemplateHtml (templateKey, data) {
     let templateStr = template[templateKey]
 
+    console.log('templateStr', templateStr, data)
+
     if (typeof templateStr === 'string' && (data instanceof Object)) {
         return templateStr.replace(/{{([^}]+)}}/g, function (i, j) {
           if (data[j]) {
