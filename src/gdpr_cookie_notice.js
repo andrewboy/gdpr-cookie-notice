@@ -1,4 +1,4 @@
-import template from './template'
+import { default as template } from './template'
 import * as locales from './locales'
 import Cookies from 'js-cookie'
 
