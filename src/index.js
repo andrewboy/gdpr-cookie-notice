@@ -83,7 +83,7 @@ class GdprCookieNotice {
   }
 
   buildNotice () {
-    document.body.insertAdjacentHTML('beforeend', this.getTemplateHtml('bar', locales[opts.locale]))
+    document.body.insertAdjacentHTML('beforeend', this.getTemplateHtml('bar', locales[this.locale]))
   }
 
   getTemplateHtml (templateKey, data) {

@@ -111,7 +111,7 @@ var GdprCookieNotice = function () {
   }, {
     key: 'buildNotice',
     value: function buildNotice() {
-      document.body.insertAdjacentHTML('beforeend', this.getTemplateHtml('bar', locales[opts.locale]));
+      document.body.insertAdjacentHTML('beforeend', this.getTemplateHtml('bar', locales[this.locale]));
     }
   }, {
     key: 'getTemplateHtml',
