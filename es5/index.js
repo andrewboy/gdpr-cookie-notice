@@ -89,13 +89,13 @@ var GdprCookieNotice = function () {
   function GdprCookieNotice(options) {
     _classCallCheck(this, GdprCookieNotice);
 
-    this.locale(options.locale ? options.locale : 'hu');
-    this.timeout(options.timeout ? options.timeout : 500);
-    this.domain(options.domain ? options.domain : null);
-    this.expiration(options.expiration ? options.expiration : 30);
-    this.defaultChecked(options.setDefaultChecked ? options.setDefaultChecked : false);
-    this.namespace(options.namespace ? options.namespace : 'gdprcookienotice');
-    this.pluginPrefix(options.pluginPrefix ? options.pluginPrefix : 'gdpr-cookie-notice');
+    this._locale = options.locale ? options.locale : 'hu';
+    this._timeout = options.timeout ? options.timeout : 500;
+    this._domain = options.domain ? options.domain : null;
+    this._expiration = options.expiration ? options.expiration : 30;
+    this._defaultChecked = options.setDefaultChecked ? options.setDefaultChecked : false;
+    this._namespace = options.namespace ? options.namespace : 'gdprcookienotice';
+    this._pluginPrefix = options.pluginPrefix ? options.pluginPrefix : 'gdpr-cookie-notice';
 
     console.log('gdprCookieNotice', locales, locales.hu, _template2.default);
     console.log(this.getCurrentCookieSelection());
@@ -111,7 +111,7 @@ var GdprCookieNotice = function () {
   }, {
     key: 'buildNotice',
     value: function buildNotice() {
-      document.body.insertAdjacentHTML('beforeend', this.getTemplateHtml('bar', locales[this.locale]));
+      document.body.insertAdjacentHTML('beforeend', this.getTemplateHtml('bar', locales[this._locale]));
     }
   }, {
     key: 'getTemplateHtml',
@@ -135,7 +135,7 @@ var GdprCookieNotice = function () {
   }, {
     key: 'getCurrentCookieSelection',
     value: function getCurrentCookieSelection() {
-      return _jsCookie2.default.getJSON(this.namespace);
+      return _jsCookie2.default.getJSON(this._namespace);
     }
   }, {
     key: 'locale',

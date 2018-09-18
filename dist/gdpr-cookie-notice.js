@@ -363,13 +363,13 @@ var GdprCookieNotice = function () {
   function GdprCookieNotice(options) {
     _classCallCheck(this, GdprCookieNotice);
 
-    this.locale(options.locale ? options.locale : 'hu');
-    this.timeout(options.timeout ? options.timeout : 500);
-    this.domain(options.domain ? options.domain : null);
-    this.expiration(options.expiration ? options.expiration : 30);
-    this.defaultChecked(options.setDefaultChecked ? options.setDefaultChecked : false);
-    this.namespace(options.namespace ? options.namespace : 'gdprcookienotice');
-    this.pluginPrefix(options.pluginPrefix ? options.pluginPrefix : 'gdpr-cookie-notice');
+    this._locale = options.locale ? options.locale : 'hu';
+    this._timeout = options.timeout ? options.timeout : 500;
+    this._domain = options.domain ? options.domain : null;
+    this._expiration = options.expiration ? options.expiration : 30;
+    this._defaultChecked = options.setDefaultChecked ? options.setDefaultChecked : false;
+    this._namespace = options.namespace ? options.namespace : 'gdprcookienotice';
+    this._pluginPrefix = options.pluginPrefix ? options.pluginPrefix : 'gdpr-cookie-notice';
 
     console.log('gdprCookieNotice', _locales__WEBPACK_IMPORTED_MODULE_1__, _locales__WEBPACK_IMPORTED_MODULE_1__["hu"], _template__WEBPACK_IMPORTED_MODULE_0__["default"]);
     console.log(this.getCurrentCookieSelection());
@@ -385,7 +385,7 @@ var GdprCookieNotice = function () {
   }, {
     key: 'buildNotice',
     value: function buildNotice() {
-      document.body.insertAdjacentHTML('beforeend', this.getTemplateHtml('bar', _locales__WEBPACK_IMPORTED_MODULE_1__[this.locale]));
+      document.body.insertAdjacentHTML('beforeend', this.getTemplateHtml('bar', _locales__WEBPACK_IMPORTED_MODULE_1__[this._locale]));
     }
   }, {
     key: 'getTemplateHtml',
@@ -409,7 +409,7 @@ var GdprCookieNotice = function () {
   }, {
     key: 'getCurrentCookieSelection',
     value: function getCurrentCookieSelection() {
-      return js_cookie__WEBPACK_IMPORTED_MODULE_2___default.a.getJSON(this.namespace);
+      return js_cookie__WEBPACK_IMPORTED_MODULE_2___default.a.getJSON(this._namespace);
     }
   }, {
     key: 'locale',
