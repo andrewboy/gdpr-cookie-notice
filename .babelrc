@@ -1,5 +1,47 @@
 {
-  "presets": ["es2015", "stage-2"],
-  "plugins": ["transform-runtime"],
-  "comments": false
+  "presets": [
+    ["env", {
+      "targets": {
+        "browsers": [">0.5%", "last 2 versions", "not dead", "not op_mini all"],
+        "node": 8
+      },
+      "modules": false
+    }]
+  ],
+  "plugins": [
+    "transform-object-rest-spread"
+  ],
+  "env": {
+    "test": {
+      "presets": [
+        ["env", {
+          "targets": { "node": true }
+        }]
+      ],
+      "plugins": [
+        ["module-resolver", {
+          "root": ["./src"],
+          "alias": {
+            "~components": "components",
+            "~directives": "directives",
+            "~mixins": "mixins",
+            "~stylus": "stylus",
+            "~util": "util"
+          }
+        }]
+      ]
+    },
+    "es5": {
+      "presets": [
+        ["env", {
+          "targets": {
+            "browsers": [">0.5%", "last 2 versions", "not dead", "not op_mini all"],
+            "node": 8
+          }
+        }]
+      ],
+      "plugins": [
+      ]
+    }
+  }
 }

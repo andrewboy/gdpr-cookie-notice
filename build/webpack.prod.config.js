@@ -1,0 +1,61 @@
+const path = require('path')
+const merge = require('webpack-merge')
+const HappyPack = require('happypack')
+// const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
+const { config: baseWebpackConfig, happyThreadPool } = require('./webpack.base.config')
+
+// Helpers
+const resolve = file => require('path').resolve(__dirname, file)
+
+module.exports = merge(baseWebpackConfig, {
+  entry: {
+    app: './src/index.js'
+  },
+  output: {
+    path: resolve('../dist'),
+    publicPath: '/dist/',
+    library: 'GdprCookieNotice',
+    libraryTarget: 'umd',
+    libraryExport: 'default',
+    // See https://github.com/webpack/webpack/issues/6522
+    globalObject: 'typeof self !== \'undefined\' ? self : this'
+  },
+  // externals: {
+  //   vuetify: 'vuetify',
+  //   qs: 'qs',
+  //   lodash: 'lodash',
+  //   'vue-router': 'vue-router'
+  // //   vue: {
+  // //     commonjs: 'vue',
+  // //     commonjs2: 'vue',
+  // //     amd: 'vue',
+  // //     root: 'Vue'
+  // //   }
+  // },
+  module: {
+    rules: [
+      {
+        test: /\.[jt]s$/,
+        use: 'happypack/loader?id=scripts',
+        exclude: /node_modules/
+      }
+    ]
+  },
+  plugins: [
+    // new ForkTsCheckerWebpackPlugin({
+    //   checkSyntacticErrors: true,
+    //   tsconfig: resolve('../tsconfig.json')
+    // }),
+    new HappyPack({
+      id: 'scripts',
+      threadPool: happyThreadPool,
+      loaders: [
+        'babel-loader',
+        // {
+        //   loader: 'ts-loader',
+        //   options: { happyPackMode: true }
+        // }
+      ]
+    })
+  ]
+})

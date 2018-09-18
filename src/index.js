@@ -1,6 +1,7 @@
 import { default as template } from './template'
 import * as locales from './locales'
 import Cookies from 'js-cookie'
+import './sass/main.scss'
 
 function gdprCookieNotice (extOpts) {
   let defOpts = {
