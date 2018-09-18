@@ -1,7 +1,7 @@
 import { default as template } from './template'
 import * as locales from './locales'
 import Cookies from 'js-cookie'
-import './sass/main.scss'
+import './sass/gdpr-cookie-notice.scss'
 
 class GdprCookieNotice {
   constructor (options) {
