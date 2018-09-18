@@ -3,7 +3,6 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.gdprCookieNotice = gdprCookieNotice;
 
 var _template = require('./template');
 
@@ -81,4 +80,6 @@ function gdprCookieNotice(extOpts) {
     return _jsCookie2.default.getJSON(opts.namespace);
   }
 }
+
+exports.default = { gdprCookieNotice: gdprCookieNotice };
 //# sourceMappingURL=index.js.map

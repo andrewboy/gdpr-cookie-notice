@@ -280,12 +280,11 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 /*!**********************!*\
   !*** ./src/index.js ***!
   \**********************/
-/*! exports provided: gdprCookieNotice */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "gdprCookieNotice", function() { return gdprCookieNotice; });
 /* harmony import */ var _template__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./template */ "./src/template.js");
 /* harmony import */ var _locales__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./locales */ "./src/locales/index.js");
 /* harmony import */ var js_cookie__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! js-cookie */ "./node_modules/js-cookie/src/js.cookie.js");
@@ -355,6 +354,8 @@ function gdprCookieNotice(extOpts) {
     return js_cookie__WEBPACK_IMPORTED_MODULE_2___default.a.getJSON(opts.namespace);
   }
 }
+
+/* harmony default export */ __webpack_exports__["default"] = ({ gdprCookieNotice: gdprCookieNotice });
 
 /***/ }),
 

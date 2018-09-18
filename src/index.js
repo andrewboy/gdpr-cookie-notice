@@ -3,7 +3,7 @@ import * as locales from './locales'
 import Cookies from 'js-cookie'
 import './sass/main.scss'
 
-export function gdprCookieNotice (extOpts) {
+function gdprCookieNotice (extOpts) {
   let defOpts = {
     locale: 'hu',
     timeout: 500,
@@ -61,3 +61,5 @@ export function gdprCookieNotice (extOpts) {
     return Cookies.getJSON(opts.namespace)
   }
 }
+
+export default { gdprCookieNotice }
