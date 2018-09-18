@@ -55,7 +55,8 @@ class GdprCookieNotice {
     this.buildNotice()
 
     // Show the notice with a little timeout
-    window.setTimeout(function () {
+    window.setTimeout(() => {
+      console.log('setTimeout', this._pluginPrefix)
       document.documentElement.classList.add(this._pluginPrefix + '-loaded')
     }, this._timeout)
   }

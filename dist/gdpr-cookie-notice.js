@@ -352,11 +352,14 @@ var GdprCookieNotice = function () {
   _createClass(GdprCookieNotice, [{
     key: 'showNotice',
     value: function showNotice() {
+      var _this = this;
+
       this.buildNotice();
 
       // Show the notice with a little timeout
       window.setTimeout(function () {
-        document.documentElement.classList.add(this._pluginPrefix + '-loaded');
+        console.log('setTimeout', _this._pluginPrefix);
+        document.documentElement.classList.add(_this._pluginPrefix + '-loaded');
       }, this._timeout);
     }
   }, {
