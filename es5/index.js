@@ -83,6 +83,7 @@ var GdprCookieNotice = function () {
   }, {
     key: 'buildNotice',
     value: function buildNotice() {
+      console.log(this.getTemplateHtml('bar', locales[this._locale]));
       document.body.insertAdjacentHTML('beforeend', this.getTemplateHtml('bar', locales[this._locale]));
     }
   }, {

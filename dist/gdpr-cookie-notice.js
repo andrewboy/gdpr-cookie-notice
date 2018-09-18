@@ -357,6 +357,7 @@ var GdprCookieNotice = function () {
   }, {
     key: 'buildNotice',
     value: function buildNotice() {
+      console.log(this.getTemplateHtml('bar', _locales__WEBPACK_IMPORTED_MODULE_1__[this._locale]));
       document.body.insertAdjacentHTML('beforeend', this.getTemplateHtml('bar', _locales__WEBPACK_IMPORTED_MODULE_1__[this._locale]));
     }
   }, {
