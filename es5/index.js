@@ -1,5 +1,10 @@
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.gdprCookieNotice = gdprCookieNotice;
+
 var _template = require('./template');
 
 var _template2 = _interopRequireDefault(_template);
@@ -76,8 +81,4 @@ function gdprCookieNotice(extOpts) {
     return _jsCookie2.default.getJSON(opts.namespace);
   }
 }
-
-module.exports = {
-  gdprCookieNotice: gdprCookieNotice
-};
 //# sourceMappingURL=index.js.map
