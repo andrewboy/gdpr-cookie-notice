@@ -79,12 +79,29 @@ var GdprCookieNotice = function () {
     key: 'showNotice',
     value: function showNotice() {
       this.buildNotice();
+
+      // Show the notice with a little timeout
+      window.setTimeout(function () {
+        document.documentElement.classList.add(this._pluginPrefix + '-loaded');
+      }, this._timeout);
     }
   }, {
     key: 'buildNotice',
     value: function buildNotice() {
       console.log(this.getTemplateHtml('bar', locales[this._locale]));
       document.body.insertAdjacentHTML('beforeend', this.getTemplateHtml('bar', locales[this._locale]));
+      var settingsButton = document.querySelectorAll('.' + this._pluginPrefix + '-nav-item-settings')[0];
+      var acceptButton = document.querySelectorAll('.' + this._pluginPrefix + '-nav-item-accept')[0];
+
+      settingsButton.addEventListener('click', function (e) {
+        e.preventDefault();
+        // showModal()
+      });
+
+      acceptButton.addEventListener('click', function (e) {
+        e.preventDefault();
+        // acceptCookies()
+      });
     }
   }, {
     key: 'getTemplateHtml',
