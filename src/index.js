@@ -5,8 +5,8 @@ import './sass/gdpr-cookie-notice.scss'
 
 class GdprCookieNotice {
   constructor (options) {
-    this._categories = []
-    this._categorySettings = []
+    this._categories = options.categories ? options.categories : []
+    // this._categorySettings = []
     this._locale = options.locale ? options.locale : 'hu'
     this._timeout = options.timeout ? options.timeout : 500
     this._domain = options.domain ? options.domain : window.location.hostname
@@ -17,20 +17,20 @@ class GdprCookieNotice {
     this._implicit = options.implicit ? options.implicit : false
     this._cookiesAccepted = false
 
-    if (options.performance && options.performance.length) {
-      this._categorySettings.performance = options.performance
-      this._categories.push('performance')
-    }
-
-    if (options.analytics && options.analytics.length) {
-      this._categorySettings.analytics = options.analytics
-      this._categories.push('analytics')
-    }
-
-    if (options.marketing && options.marketing.length) {
-      this._categorySettings.marketing = options.marketing
-      this._categories.push('marketing')
-    }
+    // if (options.performance && options.performance.length) {
+    //   this._categorySettings.performance = options.performance
+    //   this._categories.push('performance')
+    // }
+    //
+    // if (options.analytics && options.analytics.length) {
+    //   this._categorySettings.analytics = options.analytics
+    //   this._categories.push('analytics')
+    // }
+    //
+    // if (options.marketing && options.marketing.length) {
+    //   this._categorySettings.marketing = options.marketing
+    //   this._categories.push('marketing')
+    // }
 
     // console.log('gdprCookieNotice', locales, locales.hu, template)
     // console.log(this.getCurrentCookieSelection())
@@ -56,7 +56,6 @@ class GdprCookieNotice {
 
     // Show the notice with a little timeout
     window.setTimeout(() => {
-      console.log('setTimeout', this._pluginPrefix)
       document.documentElement.classList.add(this._pluginPrefix + '-loaded')
     }, this._timeout)
   }
@@ -67,15 +66,44 @@ class GdprCookieNotice {
     let settingsButton = document.querySelectorAll('.' + this._pluginPrefix + '-nav-item-settings')[0]
     let acceptButton = document.querySelectorAll('.' + this._pluginPrefix + '-nav-item-accept')[0]
 
-    settingsButton.addEventListener('click', function (e) {
+    settingsButton.addEventListener('click', (e) => {
       e.preventDefault()
       // showModal()
     })
 
-    acceptButton.addEventListener('click', function (e) {
+    acceptButton.addEventListener('click', (e) => {
       e.preventDefault()
-      // acceptCookies()
+      this.acceptCookies()
     })
+  }
+
+  acceptCookies (save) {
+    let value = {
+      date: new Date(),
+      necessary: true,
+    }
+
+    for (let i in this._categories) {
+      console.log(i, this._categories[i])
+    }
+
+    // categories.forEach(function (cat) {
+    //   value[cat] = true
+    // })
+    //
+    // // If request was coming from the modal, check for the settings
+    // if (save) {
+    //   for (var i = 0; i < categories.length; i++) {
+    //     value[categories[i]] = document.getElementById(pluginPrefix + '-cookie_' + categories[i]).checked
+    //   }
+    // }
+    //
+    // gdprCookies.set(namespace, value, {expires: config.expiration, domain: config.domain})
+    // deleteCookies(value)
+    //
+    // // Load marketing scripts that only works when cookies are accepted
+    // cookiesAcceptedEvent = new CustomEvent('gdprCookiesEnabled', {detail: value})
+    // document.dispatchEvent(cookiesAcceptedEvent)
   }
 
   getTemplateHtml (templateKey, data) {
