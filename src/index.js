@@ -17,21 +17,6 @@ class GdprCookieNotice {
     this._implicit = options.implicit ? options.implicit : false
     this._cookiesAccepted = false
 
-    // if (options.performance && options.performance.length) {
-    //   this._categorySettings.performance = options.performance
-    //   this._categories.push('performance')
-    // }
-    //
-    // if (options.analytics && options.analytics.length) {
-    //   this._categorySettings.analytics = options.analytics
-    //   this._categories.push('analytics')
-    // }
-    //
-    // if (options.marketing && options.marketing.length) {
-    //   this._categorySettings.marketing = options.marketing
-    //   this._categories.push('marketing')
-    // }
-
     // console.log('gdprCookieNotice', locales, locales.hu, template)
     // console.log(this.getCurrentCookieSelection())
 
@@ -77,6 +62,25 @@ class GdprCookieNotice {
     })
   }
 
+
+  // deleteCookies(savedCookies) {
+  //   let currentCookieSelection = this.getCurrentCookieSelection()
+  //
+  //   if (!currentCookieSelection) { return }
+  //
+  //   for (let i in this._categories) {
+  //     if(Object.keys(currentCookieSelection).indexOf(i) >= 0) {
+  //         Cookies.remove(i);
+  //     }
+  //   }
+  //
+  //   if(!savedCookies && !gdprCookies) {
+  //     showNotice();
+  //   } else {
+  //     hideNotice();
+  //   }
+  // }
+
   acceptCookies (save) {
     let value = {
       date: new Date(),
@@ -85,25 +89,29 @@ class GdprCookieNotice {
 
     for (let i in this._categories) {
       console.log(i, this._categories[i])
+
+      if (this._categories[i].length > 0) {
+        value[i] = true
+      }
     }
 
     // categories.forEach(function (cat) {
     //   value[cat] = true
     // })
-    //
-    // // If request was coming from the modal, check for the settings
+
+    // If request was coming from the modal, check for the settings
     // if (save) {
     //   for (var i = 0; i < categories.length; i++) {
     //     value[categories[i]] = document.getElementById(pluginPrefix + '-cookie_' + categories[i]).checked
     //   }
     // }
-    //
-    // gdprCookies.set(namespace, value, {expires: config.expiration, domain: config.domain})
-    // deleteCookies(value)
-    //
-    // // Load marketing scripts that only works when cookies are accepted
-    // cookiesAcceptedEvent = new CustomEvent('gdprCookiesEnabled', {detail: value})
-    // document.dispatchEvent(cookiesAcceptedEvent)
+
+    Cookies.set(this._namespace, value, {expires: this._expiration, domain: this._domain})
+    // this.deleteCookies(value)
+
+    // Load marketing scripts that only works when cookies are accepted
+    this._gdprCookiesEnabledEvt = new CustomEvent('gdprCookiesEnabled', {detail: this.getCurrentCookieSelection()})
+    document.dispatchEvent(this._gdprCookiesEnabledEvt)
   }
 
   getTemplateHtml (templateKey, data) {
