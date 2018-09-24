@@ -54,6 +54,26 @@ var GdprCookie = function () {
       _jsCookie2.default.set(this._name, value, { expires: this._expiration, domain: this._domain });
     }
   }, {
+    key: 'isNecessaryAccepted',
+    value: function isNecessaryAccepted() {
+      return _jsCookie2.default.getJSON(this._name)['necessary'];
+    }
+  }, {
+    key: 'isAnalyticsAccepted',
+    value: function isAnalyticsAccepted() {
+      return _jsCookie2.default.getJSON(this._name)['analytics'];
+    }
+  }, {
+    key: 'isPerformanceAccepted',
+    value: function isPerformanceAccepted() {
+      return _jsCookie2.default.getJSON(this._name)['performance'];
+    }
+  }, {
+    key: 'isMarketingAccepted',
+    value: function isMarketingAccepted() {
+      return _jsCookie2.default.getJSON(this._name)['marketing'];
+    }
+  }, {
     key: 'get',
     value: function get() {
       return _jsCookie2.default.getJSON(this._name);
@@ -157,7 +177,10 @@ var GdprCookieNotice = function () {
       var categoryList = document.querySelector('.' + this._pluginPrefix + '-modal-cookies');
 
       //Load essential cookies
-      categoryList.innerHTML += this.getTemplateHtml('category', [] /*'cookie_essential'*/);
+      categoryList.innerHTML += this.getTemplateHtml('category', {
+        prefix: 'cookie_essential',
+        checked: 'checked="checked"'
+      });
       var input = document.querySelector('.' + this._pluginPrefix + '-modal-cookie-input');
       var label = document.querySelector('.' + this._pluginPrefix + '-modal-cookie-input-switch');
       label.innerHTML = locales[this._locale]['always_on'];
@@ -209,13 +232,12 @@ var GdprCookieNotice = function () {
 
       statementButton.addEventListener('click', function (e) {
         e.preventDefault();
-        window.open(config.statement, '_blank');
-        //window.location.href = config.statement;
+        window.open(_this3._statementUrl, '_blank');
       });
 
       for (var i = 0; i < categoryTitles.length; i++) {
-        categoryTitles[i].addEventListener('click', function () {
-          this.parentNode.parentNode.classList.toggle('open');
+        categoryTitles[i].addEventListener('click', function (e) {
+          e.currentTarget.parentNode.parentNode.classList.toggle('open');
           return false;
         });
       }
@@ -223,12 +245,12 @@ var GdprCookieNotice = function () {
       saveButton.addEventListener('click', function (e) {
         e.preventDefault();
         saveButton.classList.add('saved');
-        setTimeout(function () {
+        window.setTimeout(function () {
           saveButton.classList.remove('saved');
         }, 1000);
-        acceptCookies(true);
-        setTimeout(function () {
-          hideModal();
+        _this3.acceptCategories();
+        window.setTimeout(function () {
+          _this3.hideModal();
         }, 1000);
       });
     }
@@ -271,6 +293,12 @@ var GdprCookieNotice = function () {
       this._gdprCookie.set(true, !!this._categories.performance, !!this._categories.analytics, !!this._categories.marketing);
       this._gdprCookiesEnabledEvt = new CustomEvent('gdprCookiesEnabled', { detail: this._gdprCookie.get() });
       document.dispatchEvent(this._gdprCookiesEnabledEvt);
+
+      if (this._gdprCookie.isExists() && this._gdprCookie.isNecessaryAccepted()) {
+        this.hideNotice();
+      } else {
+        this.showNotice();
+      }
     }
 
     // getCurrentCookieSelection () {

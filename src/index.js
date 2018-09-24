@@ -26,6 +26,22 @@ class GdprCookie {
     Cookies.set(this._name, value, {expires: this._expiration, domain: this._domain})
   }
 
+  isNecessaryAccepted () {
+    return Cookies.getJSON(this._name)['necessary']
+  }
+
+  isAnalyticsAccepted () {
+    return Cookies.getJSON(this._name)['analytics']
+  }
+
+  isPerformanceAccepted () {
+    return Cookies.getJSON(this._name)['performance']
+  }
+
+  isMarketingAccepted () {
+    return Cookies.getJSON(this._name)['marketing']
+  }
+
   get () {
     return Cookies.getJSON(this._name)
   }
@@ -112,7 +128,10 @@ class GdprCookieNotice {
     let categoryList = document.querySelector('.' + this._pluginPrefix + '-modal-cookies')
 
     //Load essential cookies
-    categoryList.innerHTML += this.getTemplateHtml('category', []/*'cookie_essential'*/)
+    categoryList.innerHTML += this.getTemplateHtml('category', {
+      prefix: 'cookie_essential',
+      checked: 'checked="checked"'
+    })
     let input = document.querySelector('.' + this._pluginPrefix + '-modal-cookie-input')
     let label = document.querySelector('.' + this._pluginPrefix + '-modal-cookie-input-switch')
     label.innerHTML = locales[this._locale]['always_on']
@@ -160,28 +179,27 @@ class GdprCookieNotice {
     statementButton.addEventListener('click', (e) => {
       e.preventDefault()
       window.open(
-        config.statement,
+        this._statementUrl,
         '_blank'
       )
-      //window.location.href = config.statement;
     })
 
-    for (var i = 0; i < categoryTitles.length; i++) {
-      categoryTitles[i].addEventListener('click', function () {
-        this.parentNode.parentNode.classList.toggle('open')
+    for (let i = 0; i < categoryTitles.length; i++) {
+      categoryTitles[i].addEventListener('click', (e) => {
+        e.currentTarget.parentNode.parentNode.classList.toggle('open')
         return false
       })
     }
 
-    saveButton.addEventListener('click', function (e) {
+    saveButton.addEventListener('click', (e) => {
       e.preventDefault()
       saveButton.classList.add('saved')
-      setTimeout(function () {
+      window.setTimeout(() => {
         saveButton.classList.remove('saved')
       }, 1000)
-      acceptCookies(true)
-      setTimeout(function () {
-        hideModal()
+      this.acceptCategories()
+      window.setTimeout(() => {
+        this.hideModal()
       }, 1000)
     })
 
@@ -228,6 +246,12 @@ class GdprCookieNotice {
     )
     this._gdprCookiesEnabledEvt = new CustomEvent('gdprCookiesEnabled', {detail: this._gdprCookie.get()})
     document.dispatchEvent(this._gdprCookiesEnabledEvt)
+
+    if (this._gdprCookie.isExists() && this._gdprCookie.isNecessaryAccepted()) {
+      this.hideNotice()
+    } else {
+      this.showNotice()
+    }
   }
 
   // getCurrentCookieSelection () {
