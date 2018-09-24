@@ -143,7 +143,9 @@ class GdprCookieNotice {
       categoryList.innerHTML += this.getTemplateHtml('category',
         {
           prefix: 'cookie_' + catId,
-          checked: this._isCategoriesCheckedByDefault || this._gdprCookie.get()[catId] ? 'checked="checked"' : ''
+          checked: this._isCategoriesCheckedByDefault || (this._gdprCookie.isExists() && this._gdprCookie.get()[catId])
+            ? 'checked="checked"'
+            : ''
         }
       )
     }
