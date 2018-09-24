@@ -3,10 +3,41 @@ import * as locales from './locales'
 import Cookies from 'js-cookie'
 import './sass/gdpr-cookie-notice.scss'
 
+class GdprCookie {
+  constructor (name, expiration, domain) {
+    this._name = name
+    this._expiration = expiration
+    this._domain = domain
+  }
+
+  isExists () {
+    return !!Cookies.getJSON(this._name)
+  }
+
+  set (isNecessaryAccepted, isAnalyticsAccepted, isPerformanceAccepted, isMarketingAccepted) {
+    let value = {
+      date: new Date(),
+      necessary: isNecessaryAccepted,
+      performance: isPerformanceAccepted,
+      analytics: isAnalyticsAccepted,
+      marketing: isMarketingAccepted
+    }
+
+    Cookies.set(this._name, value, {expires: this._expiration, domain: this._domain})
+  }
+
+  get () {
+    return Cookies.getJSON(this._name)
+  }
+
+  // delete () {
+  //
+  // }
+}
+
 class GdprCookieNotice {
   constructor (options) {
     this._categories = options.categories ? options.categories : []
-    // this._categorySettings = []
     this._locale = options.locale ? options.locale : 'hu'
     this._timeout = options.timeout ? options.timeout : 500
     this._domain = options.domain ? options.domain : window.location.hostname
@@ -16,25 +47,23 @@ class GdprCookieNotice {
     this._pluginPrefix = options.pluginPrefix ? options.pluginPrefix : 'gdpr-cookie-notice'
     this._implicit = options.implicit ? options.implicit : false
     this._cookiesAccepted = false
+    this._statementUrl = options.statementUrl ? options.statementUrl : '';
+    this._gdprCookie = new GdprCookie(this._namespace, this._expiration, this._domain)
 
-    // console.log('gdprCookieNotice', locales, locales.hu, template)
-    // console.log(this.getCurrentCookieSelection())
-
-    this._gdprCookiesEnabledEvt = new CustomEvent('gdprCookiesEnabled', {detail: this.getCurrentCookieSelection()})
-
-    if (!this.getCurrentCookieSelection()) {
+    if (!this._gdprCookie.isExists()) {
       this.showNotice()
 
       // if (this._implicit) {
       //   this.acceptOnScroll()
       // }
+    } else {
+      //   this.deleteCookies(this.getCurrentCookieSelection())
+      this._gdprCookiesEnabledEvt = new CustomEvent('gdprCookiesEnabled', {detail: this._gdprCookie.get()})
+      document.dispatchEvent(this._gdprCookiesEnabledEvt)
     }
-    // else {
-    //   this.deleteCookies(this.getCurrentCookieSelection())
-    //   document.dispatchEvent(this._gdprCookiesEnabledEvt)
-    // }
-
   }
+
+  //NOTICE =============================================================================================================
 
   showNotice () {
     this.buildNotice()
@@ -53,51 +82,132 @@ class GdprCookieNotice {
 
     settingsButton.addEventListener('click', (e) => {
       e.preventDefault()
-      // showModal()
+      this.showModal()
     })
 
     acceptButton.addEventListener('click', (e) => {
       e.preventDefault()
-      this.acceptCookies()
+      this.acceptCategories()
     })
   }
 
+  hideNotice () {
+    document.documentElement.classList.remove(this._pluginPrefix + '-loaded')
+  }
 
-  // deleteCookies(savedCookies) {
-  //   let currentCookieSelection = this.getCurrentCookieSelection()
-  //
-  //   if (!currentCookieSelection) { return }
-  //
+  //MODAL ==============================================================================================================
+
+  buildModal () {
+    // if (modalLoaded) {
+    //   return false
+    // }
+
+    // Load modal template
+    let modalHtml = this.getTemplateHtml('modal', [])
+
+    // Append modal into body
+    document.body.insertAdjacentHTML('beforeend', modalHtml)
+
+    // Get empty category list
+    let categoryList = document.querySelector('.' + this._pluginPrefix + '-modal-cookies')
+
+    //Load essential cookies
+    categoryList.innerHTML += this.getTemplateHtml('category', []/*'cookie_essential'*/)
+    let input = document.querySelector('.' + this._pluginPrefix + '-modal-cookie-input')
+    let label = document.querySelector('.' + this._pluginPrefix + '-modal-cookie-input-switch')
+    label.innerHTML = locales[this._locale]['always_on']
+    label.classList.add(this._pluginPrefix + '-modal-cookie-state')
+    label.classList.remove(this._pluginPrefix + '-modal-cookie-input-switch')
+    input.remove()
+
+    for (let catId in this._categories) {
+      categoryList.innerHTML += this.getTemplateHtml('category',
+        {
+          prefix: 'cookie_' + catId,
+          checked: this._isCategoriesCheckedByDefault || this._gdprCookie.get()[catId] ? 'checked="checked"' : ''
+        }
+      )
+    }
+
+    // Load click functions
+    this.setModalEventListeners()
+
+    // Make sure modal is only loaded once
+    // modalLoaded = true
+  }
+
+  showModal () {
+    this.buildModal()
+    document.documentElement.classList.add(this._pluginPrefix + '-show-modal')
+  }
+
+  hideModal () {
+    document.documentElement.classList.remove(this._pluginPrefix + '-show-modal')
+  }
+
+  // Click functions in the modal
+  setModalEventListeners () {
+    let closeButton = document.querySelectorAll('.' + this._pluginPrefix + '-modal-close')[0]
+    let statementButton = document.querySelectorAll('.' + this._pluginPrefix + '-modal-footer-item-statement')[0]
+    let categoryTitles = document.querySelectorAll('.' + this._pluginPrefix + '-modal-cookie-title')
+    let saveButton = document.querySelectorAll('.' + this._pluginPrefix + '-modal-footer-item-save')[0]
+
+    closeButton.addEventListener('click', (e) => {
+      this.hideModal()
+      return false
+    })
+
+    statementButton.addEventListener('click', (e) => {
+      e.preventDefault()
+      window.open(
+        config.statement,
+        '_blank'
+      )
+      //window.location.href = config.statement;
+    })
+
+    for (var i = 0; i < categoryTitles.length; i++) {
+      categoryTitles[i].addEventListener('click', function () {
+        this.parentNode.parentNode.classList.toggle('open')
+        return false
+      })
+    }
+
+    saveButton.addEventListener('click', function (e) {
+      e.preventDefault()
+      saveButton.classList.add('saved')
+      setTimeout(function () {
+        saveButton.classList.remove('saved')
+      }, 1000)
+      acceptCookies(true)
+      setTimeout(function () {
+        hideModal()
+      }, 1000)
+    })
+
+  }
+
+  //COOKIE =============================================================================================================
+
+  // deleteCookies (savedCookies) {
   //   for (let i in this._categories) {
-  //     if(Object.keys(currentCookieSelection).indexOf(i) >= 0) {
-  //         Cookies.remove(i);
+  //     if (Object.keys(savedCookies).indexOf(i) >= 0 || !savedCookies[i]) {
+  //       Cookies.remove(i)
   //     }
   //   }
   //
-  //   if(!savedCookies && !gdprCookies) {
-  //     showNotice();
+  //   if (!savedCookies) {
+  //     this.showNotice()
   //   } else {
-  //     hideNotice();
+  //     this.hideNotice()
   //   }
   // }
 
-  acceptCookies (save) {
-    let value = {
-      date: new Date(),
-      necessary: true,
-    }
-
-    for (let i in this._categories) {
-      console.log(i, this._categories[i])
-
-      if (this._categories[i].length > 0) {
-        value[i] = true
-      }
-    }
-
-    // categories.forEach(function (cat) {
-    //   value[cat] = true
-    // })
+  acceptCategories () {
+    // let value = {
+    //   date: new Date(),
+    //   necessary: true,
+    // }
 
     // If request was coming from the modal, check for the settings
     // if (save) {
@@ -106,13 +216,23 @@ class GdprCookieNotice {
     //   }
     // }
 
-    Cookies.set(this._namespace, value, {expires: this._expiration, domain: this._domain})
+    // Cookies.set(this._namespace, value, {expires: this._expiration, domain: this._domain})
     // this.deleteCookies(value)
 
     // Load marketing scripts that only works when cookies are accepted
-    this._gdprCookiesEnabledEvt = new CustomEvent('gdprCookiesEnabled', {detail: this.getCurrentCookieSelection()})
+    this._gdprCookie.set(
+      true,
+      !!this._categories.performance,
+      !!this._categories.analytics,
+      !!this._categories.marketing
+    )
+    this._gdprCookiesEnabledEvt = new CustomEvent('gdprCookiesEnabled', {detail: this._gdprCookie.get()})
     document.dispatchEvent(this._gdprCookiesEnabledEvt)
   }
+
+  // getCurrentCookieSelection () {
+  //   return Cookies.getJSON(this._namespace)
+  // }
 
   getTemplateHtml (templateKey, data) {
     let templateStr = template[templateKey]
@@ -132,64 +252,15 @@ class GdprCookieNotice {
     }
   }
 
-  getCurrentCookieSelection () {
-    return Cookies.getJSON(this._namespace)
+  //GETTER - SETTER ====================================================================================================
+
+  set statementUrl (statementUrl) {
+    this._statementUrl = statementUrl
   }
 
-  // deleteCookies (savedCookies) {
-  // let notAllEnabled = false
-  //
-  // for (let i = 0; i < this._categories.length; i++) {
-  //   if (config[categories[i]] && !savedCookies[categories[i]]) {
-  //     for (var ii = 0; ii < config[categories[i]].length; ii++) {
-  //       gdprCookies.remove(config[categories[i]][ii])
-  //       notAllEnabled = true
-  //     }
-  //   }
-  // }
-  // if (!savedCookies && !gdprCookies) {
-  //   showNotice()
-  // } else {
-  //   hideNotice()
-  // }
-  // }
-
-  // acceptOnScroll () {
-  //   window.addEventListener('scroll', function _listener () {
-  //     if (this.amountScrolled()) {
-  //       this.acceptCookies()
-  //       window.removeEventListener('click', _listener)
-  //     }
-  //   })
-  // }
-
-  // acceptCookies (save) {
-  //
-  // }
-
-  // amountScrolled () {
-  //   let winheight = window.innerHeight || (document.documentElement || document.body).clientHeight
-  //   let docheight = this.getDocHeight()
-  //   let scrollTop = window.pageYOffset || (document.documentElement || document.body.parentNode || document.body).scrollTop
-  //   let trackLength = docheight - winheight
-  //   let pctScrolled = Math.floor(scrollTop / trackLength * 100) // gets percentage scrolled (ie: 80 or NaN if tracklength == 0)
-  //   if (pctScrolled > 25 && !this._cookiesAccepted) {
-  //     this._cookiesAccepted = true
-  //     return true
-  //   } else {
-  //     return false
-  //   }
-  // }
-
-  // getDocHeight () {
-  //   return Math.max(
-  //     document.body.scrollHeight, document.documentElement.scrollHeight,
-  //     document.body.offsetHeight, document.documentElement.offsetHeight,
-  //     document.body.clientHeight, document.documentElement.clientHeight
-  //   )
-  // }
-
-  //GETTER - SETTER
+  get statementUrl () {
+    return this._statementUrl
+  }
 
   set implicit (isImplicit) {
     this._implicit = isImplicit
