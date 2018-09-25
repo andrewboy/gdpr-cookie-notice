@@ -31,10 +31,14 @@ class GdprCookieNotice {
     }
 
     // Settings button on the page somewhere
-    let globalSettingsButton = document.querySelectorAll('.' + this._pluginPrefix + '-settings-button')
-    if (globalSettingsButton) {
-      for (let i in globalSettingsButton) {
-        globalSettingsButton[i].addEventListener('click', (e) => {
+    let globalSettingsButtons = document.querySelectorAll('.' + this._pluginPrefix + '-settings-button')
+
+    console.log(globalSettingsButtons)
+
+    if (globalSettingsButtons) {
+      for (let i in globalSettingsButtons) {
+        console.log(i, globalSettingsButtons[i])
+        globalSettingsButtons[i].addEventListener('click', (e) => {
           e.preventDefault()
           this.showModal()
         })

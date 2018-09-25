@@ -58,10 +58,14 @@ var GdprCookieNotice = function () {
     }
 
     // Settings button on the page somewhere
-    var globalSettingsButton = document.querySelectorAll('.' + this._pluginPrefix + '-settings-button');
-    if (globalSettingsButton) {
-      for (var i in globalSettingsButton) {
-        globalSettingsButton[i].addEventListener('click', function (e) {
+    var globalSettingsButtons = document.querySelectorAll('.' + this._pluginPrefix + '-settings-button');
+
+    console.log(globalSettingsButtons);
+
+    if (globalSettingsButtons) {
+      for (var i in globalSettingsButtons) {
+        console.log(i, globalSettingsButtons[i]);
+        globalSettingsButtons[i].addEventListener('click', function (e) {
           e.preventDefault();
           _this.showModal();
         });
