@@ -127,6 +127,11 @@ class GdprCookieNotice {
     // Get empty category list
     let categoryList = document.querySelector('.' + this._pluginPrefix + '-modal-cookies')
 
+    console.log(locales[this._locale], Object.assign({}, locales[this._locale], {
+      prefix: 'cookie_essential',
+      checked: 'checked="checked"'
+    }))
+
     //Load essential cookies
     categoryList.innerHTML += this.getTemplateHtml('category', Object.assign({}, locales[this._locale], {
       prefix: 'cookie_essential',

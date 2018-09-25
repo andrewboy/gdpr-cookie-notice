@@ -176,6 +176,11 @@ var GdprCookieNotice = function () {
       // Get empty category list
       var categoryList = document.querySelector('.' + this._pluginPrefix + '-modal-cookies');
 
+      console.log(locales[this._locale], Object.assign({}, locales[this._locale], {
+        prefix: 'cookie_essential',
+        checked: 'checked="checked"'
+      }));
+
       //Load essential cookies
       categoryList.innerHTML += this.getTemplateHtml('category', Object.assign({}, locales[this._locale], {
         prefix: 'cookie_essential',

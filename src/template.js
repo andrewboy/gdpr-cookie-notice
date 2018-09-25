@@ -17,7 +17,7 @@ export default {
   modal: `<div class="gdpr-cookie-notice-modal">
     <div class="gdpr-cookie-notice-modal-content">
       <div class="gdpr-cookie-notice-modal-header">
-        <h2 class="gdpr-cookie-notice-modal-title">{{settings}</h2>
+        <h2 class="gdpr-cookie-notice-modal-title">{{settings}}</h2>
         <button type="button" class="gdpr-cookie-notice-modal-close"></button>
       </div>
       <ul class="gdpr-cookie-notice-modal-cookies"></ul>
