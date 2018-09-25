@@ -411,8 +411,8 @@ var GdprCookieNotice = function () {
     value: function buildNotice() {
       var _this2 = this;
 
-      console.log(this.getTemplateHtml('bar', _locales__WEBPACK_IMPORTED_MODULE_1__[this._locale]));
-      document.body.insertAdjacentHTML('beforeend', this.getTemplateHtml('bar', _locales__WEBPACK_IMPORTED_MODULE_1__[this._locale]));
+      console.log(this.getTemplateHtml('bar', _locales__WEBPACK_IMPORTED_MODULE_1__[this._locale]['bar']));
+      document.body.insertAdjacentHTML('beforeend', this.getTemplateHtml('bar', _locales__WEBPACK_IMPORTED_MODULE_1__[this._locale]['bar']));
       var settingsButton = document.querySelectorAll('.' + this._pluginPrefix + '-nav-item-settings')[0];
       var acceptButton = document.querySelectorAll('.' + this._pluginPrefix + '-nav-item-accept')[0];
 
@@ -442,7 +442,7 @@ var GdprCookieNotice = function () {
       // }
 
       // Load modal template
-      var modalHtml = this.getTemplateHtml('modal', []);
+      var modalHtml = this.getTemplateHtml('modal', Object.assign({}, _locales__WEBPACK_IMPORTED_MODULE_1__[this._locale]['modal']));
 
       // Append modal into body
       document.body.insertAdjacentHTML('beforeend', modalHtml);
@@ -451,23 +451,19 @@ var GdprCookieNotice = function () {
       var categoryList = document.querySelector('.' + this._pluginPrefix + '-modal-cookies');
 
       //Load essential cookies
-      categoryList.innerHTML += this.getTemplateHtml('category', Object.assign({}, {
-        title: _locales__WEBPACK_IMPORTED_MODULE_1__[this._locale]['categories']['essential']['title'],
-        desc: _locales__WEBPACK_IMPORTED_MODULE_1__[this._locale]['categories']['essential']['desc'],
+      categoryList.innerHTML += this.getTemplateHtml('category', Object.assign({}, _locales__WEBPACK_IMPORTED_MODULE_1__[this._locale]['category']['essential'], {
         prefix: 'cookie_essential',
         checked: 'checked="checked"'
       }));
       var input = document.querySelector('.' + this._pluginPrefix + '-modal-cookie-input');
       var label = document.querySelector('.' + this._pluginPrefix + '-modal-cookie-input-switch');
-      label.innerHTML = _locales__WEBPACK_IMPORTED_MODULE_1__[this._locale]['always_on'];
+      label.innerHTML = _locales__WEBPACK_IMPORTED_MODULE_1__[this._locale]['category']['essential']['always_on'];
       label.classList.add(this._pluginPrefix + '-modal-cookie-state');
       label.classList.remove(this._pluginPrefix + '-modal-cookie-input-switch');
       input.remove();
 
       for (var catId in this._categories) {
-        categoryList.innerHTML += this.getTemplateHtml('category', Object.assign({}, {
-          title: _locales__WEBPACK_IMPORTED_MODULE_1__[this._locale]['categories'][catId]['title'],
-          desc: _locales__WEBPACK_IMPORTED_MODULE_1__[this._locale]['categories'][catId]['desc'],
+        categoryList.innerHTML += this.getTemplateHtml('category', Object.assign({}, _locales__WEBPACK_IMPORTED_MODULE_1__[this._locale]['category'][catId], {
           prefix: 'cookie_' + catId,
           checked: this._isCategoriesCheckedByDefault || this._gdprCookie.isExists() && this._gdprCookie.get()[catId] ? 'checked="checked"' : ''
         }));
@@ -716,16 +712,21 @@ var GdprCookieNotice = function () {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "hu", function() { return hu; });
 var hu = {
-  description: 'Ez a weboldal s\xFCtiket(cookie-kat) haszn\xE1l az\xE9rt, hogy a weboldal m\u0171k\xF6dj\xF6n, statisztikai adatokat \n  gy\u0171jts\xF6n \xE9s jobb felhaszn\xE1li\xF3 \xE9lm\xE9nyt ny\xFAjtson. A S\xFCti be\xE1ll\xEDt\xE1sok gombra kattintva t\xF6bb inform\xE1ci\xF3t is megtudhat \n  err\u0151l. Az oldal tov\xE1bbi haszn\xE1lat\xE1val beleegyezik a s\xFCtik haszn\xE1lat\xE1ba.',
-  settings: 'Süti beállítások',
-  accept: 'Elfogadom',
-  statement: 'Süti nyilatkozatunk',
-  save: 'Mentés',
-  always_on: 'Mindig betölt',
-  categories: {
+  modal: {
+    settings: 'Süti beállítások',
+    statement: 'Süti nyilatkozatunk',
+    save: 'Mentés'
+  },
+  bar: {
+    description: 'Ez a weboldal s\xFCtiket(cookie-kat) haszn\xE1l az\xE9rt, hogy a weboldal m\u0171k\xF6dj\xF6n, statisztikai adatokat \n    gy\u0171jts\xF6n \xE9s jobb felhaszn\xE1li\xF3 \xE9lm\xE9nyt ny\xFAjtson. A S\xFCti be\xE1ll\xEDt\xE1sok gombra kattintva t\xF6bb inform\xE1ci\xF3t is megtudhat \n    err\u0151l. Az oldal tov\xE1bbi haszn\xE1lat\xE1val beleegyezik a s\xFCtik haszn\xE1lat\xE1ba.',
+    accept: 'Elfogadom',
+    settings: 'Süti beállítások'
+  },
+  category: {
     essential: {
       title: 'Szükséges sütik',
-      desc: 'Ezek a weboldal megfelelő megjelenéséhez szükséges sütik, amelyek nélkül nem működne a weboldal.'
+      desc: 'Ezek a weboldal megfelelő megjelenéséhez szükséges sütik, amelyek nélkül nem működne a weboldal.',
+      always_on: 'Mindig betölt'
     },
     performance: {
       title: 'Teljesítmény sütik',

@@ -137,8 +137,8 @@ var GdprCookieNotice = function () {
     value: function buildNotice() {
       var _this2 = this;
 
-      console.log(this.getTemplateHtml('bar', locales[this._locale]));
-      document.body.insertAdjacentHTML('beforeend', this.getTemplateHtml('bar', locales[this._locale]));
+      console.log(this.getTemplateHtml('bar', locales[this._locale]['bar']));
+      document.body.insertAdjacentHTML('beforeend', this.getTemplateHtml('bar', locales[this._locale]['bar']));
       var settingsButton = document.querySelectorAll('.' + this._pluginPrefix + '-nav-item-settings')[0];
       var acceptButton = document.querySelectorAll('.' + this._pluginPrefix + '-nav-item-accept')[0];
 
@@ -168,7 +168,7 @@ var GdprCookieNotice = function () {
       // }
 
       // Load modal template
-      var modalHtml = this.getTemplateHtml('modal', []);
+      var modalHtml = this.getTemplateHtml('modal', Object.assign({}, locales[this._locale]['modal']));
 
       // Append modal into body
       document.body.insertAdjacentHTML('beforeend', modalHtml);
@@ -177,23 +177,19 @@ var GdprCookieNotice = function () {
       var categoryList = document.querySelector('.' + this._pluginPrefix + '-modal-cookies');
 
       //Load essential cookies
-      categoryList.innerHTML += this.getTemplateHtml('category', Object.assign({}, {
-        title: locales[this._locale]['categories']['essential']['title'],
-        desc: locales[this._locale]['categories']['essential']['desc'],
+      categoryList.innerHTML += this.getTemplateHtml('category', Object.assign({}, locales[this._locale]['category']['essential'], {
         prefix: 'cookie_essential',
         checked: 'checked="checked"'
       }));
       var input = document.querySelector('.' + this._pluginPrefix + '-modal-cookie-input');
       var label = document.querySelector('.' + this._pluginPrefix + '-modal-cookie-input-switch');
-      label.innerHTML = locales[this._locale]['always_on'];
+      label.innerHTML = locales[this._locale]['category']['essential']['always_on'];
       label.classList.add(this._pluginPrefix + '-modal-cookie-state');
       label.classList.remove(this._pluginPrefix + '-modal-cookie-input-switch');
       input.remove();
 
       for (var catId in this._categories) {
-        categoryList.innerHTML += this.getTemplateHtml('category', Object.assign({}, {
-          title: locales[this._locale]['categories'][catId]['title'],
-          desc: locales[this._locale]['categories'][catId]['desc'],
+        categoryList.innerHTML += this.getTemplateHtml('category', Object.assign({}, locales[this._locale]['category'][catId], {
           prefix: 'cookie_' + catId,
           checked: this._isCategoriesCheckedByDefault || this._gdprCookie.isExists() && this._gdprCookie.get()[catId] ? 'checked="checked"' : ''
         }));

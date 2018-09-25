@@ -4,16 +4,21 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 var hu = {
-  description: 'Ez a weboldal s\xFCtiket(cookie-kat) haszn\xE1l az\xE9rt, hogy a weboldal m\u0171k\xF6dj\xF6n, statisztikai adatokat \n  gy\u0171jts\xF6n \xE9s jobb felhaszn\xE1li\xF3 \xE9lm\xE9nyt ny\xFAjtson. A S\xFCti be\xE1ll\xEDt\xE1sok gombra kattintva t\xF6bb inform\xE1ci\xF3t is megtudhat \n  err\u0151l. Az oldal tov\xE1bbi haszn\xE1lat\xE1val beleegyezik a s\xFCtik haszn\xE1lat\xE1ba.',
-  settings: 'Süti beállítások',
-  accept: 'Elfogadom',
-  statement: 'Süti nyilatkozatunk',
-  save: 'Mentés',
-  always_on: 'Mindig betölt',
-  categories: {
+  modal: {
+    settings: 'Süti beállítások',
+    statement: 'Süti nyilatkozatunk',
+    save: 'Mentés'
+  },
+  bar: {
+    description: 'Ez a weboldal s\xFCtiket(cookie-kat) haszn\xE1l az\xE9rt, hogy a weboldal m\u0171k\xF6dj\xF6n, statisztikai adatokat \n    gy\u0171jts\xF6n \xE9s jobb felhaszn\xE1li\xF3 \xE9lm\xE9nyt ny\xFAjtson. A S\xFCti be\xE1ll\xEDt\xE1sok gombra kattintva t\xF6bb inform\xE1ci\xF3t is megtudhat \n    err\u0151l. Az oldal tov\xE1bbi haszn\xE1lat\xE1val beleegyezik a s\xFCtik haszn\xE1lat\xE1ba.',
+    accept: 'Elfogadom',
+    settings: 'Süti beállítások'
+  },
+  category: {
     essential: {
       title: 'Szükséges sütik',
-      desc: 'Ezek a weboldal megfelelő megjelenéséhez szükséges sütik, amelyek nélkül nem működne a weboldal.'
+      desc: 'Ezek a weboldal megfelelő megjelenéséhez szükséges sütik, amelyek nélkül nem működne a weboldal.',
+      always_on: 'Mindig betölt'
     },
     performance: {
       title: 'Teljesítmény sütik',

@@ -63,7 +63,7 @@ class GdprCookieNotice {
     this._pluginPrefix = options.pluginPrefix ? options.pluginPrefix : 'gdpr-cookie-notice'
     this._implicit = options.implicit ? options.implicit : false
     this._cookiesAccepted = false
-    this._statementUrl = options.statementUrl ? options.statementUrl : '';
+    this._statementUrl = options.statementUrl ? options.statementUrl : ''
     this._gdprCookie = new GdprCookie(this._namespace, this._expiration, this._domain)
 
     if (!this._gdprCookie.isExists()) {
@@ -91,8 +91,8 @@ class GdprCookieNotice {
   }
 
   buildNotice () {
-    console.log(this.getTemplateHtml('bar', locales[this._locale]))
-    document.body.insertAdjacentHTML('beforeend', this.getTemplateHtml('bar', locales[this._locale]))
+    console.log(this.getTemplateHtml('bar', locales[this._locale]['bar']))
+    document.body.insertAdjacentHTML('beforeend', this.getTemplateHtml('bar', locales[this._locale]['bar']))
     let settingsButton = document.querySelectorAll('.' + this._pluginPrefix + '-nav-item-settings')[0]
     let acceptButton = document.querySelectorAll('.' + this._pluginPrefix + '-nav-item-accept')[0]
 
@@ -119,7 +119,7 @@ class GdprCookieNotice {
     // }
 
     // Load modal template
-    let modalHtml = this.getTemplateHtml('modal', [])
+    let modalHtml = this.getTemplateHtml('modal', Object.assign({}, locales[this._locale]['modal']))
 
     // Append modal into body
     document.body.insertAdjacentHTML('beforeend', modalHtml)
@@ -128,30 +128,38 @@ class GdprCookieNotice {
     let categoryList = document.querySelector('.' + this._pluginPrefix + '-modal-cookies')
 
     //Load essential cookies
-    categoryList.innerHTML += this.getTemplateHtml('category', Object.assign({}, {
-      title: locales[this._locale]['categories']['essential']['title'],
-      desc: locales[this._locale]['categories']['essential']['desc'],
-      prefix: 'cookie_essential',
-      checked: 'checked="checked"'
-    }))
+    categoryList.innerHTML += this.getTemplateHtml(
+      'category',
+      Object.assign(
+        {},
+        locales[this._locale]['category']['essential'],
+        {
+          prefix: 'cookie_essential',
+          checked: 'checked="checked"'
+        }
+      )
+    )
     let input = document.querySelector('.' + this._pluginPrefix + '-modal-cookie-input')
     let label = document.querySelector('.' + this._pluginPrefix + '-modal-cookie-input-switch')
-    label.innerHTML = locales[this._locale]['always_on']
+    label.innerHTML = locales[this._locale]['category']['essential']['always_on']
     label.classList.add(this._pluginPrefix + '-modal-cookie-state')
     label.classList.remove(this._pluginPrefix + '-modal-cookie-input-switch')
     input.remove()
 
     for (let catId in this._categories) {
-      categoryList.innerHTML += this.getTemplateHtml('category',
-        Object.assign({}, {
-          title: locales[this._locale]['categories'][catId]['title'],
-          desc: locales[this._locale]['categories'][catId]['desc'],
-          prefix: 'cookie_' + catId,
-          checked: this._isCategoriesCheckedByDefault || (this._gdprCookie.isExists() && this._gdprCookie.get()[catId])
-            ? 'checked="checked"'
-            : ''
-        }
-      ))
+      categoryList.innerHTML += this.getTemplateHtml(
+        'category',
+        Object.assign(
+          {},
+          locales[this._locale]['category'][catId],
+          {
+            prefix: 'cookie_' + catId,
+            checked: this._isCategoriesCheckedByDefault || (this._gdprCookie.isExists() && this._gdprCookie.get()[catId])
+              ? 'checked="checked"'
+              : ''
+          }
+        )
+      )
     }
 
     // Load click functions
