@@ -128,10 +128,10 @@ class GdprCookieNotice {
     let categoryList = document.querySelector('.' + this._pluginPrefix + '-modal-cookies')
 
     //Load essential cookies
-    categoryList.innerHTML += this.getTemplateHtml('category', {
+    categoryList.innerHTML += this.getTemplateHtml('category', Object.assign({}, locales[this._locale], {
       prefix: 'cookie_essential',
       checked: 'checked="checked"'
-    })
+    }))
     let input = document.querySelector('.' + this._pluginPrefix + '-modal-cookie-input')
     let label = document.querySelector('.' + this._pluginPrefix + '-modal-cookie-input-switch')
     label.innerHTML = locales[this._locale]['always_on']
@@ -141,13 +141,13 @@ class GdprCookieNotice {
 
     for (let catId in this._categories) {
       categoryList.innerHTML += this.getTemplateHtml('category',
-        {
+        Object.assign({}, locales[this._locale], {
           prefix: 'cookie_' + catId,
           checked: this._isCategoriesCheckedByDefault || (this._gdprCookie.isExists() && this._gdprCookie.get()[catId])
             ? 'checked="checked"'
             : ''
         }
-      )
+      ))
     }
 
     // Load click functions
