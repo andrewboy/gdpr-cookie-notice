@@ -17,6 +17,8 @@ class GdprCookieNotice {
     this._cookiesAccepted = false
     this._statementUrl = options.statementUrl ? options.statementUrl : ''
     this._gdprCookie = new GdprCookie(this._namespace, this._expiration, this._domain)
+    this._isNoticeLoaded = false
+    this._isModalLoaded = false
 
     if (!this._gdprCookie.isExists()) {
       this.showNotice()
@@ -58,6 +60,7 @@ class GdprCookieNotice {
   }
 
   buildNotice () {
+    if (this._isNoticeLoaded) { return }
     console.log(this.getTemplateHtml('bar', locales[this._locale]['bar']))
     document.body.insertAdjacentHTML('beforeend', this.getTemplateHtml('bar', locales[this._locale]['bar']))
     let settingsButton = document.querySelectorAll('.' + this._pluginPrefix + '-nav-item-settings')[0]
@@ -77,6 +80,8 @@ class GdprCookieNotice {
         !!this._categories.marketing,
       )
     })
+
+    this._isNoticeLoaded = true
   }
 
   hideNotice () {
@@ -86,9 +91,9 @@ class GdprCookieNotice {
   //MODAL ==============================================================================================================
 
   buildModal () {
-    // if (modalLoaded) {
-    //   return false
-    // }
+    if (this._isModalLoaded) {
+      return
+    }
 
     // Load modal template
     let modalHtml = this.getTemplateHtml('modal', Object.assign({}, locales[this._locale]['modal']))
@@ -138,7 +143,7 @@ class GdprCookieNotice {
     this.setModalEventListeners()
 
     // Make sure modal is only loaded once
-    // modalLoaded = true
+    this._isModalLoaded = true
   }
 
   showModal () {

@@ -400,6 +400,8 @@ var GdprCookieNotice = function () {
     this._cookiesAccepted = false;
     this._statementUrl = options.statementUrl ? options.statementUrl : '';
     this._gdprCookie = new _GdprCookie__WEBPACK_IMPORTED_MODULE_3__["default"](this._namespace, this._expiration, this._domain);
+    this._isNoticeLoaded = false;
+    this._isModalLoaded = false;
 
     if (!this._gdprCookie.isExists()) {
       this.showNotice();
@@ -448,6 +450,9 @@ var GdprCookieNotice = function () {
     value: function buildNotice() {
       var _this3 = this;
 
+      if (this._isNoticeLoaded) {
+        return;
+      }
       console.log(this.getTemplateHtml('bar', _locales__WEBPACK_IMPORTED_MODULE_1__[this._locale]['bar']));
       document.body.insertAdjacentHTML('beforeend', this.getTemplateHtml('bar', _locales__WEBPACK_IMPORTED_MODULE_1__[this._locale]['bar']));
       var settingsButton = document.querySelectorAll('.' + this._pluginPrefix + '-nav-item-settings')[0];
@@ -463,6 +468,8 @@ var GdprCookieNotice = function () {
 
         _this3.acceptCategories(!!_this3._categories.performance, !!_this3._categories.analytics, !!_this3._categories.marketing);
       });
+
+      this._isNoticeLoaded = true;
     }
   }, {
     key: 'hideNotice',
@@ -475,9 +482,9 @@ var GdprCookieNotice = function () {
   }, {
     key: 'buildModal',
     value: function buildModal() {
-      // if (modalLoaded) {
-      //   return false
-      // }
+      if (this._isModalLoaded) {
+        return;
+      }
 
       // Load modal template
       var modalHtml = this.getTemplateHtml('modal', Object.assign({}, _locales__WEBPACK_IMPORTED_MODULE_1__[this._locale]['modal']));
@@ -511,7 +518,7 @@ var GdprCookieNotice = function () {
       this.setModalEventListeners();
 
       // Make sure modal is only loaded once
-      // modalLoaded = true
+      this._isModalLoaded = true;
     }
   }, {
     key: 'showModal',
