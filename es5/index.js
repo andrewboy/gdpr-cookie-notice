@@ -176,13 +176,10 @@ var GdprCookieNotice = function () {
       // Get empty category list
       var categoryList = document.querySelector('.' + this._pluginPrefix + '-modal-cookies');
 
-      console.log(locales[this._locale], Object.assign({}, locales[this._locale], {
-        prefix: 'cookie_essential',
-        checked: 'checked="checked"'
-      }));
-
       //Load essential cookies
-      categoryList.innerHTML += this.getTemplateHtml('category', Object.assign({}, locales[this._locale], {
+      categoryList.innerHTML += this.getTemplateHtml('category', Object.assign({}, {
+        title: locales[this._locale]['categories']['essential']['title'],
+        desc: locales[this._locale]['categories']['essential']['desc'],
         prefix: 'cookie_essential',
         checked: 'checked="checked"'
       }));
@@ -194,7 +191,9 @@ var GdprCookieNotice = function () {
       input.remove();
 
       for (var catId in this._categories) {
-        categoryList.innerHTML += this.getTemplateHtml('category', Object.assign({}, locales[this._locale], {
+        categoryList.innerHTML += this.getTemplateHtml('category', Object.assign({}, {
+          title: locales[this._locale]['categories'][catId]['title'],
+          desc: locales[this._locale]['categories'][catId]['desc'],
           prefix: 'cookie_' + catId,
           checked: this._isCategoriesCheckedByDefault || this._gdprCookie.isExists() && this._gdprCookie.get()[catId] ? 'checked="checked"' : ''
         }));
