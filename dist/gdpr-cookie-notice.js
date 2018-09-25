@@ -276,43 +276,36 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 
 /***/ }),
 
-/***/ "./src/index.js":
-/*!**********************!*\
-  !*** ./src/index.js ***!
-  \**********************/
+/***/ "./src/GdprCookie.js":
+/*!***************************!*\
+  !*** ./src/GdprCookie.js ***!
+  \***************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _template__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./template */ "./src/template.js");
-/* harmony import */ var _locales__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./locales */ "./src/locales/index.js");
-/* harmony import */ var js_cookie__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! js-cookie */ "./node_modules/js-cookie/src/js.cookie.js");
-/* harmony import */ var js_cookie__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(js_cookie__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _sass_gdpr_cookie_notice_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./sass/gdpr-cookie-notice.scss */ "./src/sass/gdpr-cookie-notice.scss");
-/* harmony import */ var _sass_gdpr_cookie_notice_scss__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_sass_gdpr_cookie_notice_scss__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var js_cookie__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! js-cookie */ "./node_modules/js-cookie/src/js.cookie.js");
+/* harmony import */ var js_cookie__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(js_cookie__WEBPACK_IMPORTED_MODULE_0__);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 
 
-
-
-
-var GdprCookie = function () {
-  function GdprCookie(name, expiration, domain) {
-    _classCallCheck(this, GdprCookie);
+var _class = function () {
+  function _class(name, expiration, domain) {
+    _classCallCheck(this, _class);
 
     this._name = name;
     this._expiration = expiration;
     this._domain = domain;
   }
 
-  _createClass(GdprCookie, [{
+  _createClass(_class, [{
     key: 'isExists',
     value: function isExists() {
-      return !!js_cookie__WEBPACK_IMPORTED_MODULE_2___default.a.getJSON(this._name);
+      return !!js_cookie__WEBPACK_IMPORTED_MODULE_0___default.a.getJSON(this._name);
     }
   }, {
     key: 'set',
@@ -325,32 +318,32 @@ var GdprCookie = function () {
         marketing: isMarketingAccepted
       };
 
-      js_cookie__WEBPACK_IMPORTED_MODULE_2___default.a.set(this._name, value, { expires: this._expiration, domain: this._domain });
+      js_cookie__WEBPACK_IMPORTED_MODULE_0___default.a.set(this._name, value, { expires: this._expiration, domain: this._domain });
     }
   }, {
     key: 'isNecessaryAccepted',
     value: function isNecessaryAccepted() {
-      return js_cookie__WEBPACK_IMPORTED_MODULE_2___default.a.getJSON(this._name)['necessary'];
+      return js_cookie__WEBPACK_IMPORTED_MODULE_0___default.a.getJSON(this._name)['necessary'];
     }
   }, {
     key: 'isAnalyticsAccepted',
     value: function isAnalyticsAccepted() {
-      return js_cookie__WEBPACK_IMPORTED_MODULE_2___default.a.getJSON(this._name)['analytics'];
+      return js_cookie__WEBPACK_IMPORTED_MODULE_0___default.a.getJSON(this._name)['analytics'];
     }
   }, {
     key: 'isPerformanceAccepted',
     value: function isPerformanceAccepted() {
-      return js_cookie__WEBPACK_IMPORTED_MODULE_2___default.a.getJSON(this._name)['performance'];
+      return js_cookie__WEBPACK_IMPORTED_MODULE_0___default.a.getJSON(this._name)['performance'];
     }
   }, {
     key: 'isMarketingAccepted',
     value: function isMarketingAccepted() {
-      return js_cookie__WEBPACK_IMPORTED_MODULE_2___default.a.getJSON(this._name)['marketing'];
+      return js_cookie__WEBPACK_IMPORTED_MODULE_0___default.a.getJSON(this._name)['marketing'];
     }
   }, {
     key: 'get',
     value: function get() {
-      return js_cookie__WEBPACK_IMPORTED_MODULE_2___default.a.getJSON(this._name);
+      return js_cookie__WEBPACK_IMPORTED_MODULE_0___default.a.getJSON(this._name);
     }
 
     // delete () {
@@ -359,8 +352,35 @@ var GdprCookie = function () {
 
   }]);
 
-  return GdprCookie;
+  return _class;
 }();
+
+/* harmony default export */ __webpack_exports__["default"] = (_class);
+
+/***/ }),
+
+/***/ "./src/index.js":
+/*!**********************!*\
+  !*** ./src/index.js ***!
+  \**********************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _template__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./template */ "./src/template.js");
+/* harmony import */ var _locales__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./locales */ "./src/locales/index.js");
+/* harmony import */ var _sass_gdpr_cookie_notice_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./sass/gdpr-cookie-notice.scss */ "./src/sass/gdpr-cookie-notice.scss");
+/* harmony import */ var _sass_gdpr_cookie_notice_scss__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_sass_gdpr_cookie_notice_scss__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _GdprCookie__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./GdprCookie */ "./src/GdprCookie.js");
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+
+
+
+
 
 var GdprCookieNotice = function () {
   function GdprCookieNotice(options) {
@@ -377,7 +397,7 @@ var GdprCookieNotice = function () {
     this._implicit = options.implicit ? options.implicit : false;
     this._cookiesAccepted = false;
     this._statementUrl = options.statementUrl ? options.statementUrl : '';
-    this._gdprCookie = new GdprCookie(this._namespace, this._expiration, this._domain);
+    this._gdprCookie = new _GdprCookie__WEBPACK_IMPORTED_MODULE_3__["default"](this._namespace, this._expiration, this._domain);
 
     if (!this._gdprCookie.isExists()) {
       this.showNotice();
@@ -423,7 +443,14 @@ var GdprCookieNotice = function () {
 
       acceptButton.addEventListener('click', function (e) {
         e.preventDefault();
-        _this2.acceptCategories();
+
+        var categorySettings = {};
+
+        for (var i in _this2._categories) {
+          categorySettings[i] = true;
+        }
+
+        _this2.acceptCategories(categorySettings);
       });
     }
   }, {
@@ -522,7 +549,14 @@ var GdprCookieNotice = function () {
         window.setTimeout(function () {
           saveButton.classList.remove('saved');
         }, 1000);
-        _this3.acceptCategories();
+
+        var categorySettings = {};
+
+        for (var catId in _this3._categories) {
+          categorySettings[catId] = document.getElementById(_this3._pluginPrefix + '-cookie_' + catId).checked;
+        }
+
+        _this3.acceptCategories(categorySettings);
         window.setTimeout(function () {
           _this3.hideModal();
         }, 1000);
@@ -547,7 +581,9 @@ var GdprCookieNotice = function () {
 
   }, {
     key: 'acceptCategories',
-    value: function acceptCategories() {
+    value: function acceptCategories(categorySettings) {
+      console.log('categorySettings', categorySettings);
+
       // let value = {
       //   date: new Date(),
       //   necessary: true,
@@ -564,7 +600,7 @@ var GdprCookieNotice = function () {
       // this.deleteCookies(value)
 
       // Load marketing scripts that only works when cookies are accepted
-      this._gdprCookie.set(true, !!this._categories.performance, !!this._categories.analytics, !!this._categories.marketing);
+      this._gdprCookie.set(true, !!categorySettings.performance, !!categorySettings.analytics, !!categorySettings.marketing);
       this._gdprCookiesEnabledEvt = new CustomEvent('gdprCookiesEnabled', { detail: this._gdprCookie.get() });
       document.dispatchEvent(this._gdprCookiesEnabledEvt);
 

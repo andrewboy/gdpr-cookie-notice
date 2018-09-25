@@ -14,79 +14,17 @@ var _locales = require('./locales');
 
 var locales = _interopRequireWildcard(_locales);
 
-var _jsCookie = require('js-cookie');
-
-var _jsCookie2 = _interopRequireDefault(_jsCookie);
-
 require('./sass/gdpr-cookie-notice.scss');
+
+var _GdprCookie = require('./GdprCookie');
+
+var _GdprCookie2 = _interopRequireDefault(_GdprCookie);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var GdprCookie = function () {
-  function GdprCookie(name, expiration, domain) {
-    _classCallCheck(this, GdprCookie);
-
-    this._name = name;
-    this._expiration = expiration;
-    this._domain = domain;
-  }
-
-  _createClass(GdprCookie, [{
-    key: 'isExists',
-    value: function isExists() {
-      return !!_jsCookie2.default.getJSON(this._name);
-    }
-  }, {
-    key: 'set',
-    value: function set(isNecessaryAccepted, isAnalyticsAccepted, isPerformanceAccepted, isMarketingAccepted) {
-      var value = {
-        date: new Date(),
-        necessary: isNecessaryAccepted,
-        performance: isPerformanceAccepted,
-        analytics: isAnalyticsAccepted,
-        marketing: isMarketingAccepted
-      };
-
-      _jsCookie2.default.set(this._name, value, { expires: this._expiration, domain: this._domain });
-    }
-  }, {
-    key: 'isNecessaryAccepted',
-    value: function isNecessaryAccepted() {
-      return _jsCookie2.default.getJSON(this._name)['necessary'];
-    }
-  }, {
-    key: 'isAnalyticsAccepted',
-    value: function isAnalyticsAccepted() {
-      return _jsCookie2.default.getJSON(this._name)['analytics'];
-    }
-  }, {
-    key: 'isPerformanceAccepted',
-    value: function isPerformanceAccepted() {
-      return _jsCookie2.default.getJSON(this._name)['performance'];
-    }
-  }, {
-    key: 'isMarketingAccepted',
-    value: function isMarketingAccepted() {
-      return _jsCookie2.default.getJSON(this._name)['marketing'];
-    }
-  }, {
-    key: 'get',
-    value: function get() {
-      return _jsCookie2.default.getJSON(this._name);
-    }
-
-    // delete () {
-    //
-    // }
-
-  }]);
-
-  return GdprCookie;
-}();
 
 var GdprCookieNotice = function () {
   function GdprCookieNotice(options) {
@@ -103,7 +41,7 @@ var GdprCookieNotice = function () {
     this._implicit = options.implicit ? options.implicit : false;
     this._cookiesAccepted = false;
     this._statementUrl = options.statementUrl ? options.statementUrl : '';
-    this._gdprCookie = new GdprCookie(this._namespace, this._expiration, this._domain);
+    this._gdprCookie = new _GdprCookie2.default(this._namespace, this._expiration, this._domain);
 
     if (!this._gdprCookie.isExists()) {
       this.showNotice();
@@ -149,7 +87,14 @@ var GdprCookieNotice = function () {
 
       acceptButton.addEventListener('click', function (e) {
         e.preventDefault();
-        _this2.acceptCategories();
+
+        var categorySettings = {};
+
+        for (var i in _this2._categories) {
+          categorySettings[i] = true;
+        }
+
+        _this2.acceptCategories(categorySettings);
       });
     }
   }, {
@@ -248,7 +193,14 @@ var GdprCookieNotice = function () {
         window.setTimeout(function () {
           saveButton.classList.remove('saved');
         }, 1000);
-        _this3.acceptCategories();
+
+        var categorySettings = {};
+
+        for (var catId in _this3._categories) {
+          categorySettings[catId] = document.getElementById(_this3._pluginPrefix + '-cookie_' + catId).checked;
+        }
+
+        _this3.acceptCategories(categorySettings);
         window.setTimeout(function () {
           _this3.hideModal();
         }, 1000);
@@ -273,7 +225,9 @@ var GdprCookieNotice = function () {
 
   }, {
     key: 'acceptCategories',
-    value: function acceptCategories() {
+    value: function acceptCategories(categorySettings) {
+      console.log('categorySettings', categorySettings);
+
       // let value = {
       //   date: new Date(),
       //   necessary: true,
@@ -290,7 +244,7 @@ var GdprCookieNotice = function () {
       // this.deleteCookies(value)
 
       // Load marketing scripts that only works when cookies are accepted
-      this._gdprCookie.set(true, !!this._categories.performance, !!this._categories.analytics, !!this._categories.marketing);
+      this._gdprCookie.set(true, !!categorySettings.performance, !!categorySettings.analytics, !!categorySettings.marketing);
       this._gdprCookiesEnabledEvt = new CustomEvent('gdprCookiesEnabled', { detail: this._gdprCookie.get() });
       document.dispatchEvent(this._gdprCookiesEnabledEvt);
 

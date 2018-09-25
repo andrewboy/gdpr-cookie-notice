@@ -1,55 +1,7 @@
 import { default as template } from './template'
 import * as locales from './locales'
-import Cookies from 'js-cookie'
 import './sass/gdpr-cookie-notice.scss'
-
-class GdprCookie {
-  constructor (name, expiration, domain) {
-    this._name = name
-    this._expiration = expiration
-    this._domain = domain
-  }
-
-  isExists () {
-    return !!Cookies.getJSON(this._name)
-  }
-
-  set (isNecessaryAccepted, isAnalyticsAccepted, isPerformanceAccepted, isMarketingAccepted) {
-    let value = {
-      date: new Date(),
-      necessary: isNecessaryAccepted,
-      performance: isPerformanceAccepted,
-      analytics: isAnalyticsAccepted,
-      marketing: isMarketingAccepted
-    }
-
-    Cookies.set(this._name, value, {expires: this._expiration, domain: this._domain})
-  }
-
-  isNecessaryAccepted () {
-    return Cookies.getJSON(this._name)['necessary']
-  }
-
-  isAnalyticsAccepted () {
-    return Cookies.getJSON(this._name)['analytics']
-  }
-
-  isPerformanceAccepted () {
-    return Cookies.getJSON(this._name)['performance']
-  }
-
-  isMarketingAccepted () {
-    return Cookies.getJSON(this._name)['marketing']
-  }
-
-  get () {
-    return Cookies.getJSON(this._name)
-  }
-
-  // delete () {
-  //
-  // }
-}
+import GdprCookie from './GdprCookie'
 
 class GdprCookieNotice {
   constructor (options) {
@@ -103,7 +55,14 @@ class GdprCookieNotice {
 
     acceptButton.addEventListener('click', (e) => {
       e.preventDefault()
-      this.acceptCategories()
+
+      let categorySettings = {}
+
+      for (let i in this._categories) {
+        categorySettings[i] = true
+      }
+
+      this.acceptCategories(categorySettings)
     })
   }
 
@@ -211,7 +170,14 @@ class GdprCookieNotice {
       window.setTimeout(() => {
         saveButton.classList.remove('saved')
       }, 1000)
-      this.acceptCategories()
+
+      let categorySettings = {}
+
+      for (let catId in this._categories) {
+        categorySettings[catId] = document.getElementById(this._pluginPrefix + '-cookie_' + catId).checked
+      }
+
+      this.acceptCategories(categorySettings)
       window.setTimeout(() => {
         this.hideModal()
       }, 1000)
@@ -235,7 +201,9 @@ class GdprCookieNotice {
   //   }
   // }
 
-  acceptCategories () {
+  acceptCategories (categorySettings) {
+    console.log('categorySettings', categorySettings)
+
     // let value = {
     //   date: new Date(),
     //   necessary: true,
@@ -254,9 +222,9 @@ class GdprCookieNotice {
     // Load marketing scripts that only works when cookies are accepted
     this._gdprCookie.set(
       true,
-      !!this._categories.performance,
-      !!this._categories.analytics,
-      !!this._categories.marketing
+      !!categorySettings.performance,
+      !!categorySettings.analytics,
+      !!categorySettings.marketing
     )
     this._gdprCookiesEnabledEvt = new CustomEvent('gdprCookiesEnabled', {detail: this._gdprCookie.get()})
     document.dispatchEvent(this._gdprCookiesEnabledEvt)
