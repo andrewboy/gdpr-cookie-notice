@@ -29,6 +29,17 @@ class GdprCookieNotice {
       this._gdprCookiesEnabledEvt = new CustomEvent('gdprCookiesEnabled', {detail: this._gdprCookie.get()})
       document.dispatchEvent(this._gdprCookiesEnabledEvt)
     }
+
+    // Settings button on the page somewhere
+    let globalSettingsButton = document.querySelectorAll('.' + this._pluginPrefix + '-settings-button')
+    if (globalSettingsButton) {
+      for (let i in globalSettingsButton) {
+        globalSettingsButton[i].addEventListener('click', (e) => {
+          e.preventDefault()
+          this.showModal()
+        })
+      }
+    }
   }
 
   //NOTICE =============================================================================================================

@@ -309,7 +309,7 @@ var _class = function () {
     }
   }, {
     key: 'set',
-    value: function set(isNecessaryAccepted, isAnalyticsAccepted, isPerformanceAccepted, isMarketingAccepted) {
+    value: function set(isNecessaryAccepted, isPerformanceAccepted, isAnalyticsAccepted, isMarketingAccepted) {
       var value = {
         date: new Date(),
         necessary: isNecessaryAccepted,
@@ -384,6 +384,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var GdprCookieNotice = function () {
   function GdprCookieNotice(options) {
+    var _this = this;
+
     _classCallCheck(this, GdprCookieNotice);
 
     this._categories = options.categories ? options.categories : [];
@@ -410,6 +412,17 @@ var GdprCookieNotice = function () {
       this._gdprCookiesEnabledEvt = new CustomEvent('gdprCookiesEnabled', { detail: this._gdprCookie.get() });
       document.dispatchEvent(this._gdprCookiesEnabledEvt);
     }
+
+    // Settings button on the page somewhere
+    var globalSettingsButton = document.querySelectorAll('.' + this._pluginPrefix + '-settings-button');
+    if (globalSettingsButton) {
+      for (var i in globalSettingsButton) {
+        globalSettingsButton[i].addEventListener('click', function (e) {
+          e.preventDefault();
+          _this.showModal();
+        });
+      }
+    }
   }
 
   //NOTICE =============================================================================================================
@@ -417,19 +430,19 @@ var GdprCookieNotice = function () {
   _createClass(GdprCookieNotice, [{
     key: 'showNotice',
     value: function showNotice() {
-      var _this = this;
+      var _this2 = this;
 
       this.buildNotice();
 
       // Show the notice with a little timeout
       window.setTimeout(function () {
-        document.documentElement.classList.add(_this._pluginPrefix + '-loaded');
+        document.documentElement.classList.add(_this2._pluginPrefix + '-loaded');
       }, this._timeout);
     }
   }, {
     key: 'buildNotice',
     value: function buildNotice() {
-      var _this2 = this;
+      var _this3 = this;
 
       console.log(this.getTemplateHtml('bar', _locales__WEBPACK_IMPORTED_MODULE_1__[this._locale]['bar']));
       document.body.insertAdjacentHTML('beforeend', this.getTemplateHtml('bar', _locales__WEBPACK_IMPORTED_MODULE_1__[this._locale]['bar']));
@@ -438,13 +451,13 @@ var GdprCookieNotice = function () {
 
       settingsButton.addEventListener('click', function (e) {
         e.preventDefault();
-        _this2.showModal();
+        _this3.showModal();
       });
 
       acceptButton.addEventListener('click', function (e) {
         e.preventDefault();
 
-        _this2.acceptCategories(!!_this2._categories.performance, !!_this2._categories.analytics, !!_this2._categories.marketing);
+        _this3.acceptCategories(!!_this3._categories.performance, !!_this3._categories.analytics, !!_this3._categories.marketing);
       });
     }
   }, {
@@ -513,7 +526,7 @@ var GdprCookieNotice = function () {
   }, {
     key: 'setModalEventListeners',
     value: function setModalEventListeners() {
-      var _this3 = this;
+      var _this4 = this;
 
       var closeButton = document.querySelectorAll('.' + this._pluginPrefix + '-modal-close')[0];
       var statementButton = document.querySelectorAll('.' + this._pluginPrefix + '-modal-footer-item-statement')[0];
@@ -521,13 +534,13 @@ var GdprCookieNotice = function () {
       var saveButton = document.querySelectorAll('.' + this._pluginPrefix + '-modal-footer-item-save')[0];
 
       closeButton.addEventListener('click', function (e) {
-        _this3.hideModal();
+        _this4.hideModal();
         return false;
       });
 
       statementButton.addEventListener('click', function (e) {
         e.preventDefault();
-        window.open(_this3._statementUrl, '_blank');
+        window.open(_this4._statementUrl, '_blank');
       });
 
       for (var i = 0; i < categoryTitles.length; i++) {
@@ -546,13 +559,13 @@ var GdprCookieNotice = function () {
 
         var categorySettings = {};
 
-        for (var catId in _this3._categories) {
-          categorySettings[catId] = document.getElementById(_this3._pluginPrefix + '-cookie_' + catId).checked;
+        for (var catId in _this4._categories) {
+          categorySettings[catId] = document.getElementById(_this4._pluginPrefix + '-cookie_' + catId).checked;
         }
 
-        _this3.acceptCategories(!!_this3._categories.performance && document.getElementById(_this3._pluginPrefix + '-cookie_performance').checked, !!_this3._categories.analytics && document.getElementById(_this3._pluginPrefix + '-cookie_analytics').checked, !!_this3._categories.marketing && document.getElementById(_this3._pluginPrefix + '-cookie_marketing').checked);
+        _this4.acceptCategories(!!_this4._categories.performance && document.getElementById(_this4._pluginPrefix + '-cookie_performance').checked, !!_this4._categories.analytics && document.getElementById(_this4._pluginPrefix + '-cookie_analytics').checked, !!_this4._categories.marketing && document.getElementById(_this4._pluginPrefix + '-cookie_marketing').checked);
         window.setTimeout(function () {
-          _this3.hideModal();
+          _this4.hideModal();
         }, 1000);
       });
     }

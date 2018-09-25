@@ -30,7 +30,7 @@ var _class = function () {
     }
   }, {
     key: 'set',
-    value: function set(isNecessaryAccepted, isAnalyticsAccepted, isPerformanceAccepted, isMarketingAccepted) {
+    value: function set(isNecessaryAccepted, isPerformanceAccepted, isAnalyticsAccepted, isMarketingAccepted) {
       var value = {
         date: new Date(),
         necessary: isNecessaryAccepted,

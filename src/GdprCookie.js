@@ -11,7 +11,7 @@ export default class {
     return !!Cookies.getJSON(this._name)
   }
 
-  set (isNecessaryAccepted, isAnalyticsAccepted, isPerformanceAccepted, isMarketingAccepted) {
+  set (isNecessaryAccepted, isPerformanceAccepted, isAnalyticsAccepted, isMarketingAccepted) {
     let value = {
       date: new Date(),
       necessary: isNecessaryAccepted,
