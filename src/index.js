@@ -56,13 +56,11 @@ class GdprCookieNotice {
     acceptButton.addEventListener('click', (e) => {
       e.preventDefault()
 
-      let categorySettings = {}
-
-      for (let i in this._categories) {
-        categorySettings[i] = true
-      }
-
-      this.acceptCategories(categorySettings)
+      this.acceptCategories(
+        !!this._categories.performance,
+        !!this._categories.analytics,
+        !!this._categories.marketing,
+      )
     })
   }
 
@@ -177,7 +175,11 @@ class GdprCookieNotice {
         categorySettings[catId] = document.getElementById(this._pluginPrefix + '-cookie_' + catId).checked
       }
 
-      this.acceptCategories(categorySettings)
+      this.acceptCategories(
+        !!this._categories.performance && document.getElementById(this._pluginPrefix + '-cookie_performance').checked,
+        !!this._categories.analytics && document.getElementById(this._pluginPrefix + '-cookie_analytics').checked,
+        !!this._categories.marketing && document.getElementById(this._pluginPrefix + '-cookie_marketing').checked
+      )
       window.setTimeout(() => {
         this.hideModal()
       }, 1000)
@@ -201,8 +203,8 @@ class GdprCookieNotice {
   //   }
   // }
 
-  acceptCategories (categorySettings) {
-    console.log('categorySettings', categorySettings)
+  acceptCategories (isPerformanceAccepted, isAnalyticsAccepted, isMarketingAccepted) {
+    console.log('categorySettings', isPerformanceAccepted, isAnalyticsAccepted, isMarketingAccepted)
 
     // let value = {
     //   date: new Date(),
@@ -222,9 +224,9 @@ class GdprCookieNotice {
     // Load marketing scripts that only works when cookies are accepted
     this._gdprCookie.set(
       true,
-      !!categorySettings.performance,
-      !!categorySettings.analytics,
-      !!categorySettings.marketing
+      isPerformanceAccepted,
+      isAnalyticsAccepted,
+      isMarketingAccepted
     )
     this._gdprCookiesEnabledEvt = new CustomEvent('gdprCookiesEnabled', {detail: this._gdprCookie.get()})
     document.dispatchEvent(this._gdprCookiesEnabledEvt)

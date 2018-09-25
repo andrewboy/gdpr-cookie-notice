@@ -444,13 +444,7 @@ var GdprCookieNotice = function () {
       acceptButton.addEventListener('click', function (e) {
         e.preventDefault();
 
-        var categorySettings = {};
-
-        for (var i in _this2._categories) {
-          categorySettings[i] = true;
-        }
-
-        _this2.acceptCategories(categorySettings);
+        _this2.acceptCategories(!!_this2._categories.performance, !!_this2._categories.analytics, !!_this2._categories.marketing);
       });
     }
   }, {
@@ -556,7 +550,7 @@ var GdprCookieNotice = function () {
           categorySettings[catId] = document.getElementById(_this3._pluginPrefix + '-cookie_' + catId).checked;
         }
 
-        _this3.acceptCategories(categorySettings);
+        _this3.acceptCategories(!!_this3._categories.performance && document.getElementById(_this3._pluginPrefix + '-cookie_performance').checked, !!_this3._categories.analytics && document.getElementById(_this3._pluginPrefix + '-cookie_analytics').checked, !!_this3._categories.marketing && document.getElementById(_this3._pluginPrefix + '-cookie_marketing').checked);
         window.setTimeout(function () {
           _this3.hideModal();
         }, 1000);
@@ -581,8 +575,8 @@ var GdprCookieNotice = function () {
 
   }, {
     key: 'acceptCategories',
-    value: function acceptCategories(categorySettings) {
-      console.log('categorySettings', categorySettings);
+    value: function acceptCategories(isPerformanceAccepted, isAnalyticsAccepted, isMarketingAccepted) {
+      console.log('categorySettings', isPerformanceAccepted, isAnalyticsAccepted, isMarketingAccepted);
 
       // let value = {
       //   date: new Date(),
@@ -600,7 +594,7 @@ var GdprCookieNotice = function () {
       // this.deleteCookies(value)
 
       // Load marketing scripts that only works when cookies are accepted
-      this._gdprCookie.set(true, !!categorySettings.performance, !!categorySettings.analytics, !!categorySettings.marketing);
+      this._gdprCookie.set(true, isPerformanceAccepted, isAnalyticsAccepted, isMarketingAccepted);
       this._gdprCookiesEnabledEvt = new CustomEvent('gdprCookiesEnabled', { detail: this._gdprCookie.get() });
       document.dispatchEvent(this._gdprCookiesEnabledEvt);
 
