@@ -61,7 +61,7 @@ export default class {
     )
     let input = document.querySelector('.' + this._pluginPrefix + '-modal-cookie-input')
     let label = document.querySelector('.' + this._pluginPrefix + '-modal-cookie-input-switch')
-    label.innerHTML = this._locale.essential.always_on
+    label.innerHTML = this._locale.category.essential.always_on
     label.classList.add(this._pluginPrefix + '-modal-cookie-state')
     label.classList.remove(this._pluginPrefix + '-modal-cookie-input-switch')
     input.remove()
