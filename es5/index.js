@@ -317,8 +317,6 @@ var GdprCookieNotice = function () {
     this._cookiesAccepted = false;
     this._statementUrl = options.statementUrl ? options.statementUrl : '';
     this._gdprCookie = new _GdprCookie2.default(this._namespace, this._expiration, this._domain);
-    this._isNoticeLoaded = false;
-    this._isModalLoaded = false;
     //
     this._notice = new GdprCookieNotice2(this);
     this._modal = new GdprCookieModal(this);
@@ -343,7 +341,7 @@ var GdprCookieNotice = function () {
         console.log(i, globalSettingsButtons[i]);
         globalSettingsButtons[i].addEventListener('click', function (e) {
           e.preventDefault();
-          _this4.showModal();
+          _this4._modal.show();
         });
       }
     }

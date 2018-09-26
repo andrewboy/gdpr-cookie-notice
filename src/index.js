@@ -295,8 +295,6 @@ class GdprCookieNotice {
     this._cookiesAccepted = false
     this._statementUrl = options.statementUrl ? options.statementUrl : ''
     this._gdprCookie = new GdprCookie(this._namespace, this._expiration, this._domain)
-    this._isNoticeLoaded = false
-    this._isModalLoaded = false
     //
     this._notice = new GdprCookieNotice2(this)
     this._modal = new GdprCookieModal(this)
@@ -321,7 +319,7 @@ class GdprCookieNotice {
         console.log(i, globalSettingsButtons[i])
         globalSettingsButtons[i].addEventListener('click', (e) => {
           e.preventDefault()
-          this.showModal()
+          this._modal.show()
         })
       }
     }
