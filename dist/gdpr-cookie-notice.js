@@ -434,7 +434,7 @@ var _class = function () {
       label.classList.remove(this._pluginPrefix + '-modal-cookie-input-switch');
       input.remove();
 
-      for (var catId in this._manager.categories()) {
+      for (var catId in this._manager.categories) {
         categoryList.innerHTML += this.getTemplateHtml(this._getCategoryTemplate(), Object.assign({}, this._locale.category[catId], {
           prefix: 'cookie_' + catId,
           // checked: this._isCategoriesCheckedByDefault || (this._gdprCookie.isExists() && this._gdprCookie.get()[catId])

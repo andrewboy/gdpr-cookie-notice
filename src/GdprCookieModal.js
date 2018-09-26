@@ -66,7 +66,7 @@ export default class {
     label.classList.remove(this._pluginPrefix + '-modal-cookie-input-switch')
     input.remove()
 
-    for (let catId in this._manager.categories()) {
+    for (let catId in this._manager.categories) {
       categoryList.innerHTML += this.getTemplateHtml(
         this._getCategoryTemplate(),
         Object.assign(
