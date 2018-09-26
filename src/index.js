@@ -11,9 +11,11 @@ class GdprCookieNotice2 {
     this._timeout = 500
     this._pluginPrefix = 'gdpr-cookie-notice'
     this._locale = {
-      settings: 'Süti beállítások',
-      statement: 'Süti nyilatkozatunk',
-      save: 'Mentés'
+      description: `Ez a weboldal sütiket(cookie-kat) használ azért, hogy a weboldal működjön, statisztikai adatokat 
+      gyűjtsön és jobb felhasználió élményt nyújtson. A Süti beállítások gombra kattintva több információt is megtudhat 
+      erről. Az oldal további használatával beleegyezik a sütik használatába.`,
+      accept: 'Elfogadom',
+      settings: 'Süti beállítások'
     }
     this._manager = gdprCookieManager
   }
@@ -296,8 +298,8 @@ class GdprCookieNotice {
     this._isNoticeLoaded = false
     this._isModalLoaded = false
     //
-    this._notice = new GdprCookieNotice2()
-    this._modal = new GdprCookieModal()
+    this._notice = new GdprCookieNotice2(this)
+    this._modal = new GdprCookieModal(this)
 
     if (!this._gdprCookie.isExists()) {
       this._notice.show()

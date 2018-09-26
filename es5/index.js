@@ -36,9 +36,9 @@ var GdprCookieNotice2 = function () {
     this._timeout = 500;
     this._pluginPrefix = 'gdpr-cookie-notice';
     this._locale = {
-      settings: 'Süti beállítások',
-      statement: 'Süti nyilatkozatunk',
-      save: 'Mentés'
+      description: 'Ez a weboldal s\xFCtiket(cookie-kat) haszn\xE1l az\xE9rt, hogy a weboldal m\u0171k\xF6dj\xF6n, statisztikai adatokat \n      gy\u0171jts\xF6n \xE9s jobb felhaszn\xE1li\xF3 \xE9lm\xE9nyt ny\xFAjtson. A S\xFCti be\xE1ll\xEDt\xE1sok gombra kattintva t\xF6bb inform\xE1ci\xF3t is megtudhat \n      err\u0151l. Az oldal tov\xE1bbi haszn\xE1lat\xE1val beleegyezik a s\xFCtik haszn\xE1lat\xE1ba.',
+      accept: 'Elfogadom',
+      settings: 'Süti beállítások'
     };
     this._manager = gdprCookieManager;
   }
@@ -320,8 +320,8 @@ var GdprCookieNotice = function () {
     this._isNoticeLoaded = false;
     this._isModalLoaded = false;
     //
-    this._notice = new GdprCookieNotice2();
-    this._modal = new GdprCookieModal();
+    this._notice = new GdprCookieNotice2(this);
+    this._modal = new GdprCookieModal(this);
 
     if (!this._gdprCookie.isExists()) {
       this._notice.show();
