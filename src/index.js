@@ -125,7 +125,7 @@ class GdprCookieModal {
     this._statementUrl = 'https://index.hu/'
   }
 
-  buildModal () {
+  build () {
     if (this._isModalLoaded) {
       return
     }
@@ -179,12 +179,12 @@ class GdprCookieModal {
     this._isModalLoaded = true
   }
 
-  showModal () {
-    this.buildModal()
+  show () {
+    this.build()
     document.documentElement.classList.add(this._pluginPrefix + '-show-modal')
   }
 
-  hideModal () {
+  hide () {
     document.documentElement.classList.remove(this._pluginPrefix + '-show-modal')
   }
 
@@ -196,7 +196,7 @@ class GdprCookieModal {
     let saveButton = document.querySelectorAll('.' + this._pluginPrefix + '-modal-footer-item-save')[0]
 
     closeButton.addEventListener('click', (e) => {
-      this.hideModal()
+      this.hide()
       return false
     })
 
@@ -237,7 +237,7 @@ class GdprCookieModal {
         }
       )
       window.setTimeout(() => {
-        this.hideModal()
+        this.hide()
       }, 1000)
     })
   }
