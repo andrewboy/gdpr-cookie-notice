@@ -4,7 +4,7 @@ export default {
     <nav class="gdpr-cookie-notice-nav">
       <a href="#" class="gdpr-cookie-notice-nav-item gdpr-cookie-notice-nav-item-settings">{{settings}}</a>
       <a href="#" class="gdpr-cookie-notice-nav-item gdpr-cookie-notice-nav-item-accept gdpr-cookie-notice-nav-item-btn">{{accept}}</a>
-    </div>
+    </nav>
   </div>`,
   category: `<li class="gdpr-cookie-notice-modal-cookie">
     <div class="gdpr-cookie-notice-modal-cookie-row">

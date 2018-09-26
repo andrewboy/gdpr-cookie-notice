@@ -3,55 +3,30 @@ import * as locales from './locales'
 import './sass/gdpr-cookie-notice.scss'
 import GdprCookie from './GdprCookie'
 
-class GdprCookieNotice {
-  constructor (options) {
-    this._categories = options.categories ? options.categories : []
-    this._locale = options.locale ? options.locale : 'hu'
-    this._timeout = options.timeout ? options.timeout : 500
-    this._domain = options.domain ? options.domain : window.location.hostname
-    this._expiration = options.expiration ? options.expiration : 30
-    this._isCategoriesCheckedByDefault = options.categoriesCheckedByDefault ? options.categoriesCheckedByDefault : false
-    this._namespace = options.namespace ? options.namespace : 'gdprcookienotice'
-    this._pluginPrefix = options.pluginPrefix ? options.pluginPrefix : 'gdpr-cookie-notice'
-    this._implicit = options.implicit ? options.implicit : false
-    this._cookiesAccepted = false
-    this._statementUrl = options.statementUrl ? options.statementUrl : ''
-    this._gdprCookie = new GdprCookie(this._namespace, this._expiration, this._domain)
+// GdprCookieNotice2 ==================================
+
+class GdprCookieNotice2 {
+  constructor (gdprCookieManager) {
     this._isNoticeLoaded = false
-    this._isModalLoaded = false
-
-    if (!this._gdprCookie.isExists()) {
-      this.showNotice()
-
-      // if (this._implicit) {
-      //   this.acceptOnScroll()
-      // }
-    } else {
-      //   this.deleteCookies(this.getCurrentCookieSelection())
-      this._gdprCookiesEnabledEvt = new CustomEvent('gdprCookiesEnabled', {detail: this._gdprCookie.get()})
-      document.dispatchEvent(this._gdprCookiesEnabledEvt)
+    this._timeout = 500
+    this._pluginPrefix = 'gdpr-cookie-notice'
+    this._locale = {
+      settings: 'Süti beállítások',
+      statement: 'Süti nyilatkozatunk',
+      save: 'Mentés'
     }
-
-    // Settings button on the page somewhere
-    let globalSettingsButtons = document.querySelectorAll('.' + this._pluginPrefix + '-settings-button')
-
-    console.log(globalSettingsButtons)
-
-    if (globalSettingsButtons) {
-      for (let i in globalSettingsButtons) {
-        console.log(i, globalSettingsButtons[i])
-        globalSettingsButtons[i].addEventListener('click', (e) => {
-          e.preventDefault()
-          this.showModal()
-        })
-      }
-    }
+    this._manager = gdprCookieManager
   }
 
-  //NOTICE =============================================================================================================
+  /*
+   * @param Object locale
+   */
+  setLocale (locale) {
+    this._locale = locale
+  }
 
-  showNotice () {
-    this.buildNotice()
+  show () {
+    this.build()
 
     // Show the notice with a little timeout
     window.setTimeout(() => {
@@ -59,57 +34,112 @@ class GdprCookieNotice {
     }, this._timeout)
   }
 
-  buildNotice () {
+  build () {
     if (this._isNoticeLoaded) { return }
-    console.log(this.getTemplateHtml('bar', locales[this._locale]['bar']))
-    document.body.insertAdjacentHTML('beforeend', this.getTemplateHtml('bar', locales[this._locale]['bar']))
+    document.body.insertAdjacentHTML('beforeend', this.getTemplateHtml(this._getTemplate(), this._locale))
     let settingsButton = document.querySelectorAll('.' + this._pluginPrefix + '-nav-item-settings')[0]
     let acceptButton = document.querySelectorAll('.' + this._pluginPrefix + '-nav-item-accept')[0]
 
     settingsButton.addEventListener('click', (e) => {
       e.preventDefault()
-      this.showModal()
+      this._manager.setEvent('show_modal')
     })
 
     acceptButton.addEventListener('click', (e) => {
       e.preventDefault()
-
-      this.acceptCategories(
-        !!this._categories.performance,
-        !!this._categories.analytics,
-        !!this._categories.marketing,
-      )
+      this._manager.setEvent('accept_all_category')
     })
 
     this._isNoticeLoaded = true
   }
 
-  hideNotice () {
+  hide () {
     document.documentElement.classList.remove(this._pluginPrefix + '-loaded')
   }
 
-  //MODAL ==============================================================================================================
+  _getTemplate () {
+    return `<div class="gdpr-cookie-notice">
+    <p class="gdpr-cookie-notice-description">{{description}}</p>
+    <nav class="gdpr-cookie-notice-nav">
+      <a href="#" class="gdpr-cookie-notice-nav-item gdpr-cookie-notice-nav-item-settings">{{settings}}</a>
+      <a href="#" class="gdpr-cookie-notice-nav-item gdpr-cookie-notice-nav-item-accept gdpr-cookie-notice-nav-item-btn">{{accept}}</a>
+    </nav>
+    </div>`
+  }
+
+  //string, object
+  getTemplateHtml (template, data) {
+    if (typeof template === 'string' && (data instanceof Object)) {
+      return template.replace(/{{([^}]+)}}/g, function (i, j) {
+        if (data[j]) {
+          return data[j]
+        } else {
+          return i
+        }
+      })
+    } else {
+      return false
+    }
+  }
+}
+
+// GdprCookieModal ======================================================
+
+class GdprCookieModal {
+  constructor (gdprCookieManager) {
+    this._manager = gdprCookieManager
+    this._locale = {
+      modal: {
+        settings: 'Süti beállítások',
+        statement: 'Süti nyilatkozatunk',
+        save: 'Mentés'
+      },
+      category: {
+        essential: {
+          title: 'Szükséges sütik',
+          desc: 'Ezek a weboldal megfelelő megjelenéséhez szükséges sütik, amelyek nélkül nem működne a weboldal.',
+          always_on: 'Mindig betölt'
+        },
+        performance: {
+          title: 'Teljesítmény sütik',
+          desc: `Ezek a sütik kiegészítő funkciókat támogatnak az oldalon, például eltárolja, hogy milyen nyelven böngészi 
+          a weboldalt. Ezek nélkül nem biztos, hogy minden megfelelően fog működni.`
+        },
+        analytics: {
+          title: 'Statisztika sütik',
+          desc: `Ezeket azért használjuk, hogy tájékozódni tudjunk arról, mikor, hányan és hogyan használják a 
+          weboldalunkat. Ezekkel az adatokkal tudjuk később optimalizálni a weboldalunkat a megfelelő felhasználói 
+          élményért.`
+        },
+        marketing: {
+          title: 'Marketing sütik',
+          desc: 'Ezek a sütik segítenek nekünk a hirdetések kezelésében, célzásában.'
+        }
+      }
+    }
+    this._pluginPrefix = 'gdpr-cookie-notice'
+    this._isModalLoaded = false
+    this._isCategoriesCheckedByDefault = false
+    this._statementUrl = 'https://index.hu/'
+  }
 
   buildModal () {
     if (this._isModalLoaded) {
       return
     }
 
-    // Load modal template
-    let modalHtml = this.getTemplateHtml('modal', Object.assign({}, locales[this._locale]['modal']))
-
     // Append modal into body
-    document.body.insertAdjacentHTML('beforeend', modalHtml)
+    document.body.insertAdjacentHTML('beforeend', this.getTemplateHtml(this._getModalTemplate(), this._locale.modal))
 
     // Get empty category list
     let categoryList = document.querySelector('.' + this._pluginPrefix + '-modal-cookies')
 
     //Load essential cookies
     categoryList.innerHTML += this.getTemplateHtml(
-      'category',
+      this._getCategoryTemplate(),
       Object.assign(
         {},
-        locales[this._locale]['category']['essential'],
+        this._locale.category.essential,
         {
           prefix: 'cookie_essential',
           checked: 'checked="checked"'
@@ -118,20 +148,21 @@ class GdprCookieNotice {
     )
     let input = document.querySelector('.' + this._pluginPrefix + '-modal-cookie-input')
     let label = document.querySelector('.' + this._pluginPrefix + '-modal-cookie-input-switch')
-    label.innerHTML = locales[this._locale]['category']['essential']['always_on']
+    label.innerHTML = this._locale.essential.always_on
     label.classList.add(this._pluginPrefix + '-modal-cookie-state')
     label.classList.remove(this._pluginPrefix + '-modal-cookie-input-switch')
     input.remove()
 
-    for (let catId in this._categories) {
+    for (let catId in this._manager.categories()) {
       categoryList.innerHTML += this.getTemplateHtml(
-        'category',
+        this._getCategoryTemplate(),
         Object.assign(
           {},
-          locales[this._locale]['category'][catId],
+          this._locale.category[catId],
           {
             prefix: 'cookie_' + catId,
-            checked: this._isCategoriesCheckedByDefault || (this._gdprCookie.isExists() && this._gdprCookie.get()[catId])
+            // checked: this._isCategoriesCheckedByDefault || (this._gdprCookie.isExists() && this._gdprCookie.get()[catId])
+            checked: true
               ? 'checked="checked"'
               : ''
           }
@@ -191,20 +222,134 @@ class GdprCookieNotice {
 
       let categorySettings = {}
 
-      for (let catId in this._categories) {
+      for (let catId in this._manager.categories) {
         categorySettings[catId] = document.getElementById(this._pluginPrefix + '-cookie_' + catId).checked
       }
 
-      this.acceptCategories(
-        !!this._categories.performance && document.getElementById(this._pluginPrefix + '-cookie_performance').checked,
-        !!this._categories.analytics && document.getElementById(this._pluginPrefix + '-cookie_analytics').checked,
-        !!this._categories.marketing && document.getElementById(this._pluginPrefix + '-cookie_marketing').checked
+      this._manager.setEvent(
+        'accept_categories',
+        {
+          performance: !!this._manager.categories.performance && document.getElementById(this._pluginPrefix + '-cookie_performance').checked,
+          analytics: !!this._manager.categories.analytics && document.getElementById(this._pluginPrefix + '-cookie_analytics').checked,
+          marketing: !!this._manager.categories.marketing && document.getElementById(this._pluginPrefix + '-cookie_marketing').checked
+        }
       )
       window.setTimeout(() => {
         this.hideModal()
       }, 1000)
     })
+  }
 
+  _getModalTemplate () {
+    return `<div class="gdpr-cookie-notice">
+    <p class="gdpr-cookie-notice-description">{{description}}</p>
+    <nav class="gdpr-cookie-notice-nav">
+      <a href="#" class="gdpr-cookie-notice-nav-item gdpr-cookie-notice-nav-item-settings">{{settings}}</a>
+      <a href="#" class="gdpr-cookie-notice-nav-item gdpr-cookie-notice-nav-item-accept gdpr-cookie-notice-nav-item-btn">{{accept}}</a>
+    </nav>
+    </div>`
+  }
+
+  _getCategoryTemplate () {
+    return `<li class="gdpr-cookie-notice-modal-cookie">
+    <div class="gdpr-cookie-notice-modal-cookie-row">
+      <h3 class="gdpr-cookie-notice-modal-cookie-title">{{title}}</h3>
+      <input type="checkbox" name="gdpr-cookie-notice-{{prefix}}" id="gdpr-cookie-notice-{{prefix}}" class="gdpr-cookie-notice-modal-cookie-input" {{checked}}>
+      <label class="gdpr-cookie-notice-modal-cookie-input-switch" for="gdpr-cookie-notice-{{prefix}}"></label>
+    </div>
+    <p class="gdpr-cookie-notice-modal-cookie-info">{{desc}}</p>
+    </li>`
+  }
+
+  //string, object
+  getTemplateHtml (template, data) {
+    if (typeof template === 'string' && (data instanceof Object)) {
+      return template.replace(/{{([^}]+)}}/g, function (i, j) {
+        if (data[j]) {
+          return data[j]
+        } else {
+          return i
+        }
+      })
+    } else {
+      return false
+    }
+  }
+}
+
+// GdprCookieNotice =======================================================
+
+class GdprCookieNotice {
+  constructor (options) {
+    this._categories = options.categories ? options.categories : []
+    this._locale = options.locale ? options.locale : 'hu'
+    this._timeout = options.timeout ? options.timeout : 500
+    this._domain = options.domain ? options.domain : window.location.hostname
+    this._expiration = options.expiration ? options.expiration : 30
+    this._isCategoriesCheckedByDefault = options.categoriesCheckedByDefault ? options.categoriesCheckedByDefault : false
+    this._namespace = options.namespace ? options.namespace : 'gdprcookienotice'
+    this._pluginPrefix = options.pluginPrefix ? options.pluginPrefix : 'gdpr-cookie-notice'
+    this._implicit = options.implicit ? options.implicit : false
+    this._cookiesAccepted = false
+    this._statementUrl = options.statementUrl ? options.statementUrl : ''
+    this._gdprCookie = new GdprCookie(this._namespace, this._expiration, this._domain)
+    this._isNoticeLoaded = false
+    this._isModalLoaded = false
+    //
+    this._notice = new GdprCookieNotice2()
+    this._modal = new GdprCookieModal()
+
+    if (!this._gdprCookie.isExists()) {
+      this._notice.show()
+
+      // if (this._implicit) {
+      //   this.acceptOnScroll()
+      // }
+    } else {
+      //   this.deleteCookies(this.getCurrentCookieSelection())
+      this._gdprCookiesEnabledEvt = new CustomEvent('gdprCookiesEnabled', {detail: this._gdprCookie.get()})
+      document.dispatchEvent(this._gdprCookiesEnabledEvt)
+    }
+
+    // Settings button on the page somewhere
+    let globalSettingsButtons = document.querySelectorAll('.' + this._pluginPrefix + '-settings-button')
+
+    if (globalSettingsButtons) {
+      for (let i in globalSettingsButtons) {
+        console.log(i, globalSettingsButtons[i])
+        globalSettingsButtons[i].addEventListener('click', (e) => {
+          e.preventDefault()
+          this.showModal()
+        })
+      }
+    }
+  }
+
+  setEvent (evt, data) {
+    switch (evt) {
+      case 'accept_all_category':
+        this.acceptAllCategories()
+        break
+
+      case 'accept_categories':
+        this.acceptCategories(data.performance, data.analytics, data.marketing)
+        break
+
+      case 'show_modal':
+        this._modal.show()
+        break
+
+      default:
+        throw new Error('Event type not supported')
+    }
+  }
+
+  acceptAllCategories () {
+    this.acceptCategories(
+      !!this._categories.performance,
+      !!this._categories.analytics,
+      !!this._categories.marketing,
+    )
   }
 
   //COOKIE =============================================================================================================
@@ -225,22 +370,6 @@ class GdprCookieNotice {
 
   acceptCategories (isPerformanceAccepted, isAnalyticsAccepted, isMarketingAccepted) {
     console.log('categorySettings', isPerformanceAccepted, isAnalyticsAccepted, isMarketingAccepted)
-
-    // let value = {
-    //   date: new Date(),
-    //   necessary: true,
-    // }
-
-    // If request was coming from the modal, check for the settings
-    // if (save) {
-    //   for (var i = 0; i < categories.length; i++) {
-    //     value[categories[i]] = document.getElementById(pluginPrefix + '-cookie_' + categories[i]).checked
-    //   }
-    // }
-
-    // Cookies.set(this._namespace, value, {expires: this._expiration, domain: this._domain})
-    // this.deleteCookies(value)
-
     // Load marketing scripts that only works when cookies are accepted
     this._gdprCookie.set(
       true,
@@ -252,31 +381,9 @@ class GdprCookieNotice {
     document.dispatchEvent(this._gdprCookiesEnabledEvt)
 
     if (this._gdprCookie.isExists() && this._gdprCookie.isNecessaryAccepted()) {
-      this.hideNotice()
+      this._notice.hide()
     } else {
-      this.showNotice()
-    }
-  }
-
-  // getCurrentCookieSelection () {
-  //   return Cookies.getJSON(this._namespace)
-  // }
-
-  getTemplateHtml (templateKey, data) {
-    let templateStr = template[templateKey]
-
-    // console.log('templateStr', templateStr, data)
-
-    if (typeof templateStr === 'string' && (data instanceof Object)) {
-      return templateStr.replace(/{{([^}]+)}}/g, function (i, j) {
-        if (data[j]) {
-          return data[j]
-        } else {
-          return i
-        }
-      })
-    } else {
-      return false
+      this._notice.show()
     }
   }
 
