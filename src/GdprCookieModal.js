@@ -1,3 +1,6 @@
+import './sass/_variables.scss'
+import './sass/modal/_modal.scss'
+
 export default class {
   constructor (gdprCookieManager) {
     this._manager = gdprCookieManager

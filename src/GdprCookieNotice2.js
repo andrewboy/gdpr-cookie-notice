@@ -1,3 +1,6 @@
+import './sass/_variables.scss'
+import './sass/notice2/_notice2.scss'
+
 export default class {
   constructor (gdprCookieManager) {
     this._isNoticeLoaded = false

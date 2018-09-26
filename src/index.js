@@ -1,6 +1,6 @@
 import { default as template } from './template'
 import * as locales from './locales'
-import './sass/gdpr-cookie-notice.scss'
+// import './sass/gdpr-cookie-notice.scss'
 import GdprCookie from './GdprCookie'
 import GdprCookieNotice2 from './GdprCookieNotice2'
 import GdprCookieModal from './GdprCookieModal'

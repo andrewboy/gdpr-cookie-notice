@@ -368,9 +368,16 @@ var _class = function () {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _sass_variables_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./sass/_variables.scss */ "./src/sass/_variables.scss");
+/* harmony import */ var _sass_variables_scss__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_sass_variables_scss__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _sass_modal_modal_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./sass/modal/_modal.scss */ "./src/sass/modal/_modal.scss");
+/* harmony import */ var _sass_modal_modal_scss__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_sass_modal_modal_scss__WEBPACK_IMPORTED_MODULE_1__);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+
+
 
 var _class = function () {
   function _class(gdprCookieManager) {
@@ -558,9 +565,16 @@ var _class = function () {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _sass_variables_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./sass/_variables.scss */ "./src/sass/_variables.scss");
+/* harmony import */ var _sass_variables_scss__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_sass_variables_scss__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _sass_notice2_notice2_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./sass/notice2/_notice2.scss */ "./src/sass/notice2/_notice2.scss");
+/* harmony import */ var _sass_notice2_notice2_scss__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_sass_notice2_notice2_scss__WEBPACK_IMPORTED_MODULE_1__);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+
+
 
 var _class = function () {
   function _class(gdprCookieManager) {
@@ -672,18 +686,16 @@ var _class = function () {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _template__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./template */ "./src/template.js");
 /* harmony import */ var _locales__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./locales */ "./src/locales/index.js");
-/* harmony import */ var _sass_gdpr_cookie_notice_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./sass/gdpr-cookie-notice.scss */ "./src/sass/gdpr-cookie-notice.scss");
-/* harmony import */ var _sass_gdpr_cookie_notice_scss__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_sass_gdpr_cookie_notice_scss__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _GdprCookie__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./GdprCookie */ "./src/GdprCookie.js");
-/* harmony import */ var _GdprCookieNotice2__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./GdprCookieNotice2 */ "./src/GdprCookieNotice2.js");
-/* harmony import */ var _GdprCookieModal__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./GdprCookieModal */ "./src/GdprCookieModal.js");
+/* harmony import */ var _GdprCookie__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./GdprCookie */ "./src/GdprCookie.js");
+/* harmony import */ var _GdprCookieNotice2__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./GdprCookieNotice2 */ "./src/GdprCookieNotice2.js");
+/* harmony import */ var _GdprCookieModal__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./GdprCookieModal */ "./src/GdprCookieModal.js");
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 
 
-
+// import './sass/gdpr-cookie-notice.scss'
 
 
 
@@ -704,7 +716,7 @@ var GdprCookieNotice = function () {
     this._namespace = options.namespace ? options.namespace : 'gdprcookienotice';
     this._expiration = options.expiration ? options.expiration : 30;
     this._domain = options.domain ? options.domain : window.location.hostname;
-    this._gdprCookie = new _GdprCookie__WEBPACK_IMPORTED_MODULE_3__["default"](this._namespace, this._expiration, this._domain);
+    this._gdprCookie = new _GdprCookie__WEBPACK_IMPORTED_MODULE_2__["default"](this._namespace, this._expiration, this._domain);
 
     //BOXES
     this._pluginPrefix = options.pluginPrefix ? options.pluginPrefix : 'gdpr-cookie-notice';
@@ -712,10 +724,10 @@ var GdprCookieNotice = function () {
     //NOTICE
     this._timeout = options.timeout ? options.timeout : 500;
     this._statementUrl = options.statementUrl ? options.statementUrl : '';
-    this._notice = new _GdprCookieNotice2__WEBPACK_IMPORTED_MODULE_4__["default"](this);
+    this._notice = new _GdprCookieNotice2__WEBPACK_IMPORTED_MODULE_3__["default"](this);
     //MODAL
     this._isCategoriesCheckedByDefault = options.categoriesCheckedByDefault ? options.categoriesCheckedByDefault : false;
-    this._modal = new _GdprCookieModal__WEBPACK_IMPORTED_MODULE_5__["default"](this);
+    this._modal = new _GdprCookieModal__WEBPACK_IMPORTED_MODULE_4__["default"](this);
 
     if (!this._gdprCookie.isExists()) {
       this._notice.show();
@@ -964,14 +976,36 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./src/sass/gdpr-cookie-notice.scss":
-/*!******************************************!*\
-  !*** ./src/sass/gdpr-cookie-notice.scss ***!
-  \******************************************/
+/***/ "./src/sass/_variables.scss":
+/*!**********************************!*\
+  !*** ./src/sass/_variables.scss ***!
+  \**********************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
+
+/***/ }),
+
+/***/ "./src/sass/modal/_modal.scss":
+/*!************************************!*\
+  !*** ./src/sass/modal/_modal.scss ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+throw new Error("Module build failed (from ./node_modules/mini-css-extract-plugin/dist/loader.js):\nModuleBuildError: Module build failed (from ./node_modules/sass-loader/lib/loader.js):\n\r\n    background: url($icon_caret);\r\n                   ^\r\n      Undefined variable: \"$icon-caret\".\r\n      in C:\\Users\\beck.andras\\projects\\php\\src\\gdpr-cookie-notice\\src\\sass\\modal\\_modal.scss (line 8, column 21)\n    at runLoaders (C:\\Users\\beck.andras\\projects\\php\\src\\gdpr-cookie-notice\\node_modules\\webpack\\lib\\NormalModule.js:286:20)\n    at C:\\Users\\beck.andras\\projects\\php\\src\\gdpr-cookie-notice\\node_modules\\loader-runner\\lib\\LoaderRunner.js:364:11\n    at C:\\Users\\beck.andras\\projects\\php\\src\\gdpr-cookie-notice\\node_modules\\loader-runner\\lib\\LoaderRunner.js:230:18\n    at context.callback (C:\\Users\\beck.andras\\projects\\php\\src\\gdpr-cookie-notice\\node_modules\\loader-runner\\lib\\LoaderRunner.js:111:13)\n    at Object.render [as callback] (C:\\Users\\beck.andras\\projects\\php\\src\\gdpr-cookie-notice\\node_modules\\sass-loader\\lib\\loader.js:52:13)\n    at Object.done [as callback] (C:\\Users\\beck.andras\\projects\\php\\src\\gdpr-cookie-notice\\node_modules\\neo-async\\async.js:7974:18)\n    at options.error (C:\\Users\\beck.andras\\projects\\php\\src\\gdpr-cookie-notice\\node_modules\\node-sass\\lib\\index.js:294:32)");
+
+/***/ }),
+
+/***/ "./src/sass/notice2/_notice2.scss":
+/*!****************************************!*\
+  !*** ./src/sass/notice2/_notice2.scss ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+throw new Error("Module build failed (from ./node_modules/mini-css-extract-plugin/dist/loader.js):\nModuleBuildError: Module build failed (from ./node_modules/sass-loader/lib/loader.js):\n\r\n  background: $bar_bg;\r\n             ^\r\n      Undefined variable: \"$bar-bg\".\r\n      in C:\\Users\\beck.andras\\projects\\php\\src\\gdpr-cookie-notice\\src\\sass\\notice2\\_notice2.scss (line 3, column 15)\n    at runLoaders (C:\\Users\\beck.andras\\projects\\php\\src\\gdpr-cookie-notice\\node_modules\\webpack\\lib\\NormalModule.js:286:20)\n    at C:\\Users\\beck.andras\\projects\\php\\src\\gdpr-cookie-notice\\node_modules\\loader-runner\\lib\\LoaderRunner.js:364:11\n    at C:\\Users\\beck.andras\\projects\\php\\src\\gdpr-cookie-notice\\node_modules\\loader-runner\\lib\\LoaderRunner.js:230:18\n    at context.callback (C:\\Users\\beck.andras\\projects\\php\\src\\gdpr-cookie-notice\\node_modules\\loader-runner\\lib\\LoaderRunner.js:111:13)\n    at Object.render [as callback] (C:\\Users\\beck.andras\\projects\\php\\src\\gdpr-cookie-notice\\node_modules\\sass-loader\\lib\\loader.js:52:13)\n    at Object.done [as callback] (C:\\Users\\beck.andras\\projects\\php\\src\\gdpr-cookie-notice\\node_modules\\neo-async\\async.js:7974:18)\n    at options.error (C:\\Users\\beck.andras\\projects\\php\\src\\gdpr-cookie-notice\\node_modules\\node-sass\\lib\\index.js:294:32)");
 
 /***/ }),
 
