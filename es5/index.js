@@ -6,7 +6,8 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 // import './sass/gdpr-cookie-notice.scss'
-
+// import "sass/modal/_variables.scss";
+// import "sass/notice2/_variables.scss";
 
 var _template = require('./template');
 
@@ -20,9 +21,9 @@ var _GdprCookie = require('./GdprCookie');
 
 var _GdprCookie2 = _interopRequireDefault(_GdprCookie);
 
-var _GdprCookieNotice = require('./GdprCookieNotice2');
+var _GdprCookieNoticePopup = require('./GdprCookieNoticePopup');
 
-var _GdprCookieNotice2 = _interopRequireDefault(_GdprCookieNotice);
+var _GdprCookieNoticePopup2 = _interopRequireDefault(_GdprCookieNoticePopup);
 
 var _GdprCookieModal = require('./GdprCookieModal');
 
@@ -38,8 +39,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var GdprCookieNotice = function () {
   function GdprCookieNotice(options) {
-    var _this = this;
-
     _classCallCheck(this, GdprCookieNotice);
 
     console.log('GdprCookieNotice:constructor');
@@ -50,46 +49,76 @@ var GdprCookieNotice = function () {
     this._namespace = options.namespace ? options.namespace : 'gdprcookienotice';
     this._expiration = options.expiration ? options.expiration : 30;
     this._domain = options.domain ? options.domain : window.location.hostname;
-    this._gdprCookie = new _GdprCookie2.default(this._namespace, this._expiration, this._domain);
 
-    //BOXES
+    //BOXES ==============
     this._pluginPrefix = options.pluginPrefix ? options.pluginPrefix : 'gdpr-cookie-notice';
     this._locale = options.locale ? options.locale : 'hu';
     //NOTICE
     this._timeout = options.timeout ? options.timeout : 500;
     this._statementUrl = options.statementUrl ? options.statementUrl : '';
-    this._notice = new _GdprCookieNotice2.default(this);
     //MODAL
     this._isCategoriesCheckedByDefault = options.categoriesCheckedByDefault ? options.categoriesCheckedByDefault : false;
-    this._modal = new _GdprCookieModal2.default(this);
-
-    if (!this._gdprCookie.isExists()) {
-      this._notice.show();
-
-      // if (this._implicit) {
-      //   this.acceptOnScroll()
-      // }
-    } else {
-      //   this.deleteCookies(this.getCurrentCookieSelection())
-      this._gdprCookiesEnabledEvt = new CustomEvent('gdprCookiesEnabled', { detail: this._gdprCookie.get() });
-      document.dispatchEvent(this._gdprCookiesEnabledEvt);
-    }
-
-    // Settings button on the page somewhere
-    var globalSettingsButtons = document.querySelectorAll('.' + this._pluginPrefix + '-settings-button');
-
-    if (globalSettingsButtons) {
-      for (var i in globalSettingsButtons) {
-        console.log(i, globalSettingsButtons[i]);
-        globalSettingsButtons[i].addEventListener('click', function (e) {
-          e.preventDefault();
-          _this._modal.show();
-        });
-      }
-    }
   }
 
   _createClass(GdprCookieNotice, [{
+    key: 'run',
+    value: function run() {
+      this.destroy();
+      //cookie
+      this._gdprCookie = new _GdprCookie2.default(this._namespace, this._expiration, this._domain);
+      //notice
+      this._notice = new _GdprCookieNoticePopup2.default(this, this._pluginPrefix, locales[this._locale]['notice'], this._timeout, this._statementUrl);
+      //modal
+      this._modal = new _GdprCookieModal2.default(this, this._pluginPrefix, locales[this._locale]['modal'], this._isCategoriesCheckedByDefault);
+
+      if (!this._gdprCookie.isExists()) {
+        this._notice.show();
+
+        // if (this._implicit) {
+        //   this.acceptOnScroll()
+        // }
+      } else {
+        //   this.deleteCookies(this.getCurrentCookieSelection())
+        this._fireCookieEnvabledEvent();
+      }
+
+      this._setModalShowButton();
+    }
+  }, {
+    key: 'destroy',
+    value: function destroy() {
+      if (this._notice) {
+        this._notice.destroy();
+      }
+
+      if (this._modal) {
+        this._modal.destroy();
+      }
+    }
+  }, {
+    key: '_setModalShowButton',
+    value: function _setModalShowButton() {
+      var _this = this;
+
+      var globalSettingsButtons = document.querySelectorAll('.' + this._pluginPrefix + '-settings-button');
+
+      if (globalSettingsButtons) {
+        for (var i in globalSettingsButtons) {
+          console.log(i, globalSettingsButtons[i]);
+          globalSettingsButtons[i].addEventListener('click', function (e) {
+            e.preventDefault();
+            _this._modal.show();
+          });
+        }
+      }
+    }
+  }, {
+    key: '_fireCookieEnvabledEvent',
+    value: function _fireCookieEnvabledEvent() {
+      this._gdprCookiesEnabledEvt = new CustomEvent('gdprCookiesEnabled', { detail: this._gdprCookie.get() });
+      document.dispatchEvent(this._gdprCookiesEnabledEvt);
+    }
+  }, {
     key: 'setEvent',
     value: function setEvent(evt, data) {
       switch (evt) {
@@ -137,8 +166,7 @@ var GdprCookieNotice = function () {
       console.log('acceptCategories', isPerformanceAccepted, isAnalyticsAccepted, isMarketingAccepted);
       // Load marketing scripts that only works when cookies are accepted
       this._gdprCookie.set(true, isPerformanceAccepted, isAnalyticsAccepted, isMarketingAccepted);
-      this._gdprCookiesEnabledEvt = new CustomEvent('gdprCookiesEnabled', { detail: this._gdprCookie.get() });
-      document.dispatchEvent(this._gdprCookiesEnabledEvt);
+      this._fireCookieEnvabledEvent();
 
       if (this._gdprCookie.isExists() && this._gdprCookie.isNecessaryAccepted()) {
         this._notice.hide();
@@ -149,6 +177,22 @@ var GdprCookieNotice = function () {
 
     //GETTER - SETTER ====================================================================================================
 
+  }, {
+    key: 'notice',
+    get: function get() {
+      return this._notice;
+    },
+    set: function set(notice) {
+      this._notice = notice;
+    }
+  }, {
+    key: 'modal',
+    get: function get() {
+      return this._modal;
+    },
+    set: function set(modal) {
+      this._modal = modal;
+    }
   }, {
     key: 'statementUrl',
     set: function set(statementUrl) {

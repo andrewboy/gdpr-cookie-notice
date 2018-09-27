@@ -1,4 +1,4 @@
-import './sass/_variables.scss'
+import './sass/notice2/_variables.scss'
 import './sass/notice2/_notice2.scss'
 
 export default class {
@@ -25,7 +25,7 @@ export default class {
 
   show () {
     console.log('show')
-    this.build()
+    this._build()
 
     // Show the notice with a little timeout
     window.setTimeout(() => {
@@ -33,7 +33,7 @@ export default class {
     }, this._timeout)
   }
 
-  build () {
+  _build () {
     if (this._isNoticeLoaded) { return }
     document.body.insertAdjacentHTML('beforeend', this.getTemplateHtml(this._getTemplate(), this._locale))
     let settingsButton = document.querySelectorAll('.' + this._pluginPrefix + '-nav-item-settings')[0]
@@ -54,6 +54,10 @@ export default class {
 
   hide () {
     document.documentElement.classList.remove(this._pluginPrefix + '-loaded')
+  }
+
+  destroy () {
+    document.getElementsByClassName(this._pluginPrefix).remove()
   }
 
   _getTemplate () {

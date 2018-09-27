@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-require('./sass/_variables.scss');
+require('./sass/notice2/_variables.scss');
 
 require('./sass/notice2/_notice2.scss');
 
@@ -43,7 +43,7 @@ var _class = function () {
       var _this = this;
 
       console.log('show');
-      this.build();
+      this._build();
 
       // Show the notice with a little timeout
       window.setTimeout(function () {
@@ -51,8 +51,8 @@ var _class = function () {
       }, this._timeout);
     }
   }, {
-    key: 'build',
-    value: function build() {
+    key: '_build',
+    value: function _build() {
       var _this2 = this;
 
       if (this._isNoticeLoaded) {
@@ -78,6 +78,11 @@ var _class = function () {
     key: 'hide',
     value: function hide() {
       document.documentElement.classList.remove(this._pluginPrefix + '-loaded');
+    }
+  }, {
+    key: 'destroy',
+    value: function destroy() {
+      document.getElementsByClassName(this._pluginPrefix).remove();
     }
   }, {
     key: '_getTemplate',
@@ -108,4 +113,4 @@ var _class = function () {
 }();
 
 exports.default = _class;
-//# sourceMappingURL=GdprCookieNotice2.js.map
+//# sourceMappingURL=GdprCookieNoticePopup.js.map

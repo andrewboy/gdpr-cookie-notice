@@ -368,8 +368,8 @@ var _class = function () {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _sass_variables_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./sass/_variables.scss */ "./src/sass/_variables.scss");
-/* harmony import */ var _sass_variables_scss__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_sass_variables_scss__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _sass_modal_variables_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./sass/modal/_variables.scss */ "./src/sass/modal/_variables.scss");
+/* harmony import */ var _sass_modal_variables_scss__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_sass_modal_variables_scss__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _sass_modal_modal_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./sass/modal/_modal.scss */ "./src/sass/modal/_modal.scss");
 /* harmony import */ var _sass_modal_modal_scss__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_sass_modal_modal_scss__WEBPACK_IMPORTED_MODULE_1__);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -556,17 +556,17 @@ var _class = function () {
 
 /***/ }),
 
-/***/ "./src/GdprCookieNotice2.js":
-/*!**********************************!*\
-  !*** ./src/GdprCookieNotice2.js ***!
-  \**********************************/
+/***/ "./src/GdprCookieNoticePopup.js":
+/*!**************************************!*\
+  !*** ./src/GdprCookieNoticePopup.js ***!
+  \**************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _sass_variables_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./sass/_variables.scss */ "./src/sass/_variables.scss");
-/* harmony import */ var _sass_variables_scss__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_sass_variables_scss__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _sass_notice2_variables_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./sass/notice2/_variables.scss */ "./src/sass/notice2/_variables.scss");
+/* harmony import */ var _sass_notice2_variables_scss__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_sass_notice2_variables_scss__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _sass_notice2_notice2_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./sass/notice2/_notice2.scss */ "./src/sass/notice2/_notice2.scss");
 /* harmony import */ var _sass_notice2_notice2_scss__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_sass_notice2_notice2_scss__WEBPACK_IMPORTED_MODULE_1__);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -607,7 +607,7 @@ var _class = function () {
       var _this = this;
 
       console.log('show');
-      this.build();
+      this._build();
 
       // Show the notice with a little timeout
       window.setTimeout(function () {
@@ -615,8 +615,8 @@ var _class = function () {
       }, this._timeout);
     }
   }, {
-    key: 'build',
-    value: function build() {
+    key: '_build',
+    value: function _build() {
       var _this2 = this;
 
       if (this._isNoticeLoaded) {
@@ -642,6 +642,11 @@ var _class = function () {
     key: 'hide',
     value: function hide() {
       document.documentElement.classList.remove(this._pluginPrefix + '-loaded');
+    }
+  }, {
+    key: 'destroy',
+    value: function destroy() {
+      document.getElementsByClassName(this._pluginPrefix).remove();
     }
   }, {
     key: '_getTemplate',
@@ -687,7 +692,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _template__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./template */ "./src/template.js");
 /* harmony import */ var _locales__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./locales */ "./src/locales/index.js");
 /* harmony import */ var _GdprCookie__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./GdprCookie */ "./src/GdprCookie.js");
-/* harmony import */ var _GdprCookieNotice2__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./GdprCookieNotice2 */ "./src/GdprCookieNotice2.js");
+/* harmony import */ var _GdprCookieNoticePopup__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./GdprCookieNoticePopup */ "./src/GdprCookieNoticePopup.js");
 /* harmony import */ var _GdprCookieModal__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./GdprCookieModal */ "./src/GdprCookieModal.js");
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -696,6 +701,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 
 // import './sass/gdpr-cookie-notice.scss'
+// import "sass/modal/_variables.scss";
+// import "sass/notice2/_variables.scss";
+
 
 
 
@@ -704,8 +712,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var GdprCookieNotice = function () {
   function GdprCookieNotice(options) {
-    var _this = this;
-
     _classCallCheck(this, GdprCookieNotice);
 
     console.log('GdprCookieNotice:constructor');
@@ -716,46 +722,76 @@ var GdprCookieNotice = function () {
     this._namespace = options.namespace ? options.namespace : 'gdprcookienotice';
     this._expiration = options.expiration ? options.expiration : 30;
     this._domain = options.domain ? options.domain : window.location.hostname;
-    this._gdprCookie = new _GdprCookie__WEBPACK_IMPORTED_MODULE_2__["default"](this._namespace, this._expiration, this._domain);
 
-    //BOXES
+    //BOXES ==============
     this._pluginPrefix = options.pluginPrefix ? options.pluginPrefix : 'gdpr-cookie-notice';
     this._locale = options.locale ? options.locale : 'hu';
     //NOTICE
     this._timeout = options.timeout ? options.timeout : 500;
     this._statementUrl = options.statementUrl ? options.statementUrl : '';
-    this._notice = new _GdprCookieNotice2__WEBPACK_IMPORTED_MODULE_3__["default"](this);
     //MODAL
     this._isCategoriesCheckedByDefault = options.categoriesCheckedByDefault ? options.categoriesCheckedByDefault : false;
-    this._modal = new _GdprCookieModal__WEBPACK_IMPORTED_MODULE_4__["default"](this);
-
-    if (!this._gdprCookie.isExists()) {
-      this._notice.show();
-
-      // if (this._implicit) {
-      //   this.acceptOnScroll()
-      // }
-    } else {
-      //   this.deleteCookies(this.getCurrentCookieSelection())
-      this._gdprCookiesEnabledEvt = new CustomEvent('gdprCookiesEnabled', { detail: this._gdprCookie.get() });
-      document.dispatchEvent(this._gdprCookiesEnabledEvt);
-    }
-
-    // Settings button on the page somewhere
-    var globalSettingsButtons = document.querySelectorAll('.' + this._pluginPrefix + '-settings-button');
-
-    if (globalSettingsButtons) {
-      for (var i in globalSettingsButtons) {
-        console.log(i, globalSettingsButtons[i]);
-        globalSettingsButtons[i].addEventListener('click', function (e) {
-          e.preventDefault();
-          _this._modal.show();
-        });
-      }
-    }
   }
 
   _createClass(GdprCookieNotice, [{
+    key: 'run',
+    value: function run() {
+      this.destroy();
+      //cookie
+      this._gdprCookie = new _GdprCookie__WEBPACK_IMPORTED_MODULE_2__["default"](this._namespace, this._expiration, this._domain);
+      //notice
+      this._notice = new _GdprCookieNoticePopup__WEBPACK_IMPORTED_MODULE_3__["default"](this, this._pluginPrefix, _locales__WEBPACK_IMPORTED_MODULE_1__[this._locale]['notice'], this._timeout, this._statementUrl);
+      //modal
+      this._modal = new _GdprCookieModal__WEBPACK_IMPORTED_MODULE_4__["default"](this, this._pluginPrefix, _locales__WEBPACK_IMPORTED_MODULE_1__[this._locale]['modal'], this._isCategoriesCheckedByDefault);
+
+      if (!this._gdprCookie.isExists()) {
+        this._notice.show();
+
+        // if (this._implicit) {
+        //   this.acceptOnScroll()
+        // }
+      } else {
+        //   this.deleteCookies(this.getCurrentCookieSelection())
+        this._fireCookieEnvabledEvent();
+      }
+
+      this._setModalShowButton();
+    }
+  }, {
+    key: 'destroy',
+    value: function destroy() {
+      if (this._notice) {
+        this._notice.destroy();
+      }
+
+      if (this._modal) {
+        this._modal.destroy();
+      }
+    }
+  }, {
+    key: '_setModalShowButton',
+    value: function _setModalShowButton() {
+      var _this = this;
+
+      var globalSettingsButtons = document.querySelectorAll('.' + this._pluginPrefix + '-settings-button');
+
+      if (globalSettingsButtons) {
+        for (var i in globalSettingsButtons) {
+          console.log(i, globalSettingsButtons[i]);
+          globalSettingsButtons[i].addEventListener('click', function (e) {
+            e.preventDefault();
+            _this._modal.show();
+          });
+        }
+      }
+    }
+  }, {
+    key: '_fireCookieEnvabledEvent',
+    value: function _fireCookieEnvabledEvent() {
+      this._gdprCookiesEnabledEvt = new CustomEvent('gdprCookiesEnabled', { detail: this._gdprCookie.get() });
+      document.dispatchEvent(this._gdprCookiesEnabledEvt);
+    }
+  }, {
     key: 'setEvent',
     value: function setEvent(evt, data) {
       switch (evt) {
@@ -803,8 +839,7 @@ var GdprCookieNotice = function () {
       console.log('acceptCategories', isPerformanceAccepted, isAnalyticsAccepted, isMarketingAccepted);
       // Load marketing scripts that only works when cookies are accepted
       this._gdprCookie.set(true, isPerformanceAccepted, isAnalyticsAccepted, isMarketingAccepted);
-      this._gdprCookiesEnabledEvt = new CustomEvent('gdprCookiesEnabled', { detail: this._gdprCookie.get() });
-      document.dispatchEvent(this._gdprCookiesEnabledEvt);
+      this._fireCookieEnvabledEvent();
 
       if (this._gdprCookie.isExists() && this._gdprCookie.isNecessaryAccepted()) {
         this._notice.hide();
@@ -815,6 +850,22 @@ var GdprCookieNotice = function () {
 
     //GETTER - SETTER ====================================================================================================
 
+  }, {
+    key: 'notice',
+    get: function get() {
+      return this._notice;
+    },
+    set: function set(notice) {
+      this._notice = notice;
+    }
+  }, {
+    key: 'modal',
+    get: function get() {
+      return this._modal;
+    },
+    set: function set(modal) {
+      this._modal = modal;
+    }
   }, {
     key: 'statementUrl',
     set: function set(statementUrl) {
@@ -925,33 +976,35 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "hu", function() { return hu; });
 var hu = {
   modal: {
-    settings: 'Süti beállítások',
-    statement: 'Süti nyilatkozatunk',
-    save: 'Mentés'
+    modal: {
+      settings: 'Süti beállítások',
+      statement: 'Süti nyilatkozatunk',
+      save: 'Mentés'
+    },
+    category: {
+      essential: {
+        title: 'Szükséges sütik',
+        desc: 'Ezek a weboldal megfelelő megjelenéséhez szükséges sütik, amelyek nélkül nem működne a weboldal.',
+        always_on: 'Mindig betölt'
+      },
+      performance: {
+        title: 'Teljesítmény sütik',
+        desc: 'Ezek a s\xFCtik kieg\xE9sz\xEDt\u0151 funkci\xF3kat t\xE1mogatnak az oldalon, p\xE9ld\xE1ul elt\xE1rolja, hogy milyen nyelven b\xF6ng\xE9szi \n        a weboldalt. Ezek n\xE9lk\xFCl nem biztos, hogy minden megfelel\u0151en fog m\u0171k\xF6dni.'
+      },
+      analytics: {
+        title: 'Statisztika sütik',
+        desc: 'Ezeket az\xE9rt haszn\xE1ljuk, hogy t\xE1j\xE9koz\xF3dni tudjunk arr\xF3l, mikor, h\xE1nyan \xE9s hogyan haszn\xE1lj\xE1k a \n        weboldalunkat. Ezekkel az adatokkal tudjuk k\xE9s\u0151bb optimaliz\xE1lni a weboldalunkat a megfelel\u0151 felhaszn\xE1l\xF3i \n        \xE9lm\xE9ny\xE9rt.'
+      },
+      marketing: {
+        title: 'Marketing sütik',
+        desc: 'Ezek a sütik segítenek nekünk a hirdetések kezelésében, célzásában.'
+      }
+    }
   },
-  bar: {
+  notice: {
     description: 'Ez a weboldal s\xFCtiket(cookie-kat) haszn\xE1l az\xE9rt, hogy a weboldal m\u0171k\xF6dj\xF6n, statisztikai adatokat \n    gy\u0171jts\xF6n \xE9s jobb felhaszn\xE1li\xF3 \xE9lm\xE9nyt ny\xFAjtson. A S\xFCti be\xE1ll\xEDt\xE1sok gombra kattintva t\xF6bb inform\xE1ci\xF3t is megtudhat \n    err\u0151l. Az oldal tov\xE1bbi haszn\xE1lat\xE1val beleegyezik a s\xFCtik haszn\xE1lat\xE1ba.',
     accept: 'Elfogadom',
     settings: 'Süti beállítások'
-  },
-  category: {
-    essential: {
-      title: 'Szükséges sütik',
-      desc: 'Ezek a weboldal megfelelő megjelenéséhez szükséges sütik, amelyek nélkül nem működne a weboldal.',
-      always_on: 'Mindig betölt'
-    },
-    performance: {
-      title: 'Teljesítmény sütik',
-      desc: 'Ezek a s\xFCtik kieg\xE9sz\xEDt\u0151 funkci\xF3kat t\xE1mogatnak az oldalon, p\xE9ld\xE1ul elt\xE1rolja, hogy milyen nyelven b\xF6ng\xE9szi \n      a weboldalt. Ezek n\xE9lk\xFCl nem biztos, hogy minden megfelel\u0151en fog m\u0171k\xF6dni.'
-    },
-    analytics: {
-      title: 'Statisztika sütik',
-      desc: 'Ezeket az\xE9rt haszn\xE1ljuk, hogy t\xE1j\xE9koz\xF3dni tudjunk arr\xF3l, mikor, h\xE1nyan \xE9s hogyan haszn\xE1lj\xE1k a \n      weboldalunkat. Ezekkel az adatokkal tudjuk k\xE9s\u0151bb optimaliz\xE1lni a weboldalunkat a megfelel\u0151 felhaszn\xE1l\xF3i \n      \xE9lm\xE9ny\xE9rt.'
-    },
-    marketing: {
-      title: 'Marketing sütik',
-      desc: 'Ezek a sütik segítenek nekünk a hirdetések kezelésében, célzásában.'
-    }
   }
 };
 
@@ -976,10 +1029,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./src/sass/_variables.scss":
-/*!**********************************!*\
-  !*** ./src/sass/_variables.scss ***!
-  \**********************************/
+/***/ "./src/sass/modal/_modal.scss":
+/*!************************************!*\
+  !*** ./src/sass/modal/_modal.scss ***!
+  \************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -987,14 +1040,14 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./src/sass/modal/_modal.scss":
-/*!************************************!*\
-  !*** ./src/sass/modal/_modal.scss ***!
-  \************************************/
+/***/ "./src/sass/modal/_variables.scss":
+/*!****************************************!*\
+  !*** ./src/sass/modal/_variables.scss ***!
+  \****************************************/
 /*! no static exports found */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-throw new Error("Module build failed (from ./node_modules/mini-css-extract-plugin/dist/loader.js):\nModuleBuildError: Module build failed (from ./node_modules/sass-loader/lib/loader.js):\n\r\n    background: url($icon_caret);\r\n                   ^\r\n      Undefined variable: \"$icon-caret\".\r\n      in C:\\Users\\beck.andras\\projects\\php\\src\\gdpr-cookie-notice\\src\\sass\\modal\\_modal.scss (line 8, column 21)\n    at runLoaders (C:\\Users\\beck.andras\\projects\\php\\src\\gdpr-cookie-notice\\node_modules\\webpack\\lib\\NormalModule.js:286:20)\n    at C:\\Users\\beck.andras\\projects\\php\\src\\gdpr-cookie-notice\\node_modules\\loader-runner\\lib\\LoaderRunner.js:364:11\n    at C:\\Users\\beck.andras\\projects\\php\\src\\gdpr-cookie-notice\\node_modules\\loader-runner\\lib\\LoaderRunner.js:230:18\n    at context.callback (C:\\Users\\beck.andras\\projects\\php\\src\\gdpr-cookie-notice\\node_modules\\loader-runner\\lib\\LoaderRunner.js:111:13)\n    at Object.render [as callback] (C:\\Users\\beck.andras\\projects\\php\\src\\gdpr-cookie-notice\\node_modules\\sass-loader\\lib\\loader.js:52:13)\n    at Object.done [as callback] (C:\\Users\\beck.andras\\projects\\php\\src\\gdpr-cookie-notice\\node_modules\\neo-async\\async.js:7974:18)\n    at options.error (C:\\Users\\beck.andras\\projects\\php\\src\\gdpr-cookie-notice\\node_modules\\node-sass\\lib\\index.js:294:32)");
+// extracted by mini-css-extract-plugin
 
 /***/ }),
 
@@ -1003,9 +1056,20 @@ throw new Error("Module build failed (from ./node_modules/mini-css-extract-plugi
   !*** ./src/sass/notice2/_notice2.scss ***!
   \****************************************/
 /*! no static exports found */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-throw new Error("Module build failed (from ./node_modules/mini-css-extract-plugin/dist/loader.js):\nModuleBuildError: Module build failed (from ./node_modules/sass-loader/lib/loader.js):\n\r\n  background: $bar_bg;\r\n             ^\r\n      Undefined variable: \"$bar-bg\".\r\n      in C:\\Users\\beck.andras\\projects\\php\\src\\gdpr-cookie-notice\\src\\sass\\notice2\\_notice2.scss (line 3, column 15)\n    at runLoaders (C:\\Users\\beck.andras\\projects\\php\\src\\gdpr-cookie-notice\\node_modules\\webpack\\lib\\NormalModule.js:286:20)\n    at C:\\Users\\beck.andras\\projects\\php\\src\\gdpr-cookie-notice\\node_modules\\loader-runner\\lib\\LoaderRunner.js:364:11\n    at C:\\Users\\beck.andras\\projects\\php\\src\\gdpr-cookie-notice\\node_modules\\loader-runner\\lib\\LoaderRunner.js:230:18\n    at context.callback (C:\\Users\\beck.andras\\projects\\php\\src\\gdpr-cookie-notice\\node_modules\\loader-runner\\lib\\LoaderRunner.js:111:13)\n    at Object.render [as callback] (C:\\Users\\beck.andras\\projects\\php\\src\\gdpr-cookie-notice\\node_modules\\sass-loader\\lib\\loader.js:52:13)\n    at Object.done [as callback] (C:\\Users\\beck.andras\\projects\\php\\src\\gdpr-cookie-notice\\node_modules\\neo-async\\async.js:7974:18)\n    at options.error (C:\\Users\\beck.andras\\projects\\php\\src\\gdpr-cookie-notice\\node_modules\\node-sass\\lib\\index.js:294:32)");
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+
+/***/ "./src/sass/notice2/_variables.scss":
+/*!******************************************!*\
+  !*** ./src/sass/notice2/_variables.scss ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
 
 /***/ }),
 

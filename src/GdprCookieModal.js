@@ -1,4 +1,4 @@
-import './sass/_variables.scss'
+import './sass/modal/_variables.scss'
 import './sass/modal/_modal.scss'
 
 export default class {

@@ -1,8 +1,11 @@
 import { default as template } from './template'
 import * as locales from './locales'
 // import './sass/gdpr-cookie-notice.scss'
+// import "sass/modal/_variables.scss";
+// import "sass/notice2/_variables.scss";
+
 import GdprCookie from './GdprCookie'
-import GdprCookieNotice2 from './GdprCookieNotice2'
+import GdprCookieNoticePopup from './GdprCookieNoticePopup'
 import GdprCookieModal from './GdprCookieModal'
 
 // GdprCookieNotice =======================================================
@@ -17,18 +20,36 @@ class GdprCookieNotice {
     this._namespace = options.namespace ? options.namespace : 'gdprcookienotice'
     this._expiration = options.expiration ? options.expiration : 30
     this._domain = options.domain ? options.domain : window.location.hostname
-    this._gdprCookie = new GdprCookie(this._namespace, this._expiration, this._domain)
 
-    //BOXES
+    //BOXES ==============
     this._pluginPrefix = options.pluginPrefix ? options.pluginPrefix : 'gdpr-cookie-notice'
     this._locale = options.locale ? options.locale : 'hu'
     //NOTICE
     this._timeout = options.timeout ? options.timeout : 500
     this._statementUrl = options.statementUrl ? options.statementUrl : ''
-    this._notice = new GdprCookieNotice2(this)
     //MODAL
     this._isCategoriesCheckedByDefault = options.categoriesCheckedByDefault ? options.categoriesCheckedByDefault : false
-    this._modal = new GdprCookieModal(this)
+  }
+
+  run () {
+    this.destroy()
+    //cookie
+    this._gdprCookie = new GdprCookie(this._namespace, this._expiration, this._domain)
+    //notice
+    this._notice = new GdprCookieNoticePopup(
+      this,
+      this._pluginPrefix,
+      locales[this._locale]['notice'],
+      this._timeout,
+      this._statementUrl
+    )
+    //modal
+    this._modal = new GdprCookieModal(
+      this,
+      this._pluginPrefix,
+      locales[this._locale]['modal'],
+      this._isCategoriesCheckedByDefault
+    )
 
     if (!this._gdprCookie.isExists()) {
       this._notice.show()
@@ -38,11 +59,23 @@ class GdprCookieNotice {
       // }
     } else {
       //   this.deleteCookies(this.getCurrentCookieSelection())
-      this._gdprCookiesEnabledEvt = new CustomEvent('gdprCookiesEnabled', {detail: this._gdprCookie.get()})
-      document.dispatchEvent(this._gdprCookiesEnabledEvt)
+      this._fireCookieEnvabledEvent()
     }
 
-    // Settings button on the page somewhere
+    this._setModalShowButton()
+  }
+
+  destroy () {
+    if (this._notice) {
+      this._notice.destroy()
+    }
+
+    if (this._modal) {
+      this._modal.destroy()
+    }
+  }
+
+  _setModalShowButton () {
     let globalSettingsButtons = document.querySelectorAll('.' + this._pluginPrefix + '-settings-button')
 
     if (globalSettingsButtons) {
@@ -54,6 +87,11 @@ class GdprCookieNotice {
         })
       }
     }
+  }
+
+  _fireCookieEnvabledEvent () {
+    this._gdprCookiesEnabledEvt = new CustomEvent('gdprCookiesEnabled', {detail: this._gdprCookie.get()})
+    document.dispatchEvent(this._gdprCookiesEnabledEvt)
   }
 
   setEvent (evt, data) {
@@ -108,8 +146,7 @@ class GdprCookieNotice {
       isAnalyticsAccepted,
       isMarketingAccepted
     )
-    this._gdprCookiesEnabledEvt = new CustomEvent('gdprCookiesEnabled', {detail: this._gdprCookie.get()})
-    document.dispatchEvent(this._gdprCookiesEnabledEvt)
+    this._fireCookieEnvabledEvent()
 
     if (this._gdprCookie.isExists() && this._gdprCookie.isNecessaryAccepted()) {
       this._notice.hide()
@@ -119,6 +156,22 @@ class GdprCookieNotice {
   }
 
   //GETTER - SETTER ====================================================================================================
+
+  get notice() {
+    return this._notice
+  }
+
+  set notice (notice) {
+    this._notice = notice
+  }
+
+  get modal () {
+    return this._modal
+  }
+
+  set modal (modal) {
+    this._modal = modal
+  }
 
   set statementUrl (statementUrl) {
     this._statementUrl = statementUrl
