@@ -4,12 +4,12 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _hu = require('./hu');
+var _hu_HU = require('./hu_HU');
 
-Object.defineProperty(exports, 'hu', {
+Object.defineProperty(exports, 'hu_HU', {
   enumerable: true,
   get: function get() {
-    return _interopRequireDefault(_hu).default;
+    return _interopRequireDefault(_hu_HU).default;
   }
 });
 

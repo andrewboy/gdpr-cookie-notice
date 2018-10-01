@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var hu = {
+var hu_HU = {
   modal: {
     modal: {
       settings: 'Süti beállítások',
@@ -37,6 +37,6 @@ var hu = {
   }
 };
 
-exports.hu = hu;
-exports.default = hu;
-//# sourceMappingURL=hu.js.map
+exports.hu_HU = hu_HU;
+exports.default = hu_HU;
+//# sourceMappingURL=hu_HU.js.map

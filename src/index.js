@@ -1,4 +1,4 @@
-import { default as template } from './template'
+// import { default as template } from './template'
 import * as locales from './locales'
 // import './sass/gdpr-cookie-notice.scss'
 // import "sass/modal/_variables.scss";
@@ -13,43 +13,56 @@ import GdprCookieModal from './GdprCookieModal'
 class GdprCookieNotice {
   constructor (options) {
     console.log('GdprCookieNotice:constructor')
-    this._categories = options.categories ? options.categories : []
-    // this._implicit = options.implicit ? options.implicit : false
-    // this._cookiesAccepted = false
-    //COOKIE
-    this._namespace = options.namespace ? options.namespace : 'gdprcookienotice'
-    this._expiration = options.expiration ? options.expiration : 30
-    this._domain = options.domain ? options.domain : window.location.hostname
-
-    //BOXES ==============
-    this._pluginPrefix = options.pluginPrefix ? options.pluginPrefix : 'gdpr-cookie-notice'
-    this._locale = options.locale ? options.locale : 'hu'
-    //NOTICE
-    this._timeout = options.timeout ? options.timeout : 500
-    this._statementUrl = options.statementUrl ? options.statementUrl : ''
-    //MODAL
-    this._isCategoriesCheckedByDefault = options.categoriesCheckedByDefault ? options.categoriesCheckedByDefault : false
+    this.load(options)
   }
 
-  run () {
+  _getNotice () {
+    return new GdprCookieNoticePopup(
+      this,
+      this._opts.pluginPrefix,
+      locales[this._opts.locale]['notice'],
+      this._opts.timeout,
+      this._opts.statementUrl
+    )
+  }
+
+  _getModal () {
+    return new GdprCookieModal(
+      this,
+      this._opts.pluginPrefix,
+      locales[this._opts.locale]['modal'],
+      this._opts.isCategoriesCheckedByDefault
+    )
+  }
+
+  load (options) {
+    //remove actual
     this.destroy()
+
+    //reset options
+    this._opts = Object.assign({}, {
+      categories: {},
+      implicit: false,
+      //cookie
+      namespace: 'gdprcookienotice',
+      expiration: 30,
+      domain: window.location.hostname,
+      //boxes
+      pluginPrefix: 'gdpr-cookie-notice',
+      locale: 'hu',
+      //notice
+      timeout: 500,
+      statementUrl: '',
+      //modal
+      isCategoriesAcceptedByDefault: false
+    }, options)
+
     //cookie
-    this._gdprCookie = new GdprCookie(this._namespace, this._expiration, this._domain)
+    this._gdprCookie = new GdprCookie(this._opts.namespace, this._opts.expiration, this._opts.domain)
     //notice
-    this._notice = new GdprCookieNoticePopup(
-      this,
-      this._pluginPrefix,
-      locales[this._locale]['notice'],
-      this._timeout,
-      this._statementUrl
-    )
+    this._notice = this._getNotice()
     //modal
-    this._modal = new GdprCookieModal(
-      this,
-      this._pluginPrefix,
-      locales[this._locale]['modal'],
-      this._isCategoriesCheckedByDefault
-    )
+    this._modal = this._getModal()
 
     if (!this._gdprCookie.isExists()) {
       this._notice.show()
@@ -76,7 +89,7 @@ class GdprCookieNotice {
   }
 
   _setModalShowButton () {
-    let globalSettingsButtons = document.querySelectorAll('.' + this._pluginPrefix + '-settings-button')
+    let globalSettingsButtons = document.querySelectorAll('.' + this._opts.pluginPrefix + '-settings-button')
 
     if (globalSettingsButtons) {
       for (let i in globalSettingsButtons) {
@@ -115,27 +128,13 @@ class GdprCookieNotice {
 
   acceptAllCategories () {
     this.acceptCategories(
-      !!this._categories.performance,
-      !!this._categories.analytics,
-      !!this._categories.marketing,
+      !!this._opts.categories.performance,
+      !!this._opts.categories.analytics,
+      !!this._opts.categories.marketing,
     )
   }
 
   //COOKIE =============================================================================================================
-
-  // deleteCookies (savedCookies) {
-  //   for (let i in this._categories) {
-  //     if (Object.keys(savedCookies).indexOf(i) >= 0 || !savedCookies[i]) {
-  //       Cookies.remove(i)
-  //     }
-  //   }
-  //
-  //   if (!savedCookies) {
-  //     this.showNotice()
-  //   } else {
-  //     this.hideNotice()
-  //   }
-  // }
 
   acceptCategories (isPerformanceAccepted, isAnalyticsAccepted, isMarketingAccepted) {
     console.log('acceptCategories', isPerformanceAccepted, isAnalyticsAccepted, isMarketingAccepted)
@@ -153,112 +152,6 @@ class GdprCookieNotice {
     } else {
       this._notice.show()
     }
-  }
-
-  //GETTER - SETTER ====================================================================================================
-
-  get notice() {
-    return this._notice
-  }
-
-  set notice (notice) {
-    this._notice = notice
-  }
-
-  get modal () {
-    return this._modal
-  }
-
-  set modal (modal) {
-    this._modal = modal
-  }
-
-  set statementUrl (statementUrl) {
-    this._statementUrl = statementUrl
-  }
-
-  get statementUrl () {
-    return this._statementUrl
-  }
-
-  // set implicit (isImplicit) {
-  //   this._implicit = isImplicit
-  // }
-  //
-  // get implicit () {
-  //   return this._implicit
-  // }
-
-  // set cookiesAccepted (isAccepted) {
-  //   this._cookiesAccepted = isAccepted
-  // }
-  //
-  // get cookiesAccepted () {
-  //   return this._cookiesAccepted
-  // }
-
-  set categories (categories) {
-    this._categories = categories
-  }
-
-  get categories () {
-    return this._categories
-  }
-
-  set locale (locale) {
-    this._locale = locale
-  }
-
-  get locale () {
-    return this._locale
-  }
-
-  set timeout (timeout) {
-    this._timeout = timeout
-  }
-
-  get timeout () {
-    return this._timeout
-  }
-
-  set domain (domain) {
-    this._domain = domain
-  }
-
-  get domain () {
-    return this._domain
-  }
-
-  set expiration (expiration) {
-    this._expiration = expiration
-  }
-
-  get expiration () {
-    return this._expiration
-  }
-
-  set isCategoriesCheckedByDefault (isCategoriesCheckedByDefault) {
-    this._isCategoriesCheckedByDefault = isCategoriesCheckedByDefault
-  }
-
-  get isCategoriesCheckedByDefault () {
-    return this._isCategoriesCheckedByDefault
-  }
-
-  set namespace (namespace) {
-    this._namespace = namespace
-  }
-
-  get namespace () {
-    return this._namespace
-  }
-
-  set pluginPrefix (pluginPrefix) {
-    this._pluginPrefix = pluginPrefix
-  }
-
-  get pluginPrefix () {
-    return this._pluginPrefix
   }
 }
 

@@ -1,4 +1,4 @@
-let hu = {
+let hu_HU = {
   modal: {
     modal: {
       settings: 'Süti beállítások',
@@ -37,5 +37,5 @@ let hu = {
   },
 }
 
-export { hu }
-export default hu
+export { hu_HU }
+export default hu_HU
