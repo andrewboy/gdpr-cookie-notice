@@ -13,6 +13,22 @@ import GdprCookieModal from './GdprCookieModal'
 class GdprCookieNotice {
   constructor (options) {
     console.log('GdprCookieNotice:constructor')
+    this._opts = {
+      categories: {},
+      implicit: false,
+      //cookie
+      namespace: 'gdprcookienotice',
+      expiration: 30,
+      domain: window.location.hostname,
+      //boxes
+      pluginPrefix: 'gdpr-cookie-notice',
+      locale: 'hu',
+      //notice
+      timeout: 500,
+      statementUrl: '',
+      //modal
+      isCategoriesAcceptedByDefault: false
+    }
     this.load(options)
   }
 
@@ -40,22 +56,7 @@ class GdprCookieNotice {
     this.destroy()
 
     //reset options
-    this._opts = Object.assign({}, {
-      categories: {},
-      implicit: false,
-      //cookie
-      namespace: 'gdprcookienotice',
-      expiration: 30,
-      domain: window.location.hostname,
-      //boxes
-      pluginPrefix: 'gdpr-cookie-notice',
-      locale: 'hu',
-      //notice
-      timeout: 500,
-      statementUrl: '',
-      //modal
-      isCategoriesAcceptedByDefault: false
-    }, options)
+    this._opts = Object.assign({}, this._opts, options)
 
     //cookie
     this._gdprCookie = new GdprCookie(this._opts.namespace, this._opts.expiration, this._opts.domain)
