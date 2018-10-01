@@ -1,1 +1,1 @@
-{"version":3,"sources":["../../src/locales/index.js"],"names":["default"],"mappings":";;;;;;;;;;;0CAASA,O","file":"index.js","sourcesContent":["export { default as hu_HU } from './hu_HU'"]}
+{"version":3,"sources":["../../src/locales/index.js"],"names":["default"],"mappings":";;;;;;;;;;;0CAASA,O;;;;;;;;;0CACAA,O","file":"index.js","sourcesContent":["export { default as hu_HU } from './hu_HU'\r\nexport { default as en_GB } from './en_GB'"]}

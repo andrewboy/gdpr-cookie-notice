@@ -13,5 +13,14 @@ Object.defineProperty(exports, 'hu_HU', {
   }
 });
 
+var _en_GB = require('./en_GB');
+
+Object.defineProperty(exports, 'en_GB', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_en_GB).default;
+  }
+});
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 //# sourceMappingURL=index.js.map
