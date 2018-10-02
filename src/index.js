@@ -100,7 +100,7 @@ class GdprCookieNotice {
 
     if (globalSettingsButtons) {
       for (let i in globalSettingsButtons) {
-        console.log(i, globalSettingsButtons[i])
+        console.log('globalSettingsButtons LOOP', i, globalSettingsButtons[i])
         globalSettingsButtons[i].addEventListener('click', (e) => {
           e.preventDefault()
           this._modal.show()
