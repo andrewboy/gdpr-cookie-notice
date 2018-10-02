@@ -55,6 +55,7 @@ var GdprCookieNotice = function () {
       //modal
       isCategoriesAcceptedByDefault: false
     };
+    this._isCookiesAccepted = false;
     this.load(options);
   }
 
@@ -87,11 +88,10 @@ var GdprCookieNotice = function () {
       if (!this._gdprCookie.isExists()) {
         this._notice.show();
 
-        // if (this._implicit) {
-        //   this.acceptOnScroll()
-        // }
+        if (this._opts.implicit) {
+          this._acceptOnScroll();
+        }
       } else {
-        //   this.deleteCookies(this.getCurrentCookieSelection())
         this._fireCookieEnvabledEvent();
       }
 
@@ -108,6 +108,43 @@ var GdprCookieNotice = function () {
         this._modal.destroy();
       }
     }
+
+    //acceptonscroll =========
+
+  }, {
+    key: '_acceptOnScroll',
+    value: function _acceptOnScroll() {
+      window.addEventListener('scroll', function _listener() {
+        if (this._amountScrolled()) {
+          this.acceptAllCategories();
+          window.removeEventListener('click', _listener);
+        }
+      }.bind(this));
+    }
+  }, {
+    key: '_getDocHeight',
+    value: function _getDocHeight() {
+      var D = document;
+      return Math.max(D.body.scrollHeight, D.documentElement.scrollHeight, D.body.offsetHeight, D.documentElement.offsetHeight, D.body.clientHeight, D.documentElement.clientHeight);
+    }
+  }, {
+    key: '_amountScrolled',
+    value: function _amountScrolled() {
+      var winheight = window.innerHeight || (document.documentElement || document.body).clientHeight;
+      var docheight = this._getDocHeight();
+      var scrollTop = window.pageYOffset || (document.documentElement || document.body.parentNode || document.body).scrollTop;
+      var trackLength = docheight - winheight;
+      var pctScrolled = Math.floor(scrollTop / trackLength * 100); // gets percentage scrolled (ie: 80 or NaN if tracklength == 0)
+      if (pctScrolled > 25 && !this._isCookiesAccepted) {
+        this._isCookiesAccepted = true;
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+    //==============
+
   }, {
     key: '_setModalShowButton',
     value: function _setModalShowButton() {
