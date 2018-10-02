@@ -39,13 +39,6 @@ class GdprCookieNotice {
       locales[this._opts.locale]['notice'],
       this._opts.timeout
     )
-    // return new GdprCookieNoticePopup({
-    //   cookieManager: this,
-    //   pluginPrefix: this._opts.pluginPrefix,
-    //   locale: locales[this._opts.locale]['notice'],
-    //   timeout: this._opts.timeout,
-    //   statementUrl: this._opts.statementUrl
-    // })
   }
 
   _getModal () {
@@ -53,6 +46,7 @@ class GdprCookieNotice {
       this,
       this._opts.pluginPrefix,
       locales[this._opts.locale]['modal'],
+      this._opts.statementUrl,
       this._opts.isCategoriesCheckedByDefault
     )
   }
@@ -161,6 +155,12 @@ class GdprCookieNotice {
     } else {
       this._notice.show()
     }
+  }
+
+  //=================================
+
+  get categories () {
+    return this._categories
   }
 }
 

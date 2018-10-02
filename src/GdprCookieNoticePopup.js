@@ -1,4 +1,4 @@
-export { default as hu_HU } from './locales/hu_HU.js'
+import { default as hu_HU } from './locales/hu_HU.js'
 import './sass/notice2/_variables.scss'
 import './sass/notice2/_notice2.scss'
 

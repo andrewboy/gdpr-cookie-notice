@@ -6,47 +6,28 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _hu_HU = require('./locales/hu_HU.js');
+
+var _hu_HU2 = _interopRequireDefault(_hu_HU);
+
 require('./sass/modal/_variables.scss');
 
 require('./sass/modal/_modal.scss');
 
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var _class = function () {
-  function _class(gdprCookieManager) {
+  function _class(cookieManager, prefix, locale, statementUrl, isCheckedByDefault) {
     _classCallCheck(this, _class);
 
-    this._manager = gdprCookieManager;
-    this._locale = {
-      modal: {
-        settings: 'Süti beállítások',
-        statement: 'Süti nyilatkozatunk',
-        save: 'Mentés'
-      },
-      category: {
-        essential: {
-          title: 'Szükséges sütik',
-          desc: 'Ezek a weboldal megfelelő megjelenéséhez szükséges sütik, amelyek nélkül nem működne a weboldal.',
-          always_on: 'Mindig betölt'
-        },
-        performance: {
-          title: 'Teljesítmény sütik',
-          desc: 'Ezek a s\xFCtik kieg\xE9sz\xEDt\u0151 funkci\xF3kat t\xE1mogatnak az oldalon, p\xE9ld\xE1ul elt\xE1rolja, hogy milyen nyelven b\xF6ng\xE9szi \n          a weboldalt. Ezek n\xE9lk\xFCl nem biztos, hogy minden megfelel\u0151en fog m\u0171k\xF6dni.'
-        },
-        analytics: {
-          title: 'Statisztika sütik',
-          desc: 'Ezeket az\xE9rt haszn\xE1ljuk, hogy t\xE1j\xE9koz\xF3dni tudjunk arr\xF3l, mikor, h\xE1nyan \xE9s hogyan haszn\xE1lj\xE1k a \n          weboldalunkat. Ezekkel az adatokkal tudjuk k\xE9s\u0151bb optimaliz\xE1lni a weboldalunkat a megfelel\u0151 felhaszn\xE1l\xF3i \n          \xE9lm\xE9ny\xE9rt.'
-        },
-        marketing: {
-          title: 'Marketing sütik',
-          desc: 'Ezek a sütik segítenek nekünk a hirdetések kezelésében, célzásában.'
-        }
-      }
-    };
-    this._pluginPrefix = 'gdpr-cookie-notice';
+    this._manager = cookieManager;
+    this._locale = locale ? locale : _hu_HU2.default['modal'];
+    this._pluginPrefix = prefix ? prefix : 'gdpr-cookie-notice';
+    this._isCategoriesCheckedByDefault = isCheckedByDefault ? isCheckedByDefault : false;
+    this._statementUrl = statementUrl ? statementUrl : '';
     this._isModalLoaded = false;
-    this._isCategoriesCheckedByDefault = false;
-    this._statementUrl = 'https://index.hu/';
   }
 
   _createClass(_class, [{
@@ -120,8 +101,8 @@ var _class = function () {
       var saveButton = document.querySelectorAll('.' + this._pluginPrefix + '-modal-footer-item-save')[0];
 
       closeButton.addEventListener('click', function (e) {
+        e.preventDefault();
         _this.hide();
-        return false;
       });
 
       statementButton.addEventListener('click', function (e) {

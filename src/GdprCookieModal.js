@@ -1,42 +1,15 @@
+import { default as hu_HU } from './locales/hu_HU.js'
 import './sass/modal/_variables.scss'
 import './sass/modal/_modal.scss'
 
 export default class {
-  constructor (gdprCookieManager) {
-    this._manager = gdprCookieManager
-    this._locale = {
-      modal: {
-        settings: 'Süti beállítások',
-        statement: 'Süti nyilatkozatunk',
-        save: 'Mentés'
-      },
-      category: {
-        essential: {
-          title: 'Szükséges sütik',
-          desc: 'Ezek a weboldal megfelelő megjelenéséhez szükséges sütik, amelyek nélkül nem működne a weboldal.',
-          always_on: 'Mindig betölt'
-        },
-        performance: {
-          title: 'Teljesítmény sütik',
-          desc: `Ezek a sütik kiegészítő funkciókat támogatnak az oldalon, például eltárolja, hogy milyen nyelven böngészi 
-          a weboldalt. Ezek nélkül nem biztos, hogy minden megfelelően fog működni.`
-        },
-        analytics: {
-          title: 'Statisztika sütik',
-          desc: `Ezeket azért használjuk, hogy tájékozódni tudjunk arról, mikor, hányan és hogyan használják a 
-          weboldalunkat. Ezekkel az adatokkal tudjuk később optimalizálni a weboldalunkat a megfelelő felhasználói 
-          élményért.`
-        },
-        marketing: {
-          title: 'Marketing sütik',
-          desc: 'Ezek a sütik segítenek nekünk a hirdetések kezelésében, célzásában.'
-        }
-      }
-    }
-    this._pluginPrefix = 'gdpr-cookie-notice'
+  constructor (cookieManager, prefix, locale, statementUrl, isCheckedByDefault) {
+    this._manager = cookieManager
+    this._locale = locale ? locale : hu_HU['modal']
+    this._pluginPrefix = prefix ? prefix : 'gdpr-cookie-notice'
+    this._isCategoriesCheckedByDefault = isCheckedByDefault ? isCheckedByDefault : false
+    this._statementUrl = statementUrl ? statementUrl : ''
     this._isModalLoaded = false
-    this._isCategoriesCheckedByDefault = false
-    this._statementUrl = 'https://index.hu/'
   }
 
   build () {
@@ -116,8 +89,8 @@ export default class {
     let saveButton = document.querySelectorAll('.' + this._pluginPrefix + '-modal-footer-item-save')[0]
 
     closeButton.addEventListener('click', (e) => {
+      e.preventDefault()
       this.hide()
-      return false
     })
 
     statementButton.addEventListener('click', (e) => {

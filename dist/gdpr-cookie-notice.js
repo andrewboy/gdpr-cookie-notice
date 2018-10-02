@@ -368,10 +368,11 @@ var _class = function () {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _sass_modal_variables_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./sass/modal/_variables.scss */ "./src/sass/modal/_variables.scss");
-/* harmony import */ var _sass_modal_variables_scss__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_sass_modal_variables_scss__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _sass_modal_modal_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./sass/modal/_modal.scss */ "./src/sass/modal/_modal.scss");
-/* harmony import */ var _sass_modal_modal_scss__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_sass_modal_modal_scss__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _locales_hu_HU_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./locales/hu_HU.js */ "./src/locales/hu_HU.js");
+/* harmony import */ var _sass_modal_variables_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./sass/modal/_variables.scss */ "./src/sass/modal/_variables.scss");
+/* harmony import */ var _sass_modal_variables_scss__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_sass_modal_variables_scss__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _sass_modal_modal_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./sass/modal/_modal.scss */ "./src/sass/modal/_modal.scss");
+/* harmony import */ var _sass_modal_modal_scss__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_sass_modal_modal_scss__WEBPACK_IMPORTED_MODULE_2__);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -379,41 +380,17 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 
 
+
 var _class = function () {
-  function _class(gdprCookieManager) {
+  function _class(cookieManager, prefix, locale, statementUrl, isCheckedByDefault) {
     _classCallCheck(this, _class);
 
-    this._manager = gdprCookieManager;
-    this._locale = {
-      modal: {
-        settings: 'Süti beállítások',
-        statement: 'Süti nyilatkozatunk',
-        save: 'Mentés'
-      },
-      category: {
-        essential: {
-          title: 'Szükséges sütik',
-          desc: 'Ezek a weboldal megfelelő megjelenéséhez szükséges sütik, amelyek nélkül nem működne a weboldal.',
-          always_on: 'Mindig betölt'
-        },
-        performance: {
-          title: 'Teljesítmény sütik',
-          desc: 'Ezek a s\xFCtik kieg\xE9sz\xEDt\u0151 funkci\xF3kat t\xE1mogatnak az oldalon, p\xE9ld\xE1ul elt\xE1rolja, hogy milyen nyelven b\xF6ng\xE9szi \n          a weboldalt. Ezek n\xE9lk\xFCl nem biztos, hogy minden megfelel\u0151en fog m\u0171k\xF6dni.'
-        },
-        analytics: {
-          title: 'Statisztika sütik',
-          desc: 'Ezeket az\xE9rt haszn\xE1ljuk, hogy t\xE1j\xE9koz\xF3dni tudjunk arr\xF3l, mikor, h\xE1nyan \xE9s hogyan haszn\xE1lj\xE1k a \n          weboldalunkat. Ezekkel az adatokkal tudjuk k\xE9s\u0151bb optimaliz\xE1lni a weboldalunkat a megfelel\u0151 felhaszn\xE1l\xF3i \n          \xE9lm\xE9ny\xE9rt.'
-        },
-        marketing: {
-          title: 'Marketing sütik',
-          desc: 'Ezek a sütik segítenek nekünk a hirdetések kezelésében, célzásában.'
-        }
-      }
-    };
-    this._pluginPrefix = 'gdpr-cookie-notice';
+    this._manager = cookieManager;
+    this._locale = locale ? locale : _locales_hu_HU_js__WEBPACK_IMPORTED_MODULE_0__["default"]['modal'];
+    this._pluginPrefix = prefix ? prefix : 'gdpr-cookie-notice';
+    this._isCategoriesCheckedByDefault = isCheckedByDefault ? isCheckedByDefault : false;
+    this._statementUrl = statementUrl ? statementUrl : '';
     this._isModalLoaded = false;
-    this._isCategoriesCheckedByDefault = false;
-    this._statementUrl = 'https://index.hu/';
   }
 
   _createClass(_class, [{
@@ -487,8 +464,8 @@ var _class = function () {
       var saveButton = document.querySelectorAll('.' + this._pluginPrefix + '-modal-footer-item-save')[0];
 
       closeButton.addEventListener('click', function (e) {
+        e.preventDefault();
         _this.hide();
-        return false;
       });
 
       statementButton.addEventListener('click', function (e) {
@@ -567,14 +544,12 @@ var _class = function () {
 /*!**************************************!*\
   !*** ./src/GdprCookieNoticePopup.js ***!
   \**************************************/
-/*! exports provided: hu_HU, default */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _locales_hu_HU_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./locales/hu_HU.js */ "./src/locales/hu_HU.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "hu_HU", function() { return _locales_hu_HU_js__WEBPACK_IMPORTED_MODULE_0__["default"]; });
-
 /* harmony import */ var _sass_notice2_variables_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./sass/notice2/_variables.scss */ "./src/sass/notice2/_variables.scss");
 /* harmony import */ var _sass_notice2_variables_scss__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_sass_notice2_variables_scss__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _sass_notice2_notice2_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./sass/notice2/_notice2.scss */ "./src/sass/notice2/_notice2.scss");
@@ -601,7 +576,7 @@ var _class = function () {
     this._isNoticeLoaded = false;
     this._timeout = timeout ? timeout : 500;
     this._pluginPrefix = prefix ? prefix : 'gdpr-cookie-notice';
-    this._locale = locale ? locale : hu_HU['notice'];
+    this._locale = locale ? locale : _locales_hu_HU_js__WEBPACK_IMPORTED_MODULE_0__["default"]['notice'];
   }
 
   /*
@@ -750,18 +725,11 @@ var GdprCookieNotice = function () {
     key: '_getNotice',
     value: function _getNotice() {
       return new _GdprCookieNoticePopup__WEBPACK_IMPORTED_MODULE_2__["default"](this, this._opts.pluginPrefix, _locales__WEBPACK_IMPORTED_MODULE_0__[this._opts.locale]['notice'], this._opts.timeout);
-      // return new GdprCookieNoticePopup({
-      //   cookieManager: this,
-      //   pluginPrefix: this._opts.pluginPrefix,
-      //   locale: locales[this._opts.locale]['notice'],
-      //   timeout: this._opts.timeout,
-      //   statementUrl: this._opts.statementUrl
-      // })
     }
   }, {
     key: '_getModal',
     value: function _getModal() {
-      return new _GdprCookieModal__WEBPACK_IMPORTED_MODULE_3__["default"](this, this._opts.pluginPrefix, _locales__WEBPACK_IMPORTED_MODULE_0__[this._opts.locale]['modal'], this._opts.isCategoriesCheckedByDefault);
+      return new _GdprCookieModal__WEBPACK_IMPORTED_MODULE_3__["default"](this, this._opts.pluginPrefix, _locales__WEBPACK_IMPORTED_MODULE_0__[this._opts.locale]['modal'], this._opts.statementUrl, this._opts.isCategoriesCheckedByDefault);
     }
   }, {
     key: 'load',
@@ -869,6 +837,14 @@ var GdprCookieNotice = function () {
       } else {
         this._notice.show();
       }
+    }
+
+    //=================================
+
+  }, {
+    key: 'categories',
+    get: function get() {
+      return this._categories;
     }
   }]);
 
