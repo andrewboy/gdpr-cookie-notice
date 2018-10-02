@@ -58,7 +58,7 @@ export default class {
   }
 
   destroy () {
-    document.getElementsByClassName(this._pluginPrefix).remove()
+    document.getElementsByClassName(this._pluginPrefix)[0].remove()
   }
 
   _getTemplate () {

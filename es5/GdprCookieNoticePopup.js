@@ -96,7 +96,7 @@ var _class = function () {
   }, {
     key: 'destroy',
     value: function destroy() {
-      document.getElementsByClassName(this._pluginPrefix).remove();
+      document.getElementsByClassName(this._pluginPrefix)[0].remove();
     }
   }, {
     key: '_getTemplate',
