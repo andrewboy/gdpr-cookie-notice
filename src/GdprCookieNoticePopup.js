@@ -1,19 +1,20 @@
+export { default as hu_HU } from './locales/hu_HU.js'
 import './sass/notice2/_variables.scss'
 import './sass/notice2/_notice2.scss'
 
 export default class {
-  constructor (gdprCookieManager) {
+  constructor (cookieManager, prefix, locale, timeout) {
+  // constructor (opts) {
+  //   this._isNoticeLoaded = false
+  //   this._timeout = opts.timeout ? opts.timeout : 500
+  //   this._pluginPrefix = opts.pluginPrefix ? opts.pluginPrefix : 'gdpr-cookie-notice'
+  //   this._locale = opts.locale ? opts.locale : hu_HU['notice']
+  //   this._manager = opts.cookieManager
+    this._manager = cookieManager
     this._isNoticeLoaded = false
-    this._timeout = 500
-    this._pluginPrefix = 'gdpr-cookie-notice'
-    this._locale = {
-      description: `Ez a weboldal sütiket(cookie-kat) használ azért, hogy a weboldal működjön, statisztikai adatokat 
-      gyűjtsön és jobb felhasználió élményt nyújtson. A Süti beállítások gombra kattintva több információt is megtudhat 
-      erről. Az oldal további használatával beleegyezik a sütik használatába.`,
-      accept: 'Elfogadom',
-      settings: 'Süti beállítások'
-    }
-    this._manager = gdprCookieManager
+    this._timeout = timeout ? timeout : 500
+    this._pluginPrefix = prefix ? prefix : 'gdpr-cookie-notice'
+    this._locale = locale ? locale : hu_HU['notice']
   }
 
   /*
