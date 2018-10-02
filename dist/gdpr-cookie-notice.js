@@ -806,7 +806,7 @@ var GdprCookieNotice = function () {
       console.log(globalSettingsButtons);
 
       if (globalSettingsButtons) {
-        for (var i in globalSettingsButtons) {
+        for (var i = 0; i < globalSettingsButtons.length; i++) {
           console.log('globalSettingsButtons LOOP', i, globalSettingsButtons[i]);
           globalSettingsButtons[i].addEventListener('click', function (e) {
             e.preventDefault();
