@@ -103,7 +103,9 @@ export default class {
   }
 
   destroy () {
-    document.getElementsByClassName(this._pluginPrefix + '-modal')[0].remove()
+    if (this._isModalLoaded) {
+      document.getElementsByClassName(this._pluginPrefix + '-modal')[0].remove()
+    }
   }
 
   // Click functions in the modal
