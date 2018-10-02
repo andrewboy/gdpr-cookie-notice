@@ -102,6 +102,10 @@ export default class {
     document.documentElement.classList.remove(this._pluginPrefix + '-show-modal')
   }
 
+  destroy () {
+    document.getElementsByClassName(this._pluginPrefix + '-modal')[0].remove()
+  }
+
   // Click functions in the modal
   setModalEventListeners () {
     let closeButton = document.querySelectorAll('.' + this._pluginPrefix + '-modal-close')[0]

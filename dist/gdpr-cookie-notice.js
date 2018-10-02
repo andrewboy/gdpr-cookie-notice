@@ -466,6 +466,11 @@ var _class = function () {
     value: function hide() {
       document.documentElement.classList.remove(this._pluginPrefix + '-show-modal');
     }
+  }, {
+    key: 'destroy',
+    value: function destroy() {
+      document.getElementsByClassName(this._pluginPrefix + '-modal')[0].remove();
+    }
 
     // Click functions in the modal
 
