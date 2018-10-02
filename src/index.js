@@ -160,7 +160,7 @@ class GdprCookieNotice {
   //=================================
 
   get categories () {
-    return this._categories
+    return this._opts.categories
   }
 }
 

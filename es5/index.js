@@ -181,7 +181,7 @@ var GdprCookieNotice = function () {
   }, {
     key: 'categories',
     get: function get() {
-      return this._categories;
+      return this._opts.categories;
     }
   }]);
 
