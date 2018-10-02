@@ -803,6 +803,8 @@ var GdprCookieNotice = function () {
 
       var globalSettingsButtons = document.querySelectorAll('.' + this._opts.pluginPrefix + '-settings-button');
 
+      console.log(globalSettingsButtons);
+
       if (globalSettingsButtons) {
         for (var i in globalSettingsButtons) {
           console.log('globalSettingsButtons LOOP', i, globalSettingsButtons[i]);

@@ -98,6 +98,8 @@ class GdprCookieNotice {
   _setModalShowButton () {
     let globalSettingsButtons = document.querySelectorAll('.' + this._opts.pluginPrefix + '-settings-button')
 
+    console.log(globalSettingsButtons)
+
     if (globalSettingsButtons) {
       for (let i in globalSettingsButtons) {
         console.log('globalSettingsButtons LOOP', i, globalSettingsButtons[i])
