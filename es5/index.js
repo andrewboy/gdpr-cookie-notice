@@ -61,7 +61,14 @@ var GdprCookieNotice = function () {
   _createClass(GdprCookieNotice, [{
     key: '_getNotice',
     value: function _getNotice() {
-      return new _GdprCookieNoticePopup2.default(this, this._opts.pluginPrefix, locales[this._opts.locale]['notice'], this._opts.timeout, this._opts.statementUrl);
+      return new _GdprCookieNoticePopup2.default(this, this._opts.pluginPrefix, locales[this._opts.locale]['notice'], this._opts.timeout);
+      // return new GdprCookieNoticePopup({
+      //   cookieManager: this,
+      //   pluginPrefix: this._opts.pluginPrefix,
+      //   locale: locales[this._opts.locale]['notice'],
+      //   timeout: this._opts.timeout,
+      //   statementUrl: this._opts.statementUrl
+      // })
     }
   }, {
     key: '_getModal',

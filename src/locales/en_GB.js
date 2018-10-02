@@ -1,4 +1,4 @@
-let hu_HU = {
+let en_GB = {
   modal: {
     modal: {
       settings: 'Cookie settings',
@@ -39,5 +39,5 @@ let hu_HU = {
   },
 }
 
-export { hu_HU }
-export default hu_HU
+export { en_GB }
+export default en_GB

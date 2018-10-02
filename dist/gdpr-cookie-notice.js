@@ -560,15 +560,18 @@ var _class = function () {
 /*!**************************************!*\
   !*** ./src/GdprCookieNoticePopup.js ***!
   \**************************************/
-/*! exports provided: default */
+/*! exports provided: hu_HU, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _sass_notice2_variables_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./sass/notice2/_variables.scss */ "./src/sass/notice2/_variables.scss");
-/* harmony import */ var _sass_notice2_variables_scss__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_sass_notice2_variables_scss__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _sass_notice2_notice2_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./sass/notice2/_notice2.scss */ "./src/sass/notice2/_notice2.scss");
-/* harmony import */ var _sass_notice2_notice2_scss__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_sass_notice2_notice2_scss__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _locales_hu_HU_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./locales/hu_HU.js */ "./src/locales/hu_HU.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "hu_HU", function() { return _locales_hu_HU_js__WEBPACK_IMPORTED_MODULE_0__["default"]; });
+
+/* harmony import */ var _sass_notice2_variables_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./sass/notice2/_variables.scss */ "./src/sass/notice2/_variables.scss");
+/* harmony import */ var _sass_notice2_variables_scss__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_sass_notice2_variables_scss__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _sass_notice2_notice2_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./sass/notice2/_notice2.scss */ "./src/sass/notice2/_notice2.scss");
+/* harmony import */ var _sass_notice2_notice2_scss__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_sass_notice2_notice2_scss__WEBPACK_IMPORTED_MODULE_2__);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -576,19 +579,22 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 
 
+
 var _class = function () {
-  function _class(gdprCookieManager) {
+  function _class(cookieManager, prefix, locale, timeout) {
     _classCallCheck(this, _class);
 
+    // constructor (opts) {
+    //   this._isNoticeLoaded = false
+    //   this._timeout = opts.timeout ? opts.timeout : 500
+    //   this._pluginPrefix = opts.pluginPrefix ? opts.pluginPrefix : 'gdpr-cookie-notice'
+    //   this._locale = opts.locale ? opts.locale : hu_HU['notice']
+    //   this._manager = opts.cookieManager
+    this._manager = cookieManager;
     this._isNoticeLoaded = false;
-    this._timeout = 500;
-    this._pluginPrefix = 'gdpr-cookie-notice';
-    this._locale = {
-      description: 'Ez a weboldal s\xFCtiket(cookie-kat) haszn\xE1l az\xE9rt, hogy a weboldal m\u0171k\xF6dj\xF6n, statisztikai adatokat \n      gy\u0171jts\xF6n \xE9s jobb felhaszn\xE1li\xF3 \xE9lm\xE9nyt ny\xFAjtson. A S\xFCti be\xE1ll\xEDt\xE1sok gombra kattintva t\xF6bb inform\xE1ci\xF3t is megtudhat \n      err\u0151l. Az oldal tov\xE1bbi haszn\xE1lat\xE1val beleegyezik a s\xFCtik haszn\xE1lat\xE1ba.',
-      accept: 'Elfogadom',
-      settings: 'Süti beállítások'
-    };
-    this._manager = gdprCookieManager;
+    this._timeout = timeout ? timeout : 500;
+    this._pluginPrefix = prefix ? prefix : 'gdpr-cookie-notice';
+    this._locale = locale ? locale : hu_HU['notice'];
   }
 
   /*
@@ -736,7 +742,14 @@ var GdprCookieNotice = function () {
   _createClass(GdprCookieNotice, [{
     key: '_getNotice',
     value: function _getNotice() {
-      return new _GdprCookieNoticePopup__WEBPACK_IMPORTED_MODULE_2__["default"](this, this._opts.pluginPrefix, _locales__WEBPACK_IMPORTED_MODULE_0__[this._opts.locale]['notice'], this._opts.timeout, this._opts.statementUrl);
+      return new _GdprCookieNoticePopup__WEBPACK_IMPORTED_MODULE_2__["default"](this, this._opts.pluginPrefix, _locales__WEBPACK_IMPORTED_MODULE_0__[this._opts.locale]['notice'], this._opts.timeout);
+      // return new GdprCookieNoticePopup({
+      //   cookieManager: this,
+      //   pluginPrefix: this._opts.pluginPrefix,
+      //   locale: locales[this._opts.locale]['notice'],
+      //   timeout: this._opts.timeout,
+      //   statementUrl: this._opts.statementUrl
+      // })
     }
   }, {
     key: '_getModal',
@@ -861,13 +874,13 @@ var GdprCookieNotice = function () {
 /*!******************************!*\
   !*** ./src/locales/en_GB.js ***!
   \******************************/
-/*! exports provided: hu_HU, default */
+/*! exports provided: en_GB, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "hu_HU", function() { return hu_HU; });
-var hu_HU = {
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "en_GB", function() { return en_GB; });
+var en_GB = {
   modal: {
     modal: {
       settings: 'Cookie settings',
@@ -902,7 +915,7 @@ var hu_HU = {
 };
 
 
-/* harmony default export */ __webpack_exports__["default"] = (hu_HU);
+/* harmony default export */ __webpack_exports__["default"] = (en_GB);
 
 /***/ }),
 

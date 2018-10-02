@@ -3,28 +3,42 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.hu_HU = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _hu_HU = require('./locales/hu_HU.js');
+
+Object.defineProperty(exports, 'hu_HU', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_hu_HU).default;
+  }
+});
 
 require('./sass/notice2/_variables.scss');
 
 require('./sass/notice2/_notice2.scss');
 
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var _class = function () {
-  function _class(gdprCookieManager) {
+  function _class(cookieManager, prefix, locale, timeout) {
     _classCallCheck(this, _class);
 
+    // constructor (opts) {
+    //   this._isNoticeLoaded = false
+    //   this._timeout = opts.timeout ? opts.timeout : 500
+    //   this._pluginPrefix = opts.pluginPrefix ? opts.pluginPrefix : 'gdpr-cookie-notice'
+    //   this._locale = opts.locale ? opts.locale : hu_HU['notice']
+    //   this._manager = opts.cookieManager
+    this._manager = cookieManager;
     this._isNoticeLoaded = false;
-    this._timeout = 500;
-    this._pluginPrefix = 'gdpr-cookie-notice';
-    this._locale = {
-      description: 'Ez a weboldal s\xFCtiket(cookie-kat) haszn\xE1l az\xE9rt, hogy a weboldal m\u0171k\xF6dj\xF6n, statisztikai adatokat \n      gy\u0171jts\xF6n \xE9s jobb felhaszn\xE1li\xF3 \xE9lm\xE9nyt ny\xFAjtson. A S\xFCti be\xE1ll\xEDt\xE1sok gombra kattintva t\xF6bb inform\xE1ci\xF3t is megtudhat \n      err\u0151l. Az oldal tov\xE1bbi haszn\xE1lat\xE1val beleegyezik a s\xFCtik haszn\xE1lat\xE1ba.',
-      accept: 'Elfogadom',
-      settings: 'Süti beállítások'
-    };
-    this._manager = gdprCookieManager;
+    this._timeout = timeout ? timeout : 500;
+    this._pluginPrefix = prefix ? prefix : 'gdpr-cookie-notice';
+    this._locale = locale ? locale : hu_HU['notice'];
   }
 
   /*

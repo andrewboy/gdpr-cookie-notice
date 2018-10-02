@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var hu_HU = {
+var en_GB = {
   modal: {
     modal: {
       settings: 'Cookie settings',
@@ -37,6 +37,6 @@ var hu_HU = {
   }
 };
 
-exports.hu_HU = hu_HU;
-exports.default = hu_HU;
+exports.en_GB = en_GB;
+exports.default = en_GB;
 //# sourceMappingURL=en_GB.js.map
