@@ -1,34 +1,44 @@
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
 var _GdprCookie = require('./GdprCookie');
 
-var _GdprCookie2 = _interopRequireDefault(_GdprCookie);
+Object.defineProperty(exports, 'GdprCookie', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_GdprCookie).default;
+  }
+});
 
 var _GdprCookieNoticePopup = require('./GdprCookieNoticePopup');
 
-var _GdprCookieNoticePopup2 = _interopRequireDefault(_GdprCookieNoticePopup);
+Object.defineProperty(exports, 'GdprCookieNoticePopup', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_GdprCookieNoticePopup).default;
+  }
+});
 
 var _GdprCookieModal = require('./GdprCookieModal');
 
-var _GdprCookieModal2 = _interopRequireDefault(_GdprCookieModal);
+Object.defineProperty(exports, 'GdprCookieModal', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_GdprCookieModal).default;
+  }
+});
 
 var _GdprCookieNoticeManager = require('./GdprCookieNoticeManager');
 
-var _GdprCookieNoticeManager2 = _interopRequireDefault(_GdprCookieNoticeManager);
+Object.defineProperty(exports, 'GdprCookieNotice', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_GdprCookieNoticeManager).default;
+  }
+});
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-// export { GdprCookieNotice, GdprCookie, GdprCookieNoticePopup, GdprCookieModal }
-// export default GdprCookieNotice
-
-// import './sass/gdpr-cookie-notice.scss'
-// import "sass/modal/_variables.scss";
-// import "sass/notice2/_variables.scss";
-
-module.exports = {
-  GdprCookie: _GdprCookie2.default,
-  GdprCookieNoticePopup: _GdprCookieNoticePopup2.default,
-  GdprCookieModal: _GdprCookieModal2.default,
-  GdprCookieNotice: _GdprCookieNoticeManager2.default
-};
 //# sourceMappingURL=index.js.map
