@@ -135,8 +135,7 @@ export default class {
   }
 
   _fireCookieEnvabledEvent () {
-    this._gdprCookiesEnabledEvt = new CustomEvent('gdprCookiesEnabled', {detail: this._gdprCookie.get()})
-    document.dispatchEvent(this._gdprCookiesEnabledEvt)
+    document.dispatchEvent(new CustomEvent('gdprCookiesEnabled', {detail: this._gdprCookie.get()}))
   }
 
   setEvent (evt, data) {

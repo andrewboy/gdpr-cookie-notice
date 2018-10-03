@@ -694,8 +694,7 @@ var _class = function () {
   }, {
     key: '_fireCookieEnvabledEvent',
     value: function _fireCookieEnvabledEvent() {
-      this._gdprCookiesEnabledEvt = new CustomEvent('gdprCookiesEnabled', { detail: this._gdprCookie.get() });
-      document.dispatchEvent(this._gdprCookiesEnabledEvt);
+      document.dispatchEvent(new CustomEvent('gdprCookiesEnabled', { detail: this._gdprCookie.get() }));
     }
   }, {
     key: 'setEvent',
