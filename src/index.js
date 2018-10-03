@@ -14,7 +14,7 @@ const GdprCookieNotice = {
   GdprCookieNoticeManager
 }
 
-export default GdprCookieNoticeManager
+export default GdprCookieNotice
 
 export {
   GdprCookieNotice,

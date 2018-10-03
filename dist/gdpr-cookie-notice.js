@@ -920,7 +920,7 @@ var GdprCookieNotice = {
   GdprCookieNoticeManager: _GdprCookieNoticeManager__WEBPACK_IMPORTED_MODULE_3__["default"]
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (_GdprCookieNoticeManager__WEBPACK_IMPORTED_MODULE_3__["default"]);
+/* harmony default export */ __webpack_exports__["default"] = (GdprCookieNotice);
 
 
 

@@ -34,7 +34,7 @@ var GdprCookieNotice = {
   GdprCookieNoticeManager: _GdprCookieNoticeManager2.default
 };
 
-exports.default = _GdprCookieNoticeManager2.default;
+exports.default = GdprCookieNotice;
 exports.GdprCookieNotice = GdprCookieNotice;
 exports.GdprCookie = _GdprCookie2.default;
 exports.GdprCookieNoticePopup = _GdprCookieNoticePopup2.default;
