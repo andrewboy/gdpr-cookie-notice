@@ -60,12 +60,14 @@ export default class {
     this._modal = this._getModal()
 
     if (!this._gdprCookie.isExists()) {
+      console.log('cookie not set')
       this._notice.show()
 
       if (this._opts.acceptOnScroll) {
         this._acceptOnScroll()
       }
     } else {
+      console.log('cookie SET')
       this._fireCookieEnvabledEvent()
     }
 
