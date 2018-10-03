@@ -886,11 +886,12 @@ var _class = function () {
 /*!**********************!*\
   !*** ./src/index.js ***!
   \**********************/
-/*! exports provided: GdprCookie, GdprCookieNoticePopup, GdprCookieModal, GdprCookieNotice */
+/*! exports provided: default, GdprCookieNotice, GdprCookie, GdprCookieNoticePopup, GdprCookieModal, GdprCookieNoticeManager */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GdprCookieNotice", function() { return GdprCookieNotice; });
 /* harmony import */ var _GdprCookie__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./GdprCookie */ "./src/GdprCookie.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "GdprCookie", function() { return _GdprCookie__WEBPACK_IMPORTED_MODULE_0__["default"]; });
 
@@ -901,16 +902,27 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "GdprCookieModal", function() { return _GdprCookieModal__WEBPACK_IMPORTED_MODULE_2__["default"]; });
 
 /* harmony import */ var _GdprCookieNoticeManager__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./GdprCookieNoticeManager */ "./src/GdprCookieNoticeManager.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "GdprCookieNotice", function() { return _GdprCookieNoticeManager__WEBPACK_IMPORTED_MODULE_3__["default"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "GdprCookieNoticeManager", function() { return _GdprCookieNoticeManager__WEBPACK_IMPORTED_MODULE_3__["default"]; });
 
 // import './sass/gdpr-cookie-notice.scss'
 // import "sass/modal/_variables.scss";
 // import "sass/notice2/_variables.scss";
 
-// import GdprCookie from './GdprCookie'
-// import GdprCookieNoticePopup from './GdprCookieNoticePopup'
-// import GdprCookieModal from './GdprCookieModal'
-// import { default as GdprCookieNotice } from './GdprCookieNoticeManager'
+
+
+
+
+
+var GdprCookieNotice = {
+  GdprCookie: _GdprCookie__WEBPACK_IMPORTED_MODULE_0__["default"],
+  GdprCookieNoticePopup: _GdprCookieNoticePopup__WEBPACK_IMPORTED_MODULE_1__["default"],
+  GdprCookieModal: _GdprCookieModal__WEBPACK_IMPORTED_MODULE_2__["default"],
+  GdprCookieNoticeManager: _GdprCookieNoticeManager__WEBPACK_IMPORTED_MODULE_3__["default"]
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (GdprCookieNotice);
+
+
 
 // export { GdprCookieNotice, GdprCookie, GdprCookieNoticePopup, GdprCookieModal }
 // export default GdprCookieNotice
@@ -925,10 +937,10 @@ __webpack_require__.r(__webpack_exports__);
 // export { default as GdprCookie } from './hu_HU'
 // export { default as en_GB } from './en_GB'
 
-
-
-
-
+// export { default as GdprCookie } from './GdprCookie'
+// export { default as GdprCookieNoticePopup } from './GdprCookieNoticePopup'
+// export { default as GdprCookieModal } from './GdprCookieModal'
+// export { default as GdprCookieNotice } from './GdprCookieNoticeManager'
 
 /***/ }),
 
