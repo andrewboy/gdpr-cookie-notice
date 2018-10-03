@@ -41,7 +41,7 @@ var GdprCookieNotice = function () {
     console.log('GdprCookieNotice:constructor');
     this._opts = {
       categories: {},
-      implicit: false,
+      acceptOnScroll: false,
       //cookie
       namespace: 'gdprcookienotice',
       expiration: 30,
@@ -88,7 +88,7 @@ var GdprCookieNotice = function () {
       if (!this._gdprCookie.isExists()) {
         this._notice.show();
 
-        if (this._opts.implicit) {
+        if (this._opts.acceptOnScroll) {
           this._acceptOnScroll();
         }
       } else {
@@ -115,25 +115,22 @@ var GdprCookieNotice = function () {
     key: '_acceptOnScroll',
     value: function _acceptOnScroll() {
       window.addEventListener('scroll', function _listener() {
+        console.log(this);
         if (this._amountScrolled()) {
+          console.log('accepted on scroll');
           this.acceptAllCategories();
-          window.removeEventListener('click', _listener);
+          window.removeEventListener('scroll', _listener);
         }
       }.bind(this));
     }
   }, {
-    key: '_getDocHeight',
-    value: function _getDocHeight() {
-      var D = document;
-      return Math.max(D.body.scrollHeight, D.documentElement.scrollHeight, D.body.offsetHeight, D.documentElement.offsetHeight, D.body.clientHeight, D.documentElement.clientHeight);
-    }
-  }, {
     key: '_amountScrolled',
     value: function _amountScrolled() {
-      var winheight = window.innerHeight || (document.documentElement || document.body).clientHeight;
-      var docheight = this._getDocHeight();
+      console.log('_amountScrolled');
+      var windowHeight = window.innerHeight || (document.documentElement || document.body).clientHeight;
+      var documentHeight = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight, document.body.offsetHeight, document.documentElement.offsetHeight, document.body.clientHeight, document.documentElement.clientHeight);
       var scrollTop = window.pageYOffset || (document.documentElement || document.body.parentNode || document.body).scrollTop;
-      var trackLength = docheight - winheight;
+      var trackLength = documentHeight - windowHeight;
       var pctScrolled = Math.floor(scrollTop / trackLength * 100); // gets percentage scrolled (ie: 80 or NaN if tracklength == 0)
       if (pctScrolled > 25 && !this._isCookiesAccepted) {
         this._isCookiesAccepted = true;

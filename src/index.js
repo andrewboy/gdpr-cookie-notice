@@ -15,7 +15,7 @@ class GdprCookieNotice {
     console.log('GdprCookieNotice:constructor')
     this._opts = {
       categories: {},
-      implicit: false,
+      acceptOnScroll: false,
       //cookie
       namespace: 'gdprcookienotice',
       expiration: 30,
@@ -69,7 +69,7 @@ class GdprCookieNotice {
     if (!this._gdprCookie.isExists()) {
       this._notice.show()
 
-      if (this._opts.implicit) {
+      if (this._opts.acceptOnScroll) {
         this._acceptOnScroll()
       }
     } else {
@@ -93,33 +93,31 @@ class GdprCookieNotice {
 
   _acceptOnScroll () {
     window.addEventListener('scroll', function _listener () {
+      console.log(this)
       if (this._amountScrolled()) {
+        console.log('accepted on scroll')
         this.acceptAllCategories()
-        window.removeEventListener('click', _listener)
+        window.removeEventListener('scroll', _listener)
       }
     }.bind(this))
   }
 
-  _getDocHeight() {
-    var D = document;
-    return Math.max(
-      D.body.scrollHeight, D.documentElement.scrollHeight,
-      D.body.offsetHeight, D.documentElement.offsetHeight,
-      D.body.clientHeight, D.documentElement.clientHeight
-    );
-  }
-
   _amountScrolled () {
-    let winheight= window.innerHeight || (document.documentElement || document.body).clientHeight;
-    let docheight = this._getDocHeight();
-    let scrollTop = window.pageYOffset || (document.documentElement || document.body.parentNode || document.body).scrollTop;
-    let trackLength = docheight - winheight;
-    let pctScrolled = Math.floor(scrollTop/trackLength * 100); // gets percentage scrolled (ie: 80 or NaN if tracklength == 0)
-    if(pctScrolled > 25 && !this._isCookiesAccepted) {
-      this._isCookiesAccepted = true;
-      return true;
+    console.log('_amountScrolled')
+    let windowHeight = window.innerHeight || (document.documentElement || document.body).clientHeight
+    let documentHeight = Math.max(
+      document.body.scrollHeight, document.documentElement.scrollHeight,
+      document.body.offsetHeight, document.documentElement.offsetHeight,
+      document.body.clientHeight, document.documentElement.clientHeight
+    )
+    let scrollTop = window.pageYOffset || (document.documentElement || document.body.parentNode || document.body).scrollTop
+    let trackLength = documentHeight - windowHeight
+    let pctScrolled = Math.floor(scrollTop / trackLength * 100) // gets percentage scrolled (ie: 80 or NaN if tracklength == 0)
+    if (pctScrolled > 25 && !this._isCookiesAccepted) {
+      this._isCookiesAccepted = true
+      return true
     } else {
-      return false;
+      return false
     }
   }
 
