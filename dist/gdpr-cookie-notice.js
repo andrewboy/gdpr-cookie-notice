@@ -276,6 +276,41 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 
 /***/ }),
 
+/***/ "./node_modules/webpack/buildin/harmony-module.js":
+/*!*******************************************!*\
+  !*** (webpack)/buildin/harmony-module.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = function(originalModule) {
+	if (!originalModule.webpackPolyfill) {
+		var module = Object.create(originalModule);
+		// module.parent = undefined by default
+		if (!module.children) module.children = [];
+		Object.defineProperty(module, "loaded", {
+			enumerable: true,
+			get: function() {
+				return module.l;
+			}
+		});
+		Object.defineProperty(module, "id", {
+			enumerable: true,
+			get: function() {
+				return module.i;
+			}
+		});
+		Object.defineProperty(module, "exports", {
+			enumerable: true
+		});
+		module.webpackPolyfill = 1;
+	}
+	return module;
+};
+
+
+/***/ }),
+
 /***/ "./src/GdprCookie.js":
 /*!***************************!*\
   !*** ./src/GdprCookie.js ***!
@@ -886,23 +921,15 @@ var _class = function () {
 /*!**********************!*\
   !*** ./src/index.js ***!
   \**********************/
-/*! exports provided: GdprCookieNotice, GdprCookie, GdprCookieNoticePopup, GdprCookieModal */
+/*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _GdprCookie__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./GdprCookie */ "./src/GdprCookie.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "GdprCookie", function() { return _GdprCookie__WEBPACK_IMPORTED_MODULE_0__["default"]; });
-
+/* WEBPACK VAR INJECTION */(function(module) {/* harmony import */ var _GdprCookie__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./GdprCookie */ "./src/GdprCookie.js");
 /* harmony import */ var _GdprCookieNoticePopup__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./GdprCookieNoticePopup */ "./src/GdprCookieNoticePopup.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "GdprCookieNoticePopup", function() { return _GdprCookieNoticePopup__WEBPACK_IMPORTED_MODULE_1__["default"]; });
-
 /* harmony import */ var _GdprCookieModal__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./GdprCookieModal */ "./src/GdprCookieModal.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "GdprCookieModal", function() { return _GdprCookieModal__WEBPACK_IMPORTED_MODULE_2__["default"]; });
-
 /* harmony import */ var _GdprCookieNoticeManager__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./GdprCookieNoticeManager */ "./src/GdprCookieNoticeManager.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "GdprCookieNotice", function() { return _GdprCookieNoticeManager__WEBPACK_IMPORTED_MODULE_3__["default"]; });
-
 // import './sass/gdpr-cookie-notice.scss'
 // import "sass/modal/_variables.scss";
 // import "sass/notice2/_variables.scss";
@@ -912,8 +939,16 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
+// export { GdprCookieNotice, GdprCookie, GdprCookieNoticePopup, GdprCookieModal }
 // export default GdprCookieNotice
+
+module.exports = {
+  GdprCookie: _GdprCookie__WEBPACK_IMPORTED_MODULE_0__["default"],
+  GdprCookieNoticePopup: _GdprCookieNoticePopup__WEBPACK_IMPORTED_MODULE_1__["default"],
+  GdprCookieModal: _GdprCookieModal__WEBPACK_IMPORTED_MODULE_2__["default"],
+  GdprCookieNotice: _GdprCookieNoticeManager__WEBPACK_IMPORTED_MODULE_3__["default"]
+};
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node_modules/webpack/buildin/harmony-module.js */ "./node_modules/webpack/buildin/harmony-module.js")(module)))
 
 /***/ }),
 
