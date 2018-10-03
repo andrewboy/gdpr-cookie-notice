@@ -8,4 +8,4 @@ import GdprCookieModal from './GdprCookieModal'
 import { default as GdprCookieNotice } from './GdprCookieNoticeManager'
 
 export { GdprCookieNotice, GdprCookie, GdprCookieNoticePopup, GdprCookieModal }
-export default GdprCookieNotice
+// export default GdprCookieNotice
