@@ -2,6 +2,7 @@ import GdprCookieModal from './GdprCookieModal'
 import * as locales from './locales'
 import GdprCookieNoticePopup from './GdprCookieNoticePopup'
 import GdprCookie from './GdprCookie'
+import Cookies from 'js-cookie'
 
 export default class {
   constructor (options) {
@@ -15,7 +16,7 @@ export default class {
       domain: window.location.hostname,
       //boxes
       pluginPrefix: 'gdpr-cookie-notice',
-      locale: 'hu',
+      locale: 'en_GB',
       //notice
       timeout: 500,
       statementUrl: '',
@@ -68,6 +69,7 @@ export default class {
       }
     } else {
       console.log('cookie SET')
+      this._deleteUnacceptableCookies()
       this._fireCookieEnvabledEvent()
     }
 
@@ -176,12 +178,42 @@ export default class {
       isAnalyticsAccepted,
       isMarketingAccepted
     )
+
+    this._deleteUnacceptableCookies()
+
     this._fireCookieEnvabledEvent()
 
     if (this._gdprCookie.isExists() && this._gdprCookie.isNecessaryAccepted()) {
       this._notice.hide()
     } else {
       this._notice.show()
+    }
+  }
+
+  _deleteUnacceptableCookies () {
+    if (!this._gdprCookie.isExists()) {
+      return
+    }
+
+    //analytics
+    if (!!this._opts.categories.analytics && !this._gdprCookie.isAnalyticsAccepted()) {
+      for (let i in this._opts.categories.analytics) {
+        Cookies.remove(this._opts.categories.analytics[i])
+      }
+    }
+
+    //performance
+    if (!!this._opts.categories.performance && !this._gdprCookie.isPerformanceAccepted()) {
+      for (let i in this._opts.categories.performance) {
+        Cookies.remove(this._opts.categories.performance[i])
+      }
+    }
+
+    //marketing
+    if (!!this._opts.categories.marketing && !this._gdprCookie.isMarketingAccepted()) {
+      for (let i in this._opts.categories.marketing) {
+        Cookies.remove(this._opts.categories.marketing[i])
+      }
     }
   }
 

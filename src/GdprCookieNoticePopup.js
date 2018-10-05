@@ -1,4 +1,4 @@
-import { default as hu_HU } from './locales/hu_HU.js'
+import { default as en_GB } from './locales/en_GB.js'
 import './sass/notice2/_variables.scss'
 import './sass/notice2/_notice2.scss'
 
@@ -8,13 +8,13 @@ export default class {
   //   this._isNoticeLoaded = false
   //   this._timeout = opts.timeout ? opts.timeout : 500
   //   this._pluginPrefix = opts.pluginPrefix ? opts.pluginPrefix : 'gdpr-cookie-notice'
-  //   this._locale = opts.locale ? opts.locale : hu_HU['notice']
+  //   this._locale = opts.locale ? opts.locale : en_GB['notice']
   //   this._manager = opts.cookieManager
     this._manager = cookieManager
     this._isNoticeLoaded = false
     this._timeout = timeout ? timeout : 500
     this._pluginPrefix = prefix ? prefix : 'gdpr-cookie-notice'
-    this._locale = locale ? locale : hu_HU['notice']
+    this._locale = locale ? locale : en_GB['notice']
   }
 
   /*

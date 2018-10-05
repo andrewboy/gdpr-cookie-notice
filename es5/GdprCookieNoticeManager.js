@@ -22,6 +22,10 @@ var _GdprCookie = require('./GdprCookie');
 
 var _GdprCookie2 = _interopRequireDefault(_GdprCookie);
 
+var _jsCookie = require('js-cookie');
+
+var _jsCookie2 = _interopRequireDefault(_jsCookie);
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -42,7 +46,7 @@ var _class = function () {
       domain: window.location.hostname,
       //boxes
       pluginPrefix: 'gdpr-cookie-notice',
-      locale: 'hu',
+      locale: 'en_GB',
       //notice
       timeout: 500,
       statementUrl: '',
@@ -88,6 +92,7 @@ var _class = function () {
         }
       } else {
         console.log('cookie SET');
+        this._deleteUnacceptableCookies();
         this._fireCookieEnvabledEvent();
       }
 
@@ -196,12 +201,43 @@ var _class = function () {
       console.log('acceptCategories', isPerformanceAccepted, isAnalyticsAccepted, isMarketingAccepted);
       // Load marketing scripts that only works when cookies are accepted
       this._gdprCookie.set(true, isPerformanceAccepted, isAnalyticsAccepted, isMarketingAccepted);
+
+      this._deleteUnacceptableCookies();
+
       this._fireCookieEnvabledEvent();
 
       if (this._gdprCookie.isExists() && this._gdprCookie.isNecessaryAccepted()) {
         this._notice.hide();
       } else {
         this._notice.show();
+      }
+    }
+  }, {
+    key: '_deleteUnacceptableCookies',
+    value: function _deleteUnacceptableCookies() {
+      if (!this._gdprCookie.isExists()) {
+        return;
+      }
+
+      //analytics
+      if (!!this._opts.categories.analytics && !this._gdprCookie.isAnalyticsAccepted()) {
+        for (var i in this._opts.categories.analytics) {
+          _jsCookie2.default.remove(this._opts.categories.analytics[i]);
+        }
+      }
+
+      //performance
+      if (!!this._opts.categories.performance && !this._gdprCookie.isPerformanceAccepted()) {
+        for (var _i in this._opts.categories.performance) {
+          _jsCookie2.default.remove(this._opts.categories.performance[_i]);
+        }
+      }
+
+      //marketing
+      if (!!this._opts.categories.marketing && !this._gdprCookie.isMarketingAccepted()) {
+        for (var _i2 in this._opts.categories.marketing) {
+          _jsCookie2.default.remove(this._opts.categories.marketing[_i2]);
+        }
       }
     }
 

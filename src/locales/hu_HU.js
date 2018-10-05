@@ -8,7 +8,7 @@ let hu_HU = {
     category: {
       essential: {
         title: 'Szükséges sütik',
-        desc: 'Ezek a weboldal megfelelő megjelenéséhez szükséges sütik, amelyek nélkül nem működne a weboldal.',
+        desc: `Ezek a weboldal megfelelő megjelenéséhez szükséges sütik, amelyek nélkül nem működne a weboldal.`,
         always_on: 'Mindig betölt'
       },
       performance: {
@@ -24,7 +24,7 @@ let hu_HU = {
       },
       marketing: {
         title: 'Marketing sütik',
-        desc: 'Ezek a sütik segítenek nekünk a hirdetések kezelésében, célzásában.'
+        desc: `Ezek a sütik segítenek nekünk a hirdetések kezelésében, célzásában.`
       }
     }
   },

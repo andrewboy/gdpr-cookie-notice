@@ -13,7 +13,7 @@ var hu_HU = {
     category: {
       essential: {
         title: 'Szükséges sütik',
-        desc: 'Ezek a weboldal megfelelő megjelenéséhez szükséges sütik, amelyek nélkül nem működne a weboldal.',
+        desc: 'Ezek a weboldal megfelel\u0151 megjelen\xE9s\xE9hez sz\xFCks\xE9ges s\xFCtik, amelyek n\xE9lk\xFCl nem m\u0171k\xF6dne a weboldal.',
         always_on: 'Mindig betölt'
       },
       performance: {
@@ -26,7 +26,7 @@ var hu_HU = {
       },
       marketing: {
         title: 'Marketing sütik',
-        desc: 'Ezek a sütik segítenek nekünk a hirdetések kezelésében, célzásában.'
+        desc: 'Ezek a s\xFCtik seg\xEDtenek nek\xFCnk a hirdet\xE9sek kezel\xE9s\xE9ben, c\xE9lz\xE1s\xE1ban.'
       }
     }
   },

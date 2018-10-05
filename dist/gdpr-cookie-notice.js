@@ -323,22 +323,22 @@ var _class = function () {
   }, {
     key: 'isNecessaryAccepted',
     value: function isNecessaryAccepted() {
-      return js_cookie__WEBPACK_IMPORTED_MODULE_0___default.a.getJSON(this._name)['necessary'];
+      return !!js_cookie__WEBPACK_IMPORTED_MODULE_0___default.a.getJSON(this._name)['necessary'];
     }
   }, {
     key: 'isAnalyticsAccepted',
     value: function isAnalyticsAccepted() {
-      return js_cookie__WEBPACK_IMPORTED_MODULE_0___default.a.getJSON(this._name)['analytics'];
+      return !!js_cookie__WEBPACK_IMPORTED_MODULE_0___default.a.getJSON(this._name)['analytics'];
     }
   }, {
     key: 'isPerformanceAccepted',
     value: function isPerformanceAccepted() {
-      return js_cookie__WEBPACK_IMPORTED_MODULE_0___default.a.getJSON(this._name)['performance'];
+      return !!js_cookie__WEBPACK_IMPORTED_MODULE_0___default.a.getJSON(this._name)['performance'];
     }
   }, {
     key: 'isMarketingAccepted',
     value: function isMarketingAccepted() {
-      return js_cookie__WEBPACK_IMPORTED_MODULE_0___default.a.getJSON(this._name)['marketing'];
+      return !!js_cookie__WEBPACK_IMPORTED_MODULE_0___default.a.getJSON(this._name)['marketing'];
     }
   }, {
     key: 'get',
@@ -368,7 +368,7 @@ var _class = function () {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _locales_hu_HU_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./locales/hu_HU.js */ "./src/locales/hu_HU.js");
+/* harmony import */ var _locales_en_GB_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./locales/en_GB.js */ "./src/locales/en_GB.js");
 /* harmony import */ var _sass_modal_variables_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./sass/modal/_variables.scss */ "./src/sass/modal/_variables.scss");
 /* harmony import */ var _sass_modal_variables_scss__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_sass_modal_variables_scss__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _sass_modal_modal_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./sass/modal/_modal.scss */ "./src/sass/modal/_modal.scss");
@@ -386,7 +386,7 @@ var _class = function () {
     _classCallCheck(this, _class);
 
     this._manager = cookieManager;
-    this._locale = locale ? locale : _locales_hu_HU_js__WEBPACK_IMPORTED_MODULE_0__["default"]['modal'];
+    this._locale = locale ? locale : _locales_en_GB_js__WEBPACK_IMPORTED_MODULE_0__["default"]['modal'];
     this._pluginPrefix = prefix ? prefix : 'gdpr-cookie-notice';
     this._isCategoriesCheckedByDefault = isCheckedByDefault ? isCheckedByDefault : false;
     this._statementUrl = statementUrl ? statementUrl : '';
@@ -553,9 +553,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _locales__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./locales */ "./src/locales/index.js");
 /* harmony import */ var _GdprCookieNoticePopup__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./GdprCookieNoticePopup */ "./src/GdprCookieNoticePopup.js");
 /* harmony import */ var _GdprCookie__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./GdprCookie */ "./src/GdprCookie.js");
+/* harmony import */ var js_cookie__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! js-cookie */ "./node_modules/js-cookie/src/js.cookie.js");
+/* harmony import */ var js_cookie__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(js_cookie__WEBPACK_IMPORTED_MODULE_4__);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
 
 
 
@@ -576,7 +579,7 @@ var _class = function () {
       domain: window.location.hostname,
       //boxes
       pluginPrefix: 'gdpr-cookie-notice',
-      locale: 'hu',
+      locale: 'en_GB',
       //notice
       timeout: 500,
       statementUrl: '',
@@ -622,6 +625,7 @@ var _class = function () {
         }
       } else {
         console.log('cookie SET');
+        this._deleteUnacceptableCookies();
         this._fireCookieEnvabledEvent();
       }
 
@@ -730,12 +734,43 @@ var _class = function () {
       console.log('acceptCategories', isPerformanceAccepted, isAnalyticsAccepted, isMarketingAccepted);
       // Load marketing scripts that only works when cookies are accepted
       this._gdprCookie.set(true, isPerformanceAccepted, isAnalyticsAccepted, isMarketingAccepted);
+
+      this._deleteUnacceptableCookies();
+
       this._fireCookieEnvabledEvent();
 
       if (this._gdprCookie.isExists() && this._gdprCookie.isNecessaryAccepted()) {
         this._notice.hide();
       } else {
         this._notice.show();
+      }
+    }
+  }, {
+    key: '_deleteUnacceptableCookies',
+    value: function _deleteUnacceptableCookies() {
+      if (!this._gdprCookie.isExists()) {
+        return;
+      }
+
+      //analytics
+      if (!!this._opts.categories.analytics && !this._gdprCookie.isAnalyticsAccepted()) {
+        for (var i in this._opts.categories.analytics) {
+          js_cookie__WEBPACK_IMPORTED_MODULE_4___default.a.remove(this._opts.categories.analytics[i]);
+        }
+      }
+
+      //performance
+      if (!!this._opts.categories.performance && !this._gdprCookie.isPerformanceAccepted()) {
+        for (var _i in this._opts.categories.performance) {
+          js_cookie__WEBPACK_IMPORTED_MODULE_4___default.a.remove(this._opts.categories.performance[_i]);
+        }
+      }
+
+      //marketing
+      if (!!this._opts.categories.marketing && !this._gdprCookie.isMarketingAccepted()) {
+        for (var _i2 in this._opts.categories.marketing) {
+          js_cookie__WEBPACK_IMPORTED_MODULE_4___default.a.remove(this._opts.categories.marketing[_i2]);
+        }
       }
     }
 
@@ -764,7 +799,7 @@ var _class = function () {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _locales_hu_HU_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./locales/hu_HU.js */ "./src/locales/hu_HU.js");
+/* harmony import */ var _locales_en_GB_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./locales/en_GB.js */ "./src/locales/en_GB.js");
 /* harmony import */ var _sass_notice2_variables_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./sass/notice2/_variables.scss */ "./src/sass/notice2/_variables.scss");
 /* harmony import */ var _sass_notice2_variables_scss__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_sass_notice2_variables_scss__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _sass_notice2_notice2_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./sass/notice2/_notice2.scss */ "./src/sass/notice2/_notice2.scss");
@@ -785,13 +820,13 @@ var _class = function () {
     //   this._isNoticeLoaded = false
     //   this._timeout = opts.timeout ? opts.timeout : 500
     //   this._pluginPrefix = opts.pluginPrefix ? opts.pluginPrefix : 'gdpr-cookie-notice'
-    //   this._locale = opts.locale ? opts.locale : hu_HU['notice']
+    //   this._locale = opts.locale ? opts.locale : en_GB['notice']
     //   this._manager = opts.cookieManager
     this._manager = cookieManager;
     this._isNoticeLoaded = false;
     this._timeout = timeout ? timeout : 500;
     this._pluginPrefix = prefix ? prefix : 'gdpr-cookie-notice';
-    this._locale = locale ? locale : _locales_hu_HU_js__WEBPACK_IMPORTED_MODULE_0__["default"]['notice'];
+    this._locale = locale ? locale : _locales_en_GB_js__WEBPACK_IMPORTED_MODULE_0__["default"]['notice'];
   }
 
   /*
@@ -925,23 +960,54 @@ var GdprCookieNotice = {
 
 
 
-// export { GdprCookieNotice, GdprCookie, GdprCookieNoticePopup, GdprCookieModal }
-// export default GdprCookieNotice
+/***/ }),
 
-// module.exports = {
-//   GdprCookie,
-//   GdprCookieNoticePopup,
-//   GdprCookieModal,
-//   GdprCookieNotice
-// }
+/***/ "./src/locales/da_DK.js":
+/*!******************************!*\
+  !*** ./src/locales/da_DK.js ***!
+  \******************************/
+/*! exports provided: da_DK, default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-// export { default as GdprCookie } from './hu_HU'
-// export { default as en_GB } from './en_GB'
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "da_DK", function() { return da_DK; });
+var da_DK = {
+  modal: {
+    modal: {
+      settings: 'Cookie Indstillinger',
+      statement: 'Vores cookie politik',
+      save: 'Gem indstillinger'
+    },
+    category: {
+      essential: {
+        title: 'Nødvendige cookies',
+        desc: 'N\xF8dvendige cookies g\xF8r websitet brugbart og s\xF8rger for basale funktioner som navigation og adgang til \n        l\xE5ste sektioner p\xE5 sitet. Websitet fungerer ikke uden disse cookies.',
+        always_on: 'Altid aktiveret'
+      },
+      performance: {
+        title: 'Præference cookies',
+        desc: 'Disse cookies bruges til at forbedre oplevelsen og funktionaliteten men er ikke essentielle. For \n        eksempel kan de gemme dit foretrukne sprog og/eller hvilken region du er i.'
+      },
+      analytics: {
+        title: 'Analytics cookies',
+        desc: 'Vi bruger analytics cookies til at m\xE5le hvordan websitets indhold bruges, hvilket hj\xE6lper os med at \n        skr\xE6ddersy websitet til dig s\xE5 du f\xE5r den bedste oplevelse.'
+      },
+      marketing: {
+        title: 'Marketing cookies',
+        desc: 'Disse cookies bruges til at g\xF8re reklamer mere relevante for dig. Det er meningen at de reklamer der \n        vises er relevante for den individuelle bruger og derved mere v\xE6rdifulde for udbydere og tredjeparts \n        annonc\xF8rer.'
+      }
+    }
+  },
+  notice: {
+    description: 'Vi bruger cookies til at forbedre din oplevelse p\xE5 siden, personalisere indhold og reklamer, til \n    sociale mediers funktioner og til at analysere vores trafik. L\xE6s om vores cookies og om hvordan du kan frav\xE6lge \n    dem ved at klikke p\xE5 Cookie Indstillinger. Du accepterer vores cookies hvis du forts\xE6tter med at bruge vores site.',
+    accept: 'Accepter cookies',
+    settings: 'Cookie Indstillinger'
+  }
+};
 
-// export { default as GdprCookie } from './GdprCookie'
-// export { default as GdprCookieNoticePopup } from './GdprCookieNoticePopup'
-// export { default as GdprCookieModal } from './GdprCookieModal'
-// export { default as GdprCookieNotice } from './GdprCookieNoticeManager'
+
+/* harmony default export */ __webpack_exports__["default"] = (da_DK);
 
 /***/ }),
 
@@ -1014,7 +1080,7 @@ var hu_HU = {
     category: {
       essential: {
         title: 'Szükséges sütik',
-        desc: 'Ezek a weboldal megfelelő megjelenéséhez szükséges sütik, amelyek nélkül nem működne a weboldal.',
+        desc: 'Ezek a weboldal megfelel\u0151 megjelen\xE9s\xE9hez sz\xFCks\xE9ges s\xFCtik, amelyek n\xE9lk\xFCl nem m\u0171k\xF6dne a weboldal.',
         always_on: 'Mindig betölt'
       },
       performance: {
@@ -1027,7 +1093,7 @@ var hu_HU = {
       },
       marketing: {
         title: 'Marketing sütik',
-        desc: 'Ezek a sütik segítenek nekünk a hirdetések kezelésében, célzásában.'
+        desc: 'Ezek a s\xFCtik seg\xEDtenek nek\xFCnk a hirdet\xE9sek kezel\xE9s\xE9ben, c\xE9lz\xE1s\xE1ban.'
       }
     }
   },
@@ -1047,7 +1113,7 @@ var hu_HU = {
 /*!******************************!*\
   !*** ./src/locales/index.js ***!
   \******************************/
-/*! exports provided: hu_HU, en_GB */
+/*! exports provided: hu_HU, en_GB, nl_NL, da_DK */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1058,8 +1124,65 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _en_GB__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./en_GB */ "./src/locales/en_GB.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "en_GB", function() { return _en_GB__WEBPACK_IMPORTED_MODULE_1__["default"]; });
 
+/* harmony import */ var _nl_NL__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./nl_NL */ "./src/locales/nl_NL.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "nl_NL", function() { return _nl_NL__WEBPACK_IMPORTED_MODULE_2__["default"]; });
+
+/* harmony import */ var _da_DK__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./da_DK */ "./src/locales/da_DK.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "da_DK", function() { return _da_DK__WEBPACK_IMPORTED_MODULE_3__["default"]; });
 
 
+
+
+
+
+/***/ }),
+
+/***/ "./src/locales/nl_NL.js":
+/*!******************************!*\
+  !*** ./src/locales/nl_NL.js ***!
+  \******************************/
+/*! exports provided: nl_NL, default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "nl_NL", function() { return nl_NL; });
+var nl_NL = {
+  modal: {
+    modal: {
+      settings: 'Cookie instellingen',
+      statement: 'Onze cookie verklaring',
+      save: 'Bewaar instellingen'
+    },
+    category: {
+      essential: {
+        title: 'Essentiële cookies',
+        desc: 'Essenti\xEBle (noodzakelijke) cookies helpen een website bruikbaar te maken door basisfuncties zoals \n        paginanavigatie en toegang tot beveiligde delen van de website in te schakelen. De website kan niet goed \n        functioneren zonder deze cookies.',
+        always_on: 'Altijd aan'
+      },
+      performance: {
+        title: 'Prestatie cookies',
+        desc: 'Deze cookies worden gebruikt om de prestaties en functionaliteit van onze websites te verbeteren, maar \n        zijn niet essentieel voor gebruik. Het slaat bijvoorbeeld de taal van uw voorkeur op of de regio waarin u zich \n        bevindt.'
+      },
+      analytics: {
+        title: 'Analytische cookies',
+        desc: 'We gebruiken analytische cookies om te meten hoe gebruikers omgaan met website en inhoud, waardoor we \n        onze websites en applicaties voor u kunnen aanpassen om uw ervaring te verbeteren.'
+      },
+      marketing: {
+        title: 'Marketing cookies',
+        desc: 'Deze cookies worden gebruikt om advertenties te kunnen tonen die aansluit bij uw interesses. Het is de \n        bedoeling advertenties weer te geven die relevant en aantrekkelijk zijn voor de individuele gebruiker en \n        daardoor waardevoller voor uitgevers en externe adverteerders.'
+      }
+    }
+  },
+  notice: {
+    description: 'Wij gebruiken cookies om u deze website optimaal te kunnen gebruiken, inhoud en advertenties te \n    personaliseren, social media-functies te bieden en ons verkeer te analyseren. Lees meer over hoe wij cookies \n    gebruiken en hoe u ze kunt beheren door op Cookie instellingen te klikken. U gaat akkoord met onze cookies als u \n    deze website blijft gebruiken.',
+    accept: 'Accepteer cookies',
+    settings: 'Cookie instellingen'
+  }
+};
+
+
+/* harmony default export */ __webpack_exports__["default"] = (nl_NL);
 
 /***/ }),
 

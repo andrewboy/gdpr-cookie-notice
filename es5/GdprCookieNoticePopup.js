@@ -6,9 +6,9 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _hu_HU = require('./locales/hu_HU.js');
+var _en_GB = require('./locales/en_GB.js');
 
-var _hu_HU2 = _interopRequireDefault(_hu_HU);
+var _en_GB2 = _interopRequireDefault(_en_GB);
 
 require('./sass/notice2/_variables.scss');
 
@@ -26,13 +26,13 @@ var _class = function () {
     //   this._isNoticeLoaded = false
     //   this._timeout = opts.timeout ? opts.timeout : 500
     //   this._pluginPrefix = opts.pluginPrefix ? opts.pluginPrefix : 'gdpr-cookie-notice'
-    //   this._locale = opts.locale ? opts.locale : hu_HU['notice']
+    //   this._locale = opts.locale ? opts.locale : en_GB['notice']
     //   this._manager = opts.cookieManager
     this._manager = cookieManager;
     this._isNoticeLoaded = false;
     this._timeout = timeout ? timeout : 500;
     this._pluginPrefix = prefix ? prefix : 'gdpr-cookie-notice';
-    this._locale = locale ? locale : _hu_HU2.default['notice'];
+    this._locale = locale ? locale : _en_GB2.default['notice'];
   }
 
   /*

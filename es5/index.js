@@ -40,22 +40,4 @@ exports.GdprCookie = _GdprCookie2.default;
 exports.GdprCookieNoticePopup = _GdprCookieNoticePopup2.default;
 exports.GdprCookieModal = _GdprCookieModal2.default;
 exports.GdprCookieNoticeManager = _GdprCookieNoticeManager2.default;
-
-// export { GdprCookieNotice, GdprCookie, GdprCookieNoticePopup, GdprCookieModal }
-// export default GdprCookieNotice
-
-// module.exports = {
-//   GdprCookie,
-//   GdprCookieNoticePopup,
-//   GdprCookieModal,
-//   GdprCookieNotice
-// }
-
-// export { default as GdprCookie } from './hu_HU'
-// export { default as en_GB } from './en_GB'
-
-// export { default as GdprCookie } from './GdprCookie'
-// export { default as GdprCookieNoticePopup } from './GdprCookieNoticePopup'
-// export { default as GdprCookieModal } from './GdprCookieModal'
-// export { default as GdprCookieNotice } from './GdprCookieNoticeManager'
 //# sourceMappingURL=index.js.map

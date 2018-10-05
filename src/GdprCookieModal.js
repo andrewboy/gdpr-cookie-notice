@@ -1,11 +1,11 @@
-import { default as hu_HU } from './locales/hu_HU.js'
+import { default as en_GB } from './locales/en_GB.js'
 import './sass/modal/_variables.scss'
 import './sass/modal/_modal.scss'
 
 export default class {
   constructor (cookieManager, prefix, locale, statementUrl, isCheckedByDefault) {
     this._manager = cookieManager
-    this._locale = locale ? locale : hu_HU['modal']
+    this._locale = locale ? locale : en_GB['modal']
     this._pluginPrefix = prefix ? prefix : 'gdpr-cookie-notice'
     this._isCategoriesCheckedByDefault = isCheckedByDefault ? isCheckedByDefault : false
     this._statementUrl = statementUrl ? statementUrl : ''

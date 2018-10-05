@@ -44,22 +44,22 @@ var _class = function () {
   }, {
     key: 'isNecessaryAccepted',
     value: function isNecessaryAccepted() {
-      return _jsCookie2.default.getJSON(this._name)['necessary'];
+      return !!_jsCookie2.default.getJSON(this._name)['necessary'];
     }
   }, {
     key: 'isAnalyticsAccepted',
     value: function isAnalyticsAccepted() {
-      return _jsCookie2.default.getJSON(this._name)['analytics'];
+      return !!_jsCookie2.default.getJSON(this._name)['analytics'];
     }
   }, {
     key: 'isPerformanceAccepted',
     value: function isPerformanceAccepted() {
-      return _jsCookie2.default.getJSON(this._name)['performance'];
+      return !!_jsCookie2.default.getJSON(this._name)['performance'];
     }
   }, {
     key: 'isMarketingAccepted',
     value: function isMarketingAccepted() {
-      return _jsCookie2.default.getJSON(this._name)['marketing'];
+      return !!_jsCookie2.default.getJSON(this._name)['marketing'];
     }
   }, {
     key: 'get',

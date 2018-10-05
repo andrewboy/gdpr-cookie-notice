@@ -24,19 +24,19 @@ export default class {
   }
 
   isNecessaryAccepted () {
-    return Cookies.getJSON(this._name)['necessary']
+    return !!Cookies.getJSON(this._name)['necessary']
   }
 
   isAnalyticsAccepted () {
-    return Cookies.getJSON(this._name)['analytics']
+    return !!Cookies.getJSON(this._name)['analytics']
   }
 
   isPerformanceAccepted () {
-    return Cookies.getJSON(this._name)['performance']
+    return !!Cookies.getJSON(this._name)['performance']
   }
 
   isMarketingAccepted () {
-    return Cookies.getJSON(this._name)['marketing']
+    return !!Cookies.getJSON(this._name)['marketing']
   }
 
   get () {
